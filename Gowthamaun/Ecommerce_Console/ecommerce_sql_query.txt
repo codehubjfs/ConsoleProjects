@@ -1,0 +1,113 @@
+create table customer(c_id number primary key,
+username varchar2(40) unique,
+password varchar2(20) not null,
+first_name varchar2(20),
+last_name varchar2(20),
+address varchar2(100),
+gender varchar2(20),
+mobile_no number(10) unique,
+email_id varchar2(30) unique,
+customer_type varchar2(30),
+customer_status varchar2(30));
+
+-----------------------------------------------------------
+create table admin(
+admin_id number primary key,
+admin_name varchar2(30),
+pswd varchar2(20));
+
+--------------------------------------------------------------
+
+create table vendor(
+v_id number primary key,
+v_name varchar2(30),
+reg_no varchar2(20),
+address varchar2(100),
+mobile_no NUMBER(10),
+password NUMBER(20),
+aadhar_no NUMBER(12));
+
+--------------------------------------------------------------
+
+create table category(
+category_id number primary key,
+category_name varchar2(40));
+
+--------------------------------------------------------------
+
+create table subcategory(
+subcategory_id number primary key,
+category_id number,
+foreign key(category_id) references category(category_id),
+subcategory_name varchar2(40));
+
+--------------------------------------------------------------
+
+create table product(
+p_id number primary key,
+p_name varchar2(30),
+p_brand varchar2(40),
+p_quantity number,
+p_subtitle varchar2(80),
+p_description varchar2(250),
+warranty varchar2(40),
+subcategory_id number,
+foreign key(subcategory_id) references subcategory(subcategory_id),
+category_id number,
+foreign key(category_id) references category(category_id));
+
+--------------------------------------------------------------
+
+create table orders(
+order_id number primary key,
+c_id number,
+foreign key(c_id) references customer(c_id),
+order_date DATE,
+address varchar2(100));
+
+--------------------------------------------------------------
+
+create table order_product(
+order_id number,
+foreign key(order_id) references orders(order_id),
+p_id number,
+foreign key(p_id) references product(p_id),
+primary key(order_id,p_id),
+quantity number);
+
+--------------------------------------------------------------
+
+create table cart(
+cart_id number primary key,
+c_id number,
+foreign key(c_id) references customer(c_id));
+
+--------------------------------------------------------------
+
+create table cart_detail(
+cart_id number,
+foreign key(cart_id) references cart(cart_id),
+p_id number,
+foreign key(p_id) references product(p_id),
+primary key(cart_id,p_id),
+quantity number);
+
+--------------------------------------------------------------
+
+create table wishlist(
+w_id number primary key,
+c_id number,
+foreign key(c_id) references customer(c_id),
+p_id number,
+foreign key(p_id) references product(p_id));
+
+--------------------------------------------------------------
+
+create table payment(
+payment_id number primary key,
+order_id number,
+foreign key(order_id) references orders(order_id),
+payment_date DATE,
+payment_type varchar2(50),
+payment_status varchar2(50));
+

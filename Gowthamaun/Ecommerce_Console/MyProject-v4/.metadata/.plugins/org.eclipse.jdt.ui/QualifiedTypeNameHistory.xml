@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.ecommerce.menu.CustomerActivity"/>
+    <fullyQualifiedTypeName name="com.ecommerce.menu.AdminActivity"/>
+    <fullyQualifiedTypeName name="com.ecommerce.users.account.AccountStatus"/>
+    <fullyQualifiedTypeName name="com.ungalkadai.tester.UngalKadaiTester"/>
+    <fullyQualifiedTypeName name="java.util.stream.Stream"/>
+    <fullyQualifiedTypeName name="com.ecommerce.customizedexceptions.InvalidEmailException"/>
+    <fullyQualifiedTypeName name="com.ungalkadai.components.ProductStatus"/>
+    <fullyQualifiedTypeName name="com.ecommerce.customizedexceptions.InvalidSubCategoryException"/>
+    <fullyQualifiedTypeName name="com.ungalkadai.components.VerificationStatus"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
+    <fullyQualifiedTypeName name="java.io.Reader"/>
+    <fullyQualifiedTypeName name="com.ecommerce.menu.SearchManager"/>
+    <fullyQualifiedTypeName name="java.util.Map.Entry"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="com.ecommerce.customizedexceptions.InvalidCreditCardNumberException"/>
+    <fullyQualifiedTypeName name="com.ecommerce.users.DbmsConnection"/>
+    <fullyQualifiedTypeName name="com.ungalkadai.components.PaymentStatus"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="com.ungalkadai.components.SubCategory"/>
+    <fullyQualifiedTypeName name="com.ecommerce.menu.CartAndOrderManager"/>
+    <fullyQualifiedTypeName name="java.time.LocalDate"/>
+    <fullyQualifiedTypeName name="java.time.format.DateTimeFormatter"/>
+    <fullyQualifiedTypeName name="com.ungalkadai.components.Product"/>
+    <fullyQualifiedTypeName name="java.util.Collections"/>
+    <fullyQualifiedTypeName name="com.ecommerce.customizedexceptions.Validation"/>
+    <fullyQualifiedTypeName name="com.ungalkadai.components.OrderStatus"/>
+    <fullyQualifiedTypeName name="com.ungalkadai.components.Order"/>
+    <fullyQualifiedTypeName name="java.util.stream.IntStream"/>
+    <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
+    <fullyQualifiedTypeName name="com.ecommerce.customizedexceptions.InvalidStringException"/>
+    <fullyQualifiedTypeName name="com.ecommerce.menu.SearchAndSortManager"/>
+    <fullyQualifiedTypeName name="com.ecommerce.menu.SellerActivity"/>
+    <fullyQualifiedTypeName name="com.ecommerce.users.account.AccountType"/>
+    <fullyQualifiedTypeName name="java.sql.SQLException"/>
+    <fullyQualifiedTypeName name="com.ecommerce.users.DbConnection"/>
+    <fullyQualifiedTypeName name="com.ecommerce.customizedexceptions.InvalidUserNameException"/>
+</qualifiedTypeNameHistroy>
