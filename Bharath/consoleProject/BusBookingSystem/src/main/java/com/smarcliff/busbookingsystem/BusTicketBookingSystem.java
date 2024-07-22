@@ -286,11 +286,6 @@ public class BusTicketBookingSystem {
 				case 2:
 					admin.deleteRoute();
 					break;
-			/*	case 3://because if update the record means it will change the already booked person location then issues
-					//if only linking to update means then seperataly link to booking person but how it  means we will add more column in existing table
-					System.out.println("Updating Bus Details...");
-					admin.updateRoute();
-					break;*/
 				case 3:
 					admin.viewRoute(); 
 					break;
@@ -405,42 +400,6 @@ public class BusTicketBookingSystem {
 								}while(true);
 							}
 
-
-//	// Display the admin login menu for Bus Ticket Booking System
-//	private void adminLoginMenu() {
-//		do {
-//			try {
-//				System.out.println(" +-----------------------------------------------------+");
-//				System.out.println(" |     1.Login    |        2.Back        |     3.Exit  |");
-//				System.out.println(" +-----------------------------------------------------+");
-//				System.out.print(" Enter Your Option: ");
-//				int option = Validation.validateOption(in.readLine().trim());
-//				UserAuthentication authenticate = new UserAuthentication();
-//				switch (option) {
-//				case 1:
-//					Admin admin = authenticate.loginAsAdmin();
-//					if (admin != null) {
-//						routeDetails(admin);
-//					} else {
-//						continue;
-//					}
-//					break;
-//				case 2:
-//					consoleBusMenu();
-//					break;
-//				case 3:
-//					System.out.print(" Thank You for Visiting. Have a Great Day!");
-//					System.exit(0);
-//					break;
-//				default:
-//					System.out.println(" Invalid Choice.Please Enter the Valid Option");
-//					break;
-//				}
-//			} catch (IOException | OptionException e) {
-//				System.out.println(e.getMessage());
-//			}1
-//		} while (true);
-//	}
 	private void busOperatorLoginMenu() {
 		do {
 			try {
@@ -579,62 +538,6 @@ public class BusTicketBookingSystem {
 	}while(true);
 	} 
 
-	/**
-	 * This method displays the admin menu for managing bus route details. The admin
-	 * can choose to add, delete, update, or view bus route details, go back to the
-	 * previous menu, or exit the program.
-	 */
-//	private void routeDetails(Admin admin) {
-//		do {
-//			try {
-//				System.out.println("\n");
-//				System.out.println(" +-------------------------------------------------+");
-//				System.out.println(" |                   ADMIN                         |");
-//				System.out.println(" +-------------------------------------------------+");
-//				System.out.println(" | 1. Add Bus Route Details                        |");
-//				System.out.println(" | 2. Delete Bus Route                             |");
-//				System.out.println(" | 3. View Route Detils                            |");
-//				System.out.println(" | 4. Back                                         |");
-//				System.out.println(" | 5. Exit                                         |");
-//				System.out.println("+--------------------------------------------------+");
-//				System.out.print(" Enter Your Option: ");
-//				int option = Validation.validateOption(in.readLine().trim());
-//				Route location = new Route();
-//				switch (option) {
-//				case 1:
-//					location = admin.addRoute();
-//					if (location != null) {
-//						break;
-//					} else {
-//						continue;
-//					}
-//				case 2:
-//					admin.deleteRoute();
-//					break;
-//			/*	case 3://because if update the record means it will change the already booked person location then issues
-//					//if only linking to update means then seperataly link to booking person but how it  means we will add more column in existing table
-//					System.out.println("Updating Bus Details...");
-//					admin.updateRoute();
-//					break;*/
-//				case 3:
-//					admin.viewRoute(); 
-//					break;
-//				case 4:
-//					adminLoginMenu();
-//					break;
-//				case 5:
-//					System.out.print(" Thank You for Visiting. Have a Great Day!");
-//					System.exit(0);
-//					break;
-//				default:
-//					System.out.println("Invalid Choice! Please Enter a Valid Option.");
-//					break;
-//				}
-//			} catch (Exception e) {
-//				System.out.println(e.getMessage());
-//			}
-//		} while (true);
-//	} 
 	//bus operator
 	private void busDetails(BusOperator operator) {
 		do {
