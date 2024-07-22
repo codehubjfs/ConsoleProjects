@@ -299,13 +299,7 @@ public class Admin extends User {
 						}
                        case 4:{
                     	   profileManagement(em);
-//                    	   System.out.println("Enter the Emploer id");
-//                    	   int id=sc.nextInt();
-//                    	   sc.nextLine();
-//                    	   System.out.println("Enter the job description");
-//                    	  String name =sc.nextLine();
-//                    	  em.updateCompanyName(id, name);
-//							
+						
 							
 							break;
 						}
@@ -384,54 +378,7 @@ public class Admin extends User {
 		                    }
 		                }
 		            }
-//		            public void viewAllJobSeekers() throws SQLException, ClassNotFoundException {
-//		                String sql = "SELECT JOB_SEEKER_ID,USERNAME, EMAIL,CONTACT_DETAILS,STATUS,REGISTER_DATE FROM job_Seekers";
-//		                Connection con = null;
-//		                PreparedStatement statement = null;
-//		                ResultSet resultSet = null;
-//		                try {
-//		                    new JdbcConnection();
-//							con = JdbcConnection.connectdatabase();
-//		                    statement = con.prepareStatement(sql);
-//		                    resultSet = statement.executeQuery();
-//
-//		                    System.out.println("===========================================================================================================================================================================================================================");
-//		                    System.out.printf("| %-20s | %-20s | %-30s | %-15s | %-15s | %-10s | %-15s | %-10s | %-20s |%n",
-//		                            "JOBSEEKER ID","UserName", "Email Id", "Phone Number", "Accont Status","Register Date");
-//		                    System.out.println("===========================================================================================================================================================================================================================");
-//
-//		                    int count = 0; // Counter for number of employers
-//
-//		                    while (resultSet.next()) {
-//		                        count++; // Increment the count for each row
-//		                        int id = resultSet.getInt("JOB_SEEKER_ID");
-//		                        String username = resultSet.getString("USERNAME");
-//		                        String email = resultSet.getString("EMAIL");
-//		                        String phone = resultSet.getString("CONTACT_DETAILS");
-//		                       
-//		                        
-//		             
-//		                        String status = resultSet.getString("STATUS");
-//		                        String registerDate = resultSet.getString("REGISTER_DATE");
-//
-//		                        System.out.printf("| %-20s | %-30s | %-20s | %-30s | %-15d | %-15s | %-10d | %-15s | %-10s | %-20s |%n",
-//		                        		id, username, email,   phone, status, registerDate);
-//		                        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-//		                    }
-//
-//		                    System.out.println("Number of Seekers: " + count); // Print the number of employers
-//		                } finally {
-//		                    if (resultSet != null) {
-//		                        resultSet.close();
-//		                    }
-//		                    if (statement != null) {
-//		                        statement.close();
-//		                    }
-//		                    if (con != null) {
-//		                        con.close();
-//		                    }
-//		                }
-//		            }
+
 		            public void viewAllJobSeekers() throws SQLException, ClassNotFoundException {
 		                String sql = "SELECT JOB_SEEKER_ID, USERNAME, EMAIL, CONTACT_DETAILS, STATUS, REGISTER_DATE FROM job_seekers";
 		                Connection con = null;
