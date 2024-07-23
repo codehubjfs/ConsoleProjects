@@ -1,18 +1,30 @@
 
 # Leave Management System
 
-##Introduction
+## Introduction
 
-A comprehensive Leave Management System built with different technologies to simplify and automate the process of managing employee leaves. The project includes three versions: console-based, JSP/Servlet, and Spring MVC, each with different levels of user functionality.
+A comprehensive Leave Management System built with different technologies to simplify and automate the process of managing employee leaves. The project includes three versions: console-based, JSP/Servlet, and Spring web MVC, each with different levels of user functionality.
 
 ## Table of Contents
 
-- [Features](#features)
-- [Technologies](#technologies)
-- [Versions](#versions)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
+- [Phase 1: Console-based](#phase-1-console-based)
+  - [Features](#features-1)
+  - [Technologies](#technologies-1)
+  - [Installation](#installation-1)
+  - [Configuration](#configuration-1)
+  - [Usage](#usage-1)
+- [Phase 2: JSP/Servlet](#phase-2-jsps-ervlet)
+  - [Features](#features-2)
+  - [Technologies](#technologies-2)
+  - [Installation](#installation-2)
+  - [Configuration](#configuration-2)
+  - [Usage](#usage-2)
+- [Phase 3: Spring web MVC](#phase-3-spring-web-mvc)
+  - [Features](#features-3)
+  - [Technologies](#technologies-3)
+  - [Installation](#installation-3)
+  - [Configuration](#configuration-3)
+  - [Usage](#usage-3)
 - [Contributing](#contributing)
 - [Contact](#contact)
 
@@ -30,54 +42,25 @@ A comprehensive Leave Management System built with different technologies to sim
 - Role-based access control
 - Reports and analytics
 
-## Technologies
+## Phase 1: Console-based
 
-- **Backend:** Spring MVC (with MyBatis), JSP/Servlet (with JDBC), Console-based (with JDBC)
+### Features
+
+- Employee leave request submission
+- Employee leave cancellation and updating leave requests
+- Employees can view their leave history
+- Leave balance tracking
+- Manager leave approval/rejection
+- Managers can view teams
+- Admins can manage users and departments
+- Basic leave balance tracking
+
+### Technologies
+
+- **Backend:** Java with JDBC
 - **Database:** Oracle DB
-- **Frontend:** JSP, JSTL
-- **Build Tool:** Maven
-- **Others:** Lombok
 
-## Versions
-
-### Console-based
-
-- **Users Supported:** Employee, Manager, System Admin
-- **Features:**
-  - Employees can submit, cancel, and update leave requests
-  - View history of the leave applications
-  - Track the approval status
-  - Managers can approve or reject leave requests
-  - Manager can view teams
-  - Admins can manage users and departments
-  - Basic leave balance tracking
-
-### JSP/Servlet
-
-- **Users Supported:** Employee, Manager
-- **Features:**
-  - Web-based interface for submitting and managing leave requests
-  - View history of the leave applications
-  - Track the approval status
-  - Leave request cancellation and updates by employees
-  - Manager approval and rejection of leave requests
-  - View team count and the individual profile
-  - View of today's absentees
-  - Basic leave balance and reporting functionality
-
-### Spring MVC
-
-- **Users:** Employee, Manager
-- **Features:** 
-  - Enhanced web interface using JSP and JSTL for leave management
-  - Employees can submit, cancel, and update leave requests
-  - View history of the leave applications
-  - Track the approval status
-  - Managers can approve or reject leave requests and view today's absentees
-  - Calendar view displaying absentees' names for the month
-  - Ability for managers to view individual team member profiles
-
-## Installation
+### Installation
 
 1. **Clone the repository:**
 
@@ -85,36 +68,161 @@ A comprehensive Leave Management System built with different technologies to sim
     git clone https://github.com/codehubjfs/ConsoleProjects.git
     cd ConsoleProjects
     cd Samrutha
-    ```
+    cd LeaveManagementSystem_Console
+   ```
 
 2. **Configure the database:**
+   
+   Run the script in your database with the below mentioned credentials
 
    ```properties
     url=jdbc:oracle:thin:@localhost:1521:xe
-    username=LEAVEMANAGEMNT
+    username=LMS
     password=oracle123
    ```
-
 3. **Run the application:**
 
-    - For the Spring MVC version, deploy the WAR file to a servlet container like Tomcat and configure the datasource in the `DispatcherConfig` class. 
-    - For JSP/Servlet version, deploy the WAR file to a servlet container like Tomcat.
-    - For Console-based version, run the Java application from the command line.
+   Run the Java application from the command line.
 
-## Configuration
+### Configuration
 
-For the Spring MVC version and the JSP/Servlet, the application is configured using the `DispatcherConfig` class where a bean for the datasource is created. Ensure that the datasource and other configurations are correctly set in the `DispatcherConfig` class.
+   Configure the database and other settings in the respective configuration files or directly within the application code.
 
-For the console-based versions, configure the database and other settings in the respective configuration files or directly within the application code.
+### Usage
 
-## Usage
+Once the application is running, you can perform the following operations:
+- **Employee:** Submit a leave request, cancel a leave request, update leave request details, view leave balance, view leave history.  
+- **Manager:** Approve or reject leave requests, view teams. 
+- **Admin:** Manage users and departments.
 
-Once the application is running, you can access it via `http://localhost:8080` for the web-based versions. Here are some basic operations you can perform:
+## Leave Management System - Phase 2: JSP/Servlet
 
-- **Employee:** Submit a leave request, cancel a leave request, update leave request details, view leave balance, view leave history.
-- **Manager:** Approve or reject leave requests, view today's absentees, view calendar with absentees' names, view individual team member profiles.
-- **Admin (Console-based only):** Manage users and departments.
+### Features
+
+- Web-based interface for submitting and managing leave requests
+- Employee leave request submission
+- Employee leave cancellation and updating leave requests
+- View leave history
+- Track leave balance
+- Graph based analysis
+- Manager leave approval/rejection
+- View today's absentees
+- View team count and individual profiles
+- Basic leave balance and reporting functionality
+
+### Technologies
+
+- **Backend:** JSP/Servlet with JDBC
+- **Database:** Oracle DB
+- **Frontend:** JSP, JSTL
+- **Build Tool:** Maven
+- **Others:** Lombok
+
+### Installation
+
+1. **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/codehubjfs/ConsoleProjects.git
+    cd ConsoleProjects
+    cd Samrutha
+    cd LeaveManagementSystem_Web
+    cd lms
+   ```
+
+2. **Configure the database:**
+   
+   Run the script in your database with the below mentioned credentials
+
+   ```properties
+    url=jdbc:oracle:thin:@localhost:1521:xe
+    username=LEAVEMANAGEMENT
+    password=oracle123
+   ```
+3. **Run the application:**
+
+   - Deploy the WAR file to a servlet container like Tomcat.
+   - Configure the port number
+   - Run the application on the server
+
+### Configuration
+
+   For the Spring MVC version and the JSP/Servlet, the application is configured using the `DispatcherConfig` class where a bean for the datasource is created. Ensure that the datasource and other configurations are correctly set in the `DispatcherConfig` class.
+
+
+### Usage
+
+Once the application is running, you can access it via http://localhost:8080 and perform the following operations:
+- **Employee:** Submit a leave request, cancel a leave request, update leave request details, view leave balance, view leave history.  
+- **Manager:** Approve or reject leave requests, view today's absentees, view calendar with absentees' names, view individual team member profiles.. 
+- *Admin:** (Not yet implemented)
 - **HR:** (Not yet implemented)
+
+
+## Leave Management System - Phase 3: Spring web MVC
+
+### Features
+
+- Enhanced web interface using JSP and JSTL for leave management
+- Employee leave request submission
+- Employee leave cancellation and updating leave requests
+- View leave history
+- Track leave balance
+- Graph based analysis
+- Manager leave approval/rejection
+- View today's absentees
+- View team count and individual profiles
+- Calendar view displaying absentees' names for the month
+- Basic leave balance and reporting functionality
+
+### Technologies
+
+- **Backend:** Spring web MVC with MyBatis
+- **Database:** Oracle DB
+- **Frontend:** JSP, JSTL
+- **Build Tool:** Maven
+- **Others:** Lombok
+
+### Installation
+
+1. **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/codehubjfs/ConsoleProjects.git
+    cd ConsoleProjects
+    cd Samrutha
+    cd LeaveManagementSystem_Web
+    cd leavemanagement
+   ```
+
+2. **Configure the database:**
+   
+   Run the script in your database with the below mentioned credentials
+
+   ```properties
+    url=jdbc:oracle:thin:@localhost:1521:xe
+    username=LEAVEMANAGEMENT
+    password=oracle123
+   ```
+3. **Run the application:**
+
+   - Deploy the WAR file to a servlet container like Tomcat.
+   - Configure the port number
+   - Run the application on the server
+
+### Configuration
+
+   For the Spring MVC version and the JSP/Servlet, the application is configured using the `DispatcherConfig` class where a bean for the datasource is created. Ensure that the datasource and other configurations are correctly set in the `DispatcherConfig` class.
+
+
+### Usage
+
+Once the application is running, you can access it via http://localhost:8080 and perform the following operations:
+- **Employee:** Submit a leave request, cancel a leave request, update leave request details, view leave balance, view leave history.  
+- **Manager:** Approve or reject leave requests, view today's absentees, view calendar with absentees' names, view individual team member profiles.. 
+- *Admin:** (Not yet implemented)
+- **HR:** (Not yet implemented)
+
 
 ## Contributing
 
