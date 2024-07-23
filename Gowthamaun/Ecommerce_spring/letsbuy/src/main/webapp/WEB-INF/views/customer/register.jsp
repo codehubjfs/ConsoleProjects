@@ -1,0 +1,372 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" isELIgnored="false"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/asserts/css/customerstyles.css">
+    <title>LetsBuy - Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+</head>
+
+<body id="reg-body">
+    <div class="container m-5 d-flex justify-content-center align-items-center">
+        <div class="row justify-content-center">
+            <div class="col-md-12" style="width:800px;">
+                <div class="card mt-5">
+                    <div class="card-header bg-white d-flex align-items-center ">
+                        <div>
+                            <img src="${pageContext.request.contextPath}/asserts/images/logo.png" class="rounded" width="210" height="110" alt="">
+                        </div>
+                        <div>
+                            <h3 class="text-center txt-sign-up ml-3">Sign Up</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="registrationForm" action="CustomerRegisterController" method="post">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="mobile_no">Mobile No.</label>
+                                    <input type="text" id="mobile_no" name="mobile_no" class="form-control">
+                                    <div class="invalid-feedback" id="invalid-mobileNumber">Please enter a valid mobile number.</div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="emailid">Email ID</label>
+                                    <input type="email" id="emailid" name="emailid" class="form-control">
+                                    <div class="invalid-feedback" id="invalid-email">Please enter a valid email address.</div>
+                                </div>
+                                
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="first_name">First Name</label>
+                                    <input type="text" id="first_name" name="first_name" class="form-control">
+                                    <div class="invalid-feedback" id="invalid-fName">Please enter your first name.</div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="last_name">Last Name</label>
+                                    <input type="text" id="last_name" name="last_name" class="form-control">
+                                    <div class="invalid-feedback" id="invalid-lName">Please enter your last name.</div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="address">Address</label>
+                                    <input type="text" id="address" name="address" class="form-control">
+                                    <div class="invalid-feedback">Please enter your address length between(10-70).</div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="gender">Gender</label>
+                                    <select id="gender" name="gender" class="form-control">
+                                        <option value="">Select Gender</option>
+                                        <option value="MALE">Male</option>
+                                        <option value="FEMALE">Female</option>
+                                        <option value="TRANSGENDER">Transgender</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select your gender.</div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="username">Username</label>
+                                    <input type="text" id="username" name="username" class="form-control">
+                                    <div class="invalid-feedback" id="invalid-username">input can be alphabets,numbers and Underscore(_)</div>
+                                    <!-- <div class="invalid-feedback">Length should be minimum of 4 and max of 24</div> -->
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="password" name="password" class="form-control">
+                                    <div class="invalid-feedback" id="invalid-password">Password must be at least 6 characters long.</div>
+                                </div>
+                            </div>
+                           <div class="row">
+                           	<div class="col-5">
+                           		<p class="fs-5 text-secodary">Already Registered? <a href='forwardLogin'>Login</a></p>
+                           	</div>
+                            <div class="col">
+                            	<button type="submit" id="submitBtn" class="btn  btn-primary px-4 fw-bold" disabled>Register</button>
+                            </div>
+                           </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+   
+    let mobileNumbers = [];
+    let emails = [];
+    let usernames = [];
+    document.addEventListener('DOMContentLoaded', function() {
+    
+    
+    fetch('CustomerMobileDataController')
+    .then(response => response.json())
+    .then(data => {
+        mobileNumbers = data;
+    })
+    .catch(error => {
+        alert('Error fetching mobile numbers');
+        console.error('Error:', error);
+    });
+    
+    fetch('CustomerEmailDataController')
+    .then(response => response.json())
+    .then(data => {
+        emails = data;
+    })
+    .catch(error => {
+        alert('Error fetching email');
+        console.error('Error:', error);
+    });
+    
+    fetch('CustomerUsernameDataController')
+    .then(response => response.json())
+    .then(data => {
+        usernames = data;
+    })
+    .catch(error => {
+        alert('Error fetching usernames');
+        console.error('Error:', error);
+    });
+
+    
+    
+    
+
+
+    //validateForm();
+});
+    
+ let form = document.getElementById('registrationForm');
+    
+    let inputs = form.querySelectorAll('input, select');
+    
+    inputs.forEach(input => {
+        input.addEventListener('input', validateForm);
+    });
+    
+let submitBtn = document.getElementById('submitBtn');
+
+    
+
+    var userNameError = document.getElementById('invalid-username');
+
+    var passwordError = document.getElementById('invalid-password');
+
+    var fNameError = document.getElementById('invalid-fName');
+
+    var lNameError = document.getElementById('invalid-lName');
+
+    var mobileNumberError = document.getElementById('invalid-mobileNumber');
+    
+    var emailError = document.getElementById('invalid-email');
+    
+
+    
+
+    function validateForm() {
+        let isFormValid = true;
+
+        isFormValid &= validateUsername();
+        isFormValid &= validatePassword();
+        isFormValid &= validateFirstName();
+        isFormValid &= validateLastName();
+        isFormValid &= validateAddress();
+        isFormValid &= validateGender();
+        isFormValid &= validateMobileNo();
+        isFormValid &= validateEmail();
+
+        submitBtn.disabled = !isFormValid;
+    }
+
+    // function validateUsername() {
+    //     let username = form.username.value.trim();
+
+    //     if (!username.match(/^[a-zA-Z][a-zA-Z0-9_]{4,24}$/)) {
+    //         if(!username.match(/^[a-zA-Z0-9_]+$/)){
+    //             userName.innerHTML="Username can contain only alphabets,numbers and _(underscore)";
+    //         }else if(!username.match(/^.{5,24}$/)){
+    //             userName.innerHTML="Length should be between 5-24";
+    //         }else if(!userName.match(/^[a-zA-Z]/)){
+    //             userName.innerHTML="Username should start with alphabet";
+    //         }
+    //         form.username.classList.add('is-invalid');
+    //         return false;
+    //     } else {
+    //         form.username.classList.remove('is-invalid');
+    //         return true;
+    //     }
+    // }
+
+    function validateUsername() {
+    let username = form.username.value.trim();
+    // let userNameError = document.getElementById('userNameError');
+
+    if (!username.match(/^[a-zA-Z][a-zA-Z0-9_]{4,24}$/)) {
+    	userNameError.classList.remove("text-primary");
+    	userNameError.classList.add("text-danger");
+        if (!username.match(/^[a-zA-Z0-9_]+$/)) {
+            userNameError.innerHTML = "Username can contain only alphabets, numbers, and underscores";
+        } else if (!username.match(/^.{5,24}$/)) {
+            userNameError.innerHTML = "Length should be between 5-24 characters";
+        } else if (!username.match(/^[a-zA-Z]/)) {
+            userNameError.innerHTML = "Username should start with an alphabet";
+        }
+        form.username.classList.add('is-invalid');
+        return false;
+    }else if(usernames.includes(username)){
+    	userNameError.classList.remove('text-danger');
+    	userNameError.classList.add('text-primary');
+    	userNameError.innerHTML = 'Username already Exist';
+    	form.username.classList.add('is-invalid');
+    	return false;
+    } else {
+        // userNameError.innerHTML = ""; // Clear error message
+        form.username.classList.remove('is-invalid');
+        form.username.classList.add('is-valid');
+        return true;
+    }
+}
+
+
+    function validatePassword() {
+        let password = form.password.value.trim();
+        if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%#?&])[A-Za-z\d@$!%*#?&]{8,20}$/)) {
+           if(!password.match(/(?=.*[A-Za-z])/)){
+            passwordError.innerHTML = "password should has atleast one alphabet";
+           }else if(!password.match(/(?=.*\d)/)){
+            passwordError.innerHTML = "password should has atleast one Number";
+           }else if(!password.match(/(?=.*[@$!%#?&])/)){
+            passwordError.innerHTML = "password should has atleast one Symbols[@$!%#?&]";
+           }else if(!password.match(/^.{8,20}$/)){
+            passwordError.innerHTML = "password Length should be 8-20";
+           }
+            form.password.classList.add('is-invalid');
+            return false;
+        } else {
+            form.password.classList.remove('is-invalid');
+            form.password.classList.add('is-valid');
+            return true;
+        }
+    }
+
+    function validateFirstName() {
+        let firstName = form.first_name.value.trim();
+        if (!firstName.match(/^[a-zA-Z]{4,20}$/)) {
+            if(!firstName.match(/^[a-zA-Z]+$/)){
+                fNameError.innerHTML = "Numbers and symbols are not allowed.";
+            }else if(!firstName.match(/^.{4,20}$/)){
+                fNameError.innerHTML = "First Name length should be 4-20";
+            }
+            form.first_name.classList.add('is-invalid');
+            return false;
+        } else {
+            form.first_name.classList.remove('is-invalid');
+            form.first_name.classList.add('is-valid');
+            return true;
+        }
+    }
+
+    function validateLastName() {
+        let lastName = form.last_name.value.trim();
+        if (!lastName.match(/^[a-zA-Z]{1,20}$/)) {
+            if(!lastName.match(/^[a-zA-Z]+$/)){
+                lNameError.innerHTML = "Numbers and symbols are not allowed.";
+            }else if(!lastName.match(/^.{1,20}$/)){
+                lNameError.innerHTML = "Last Name length should be 1-20";
+            }
+            form.last_name.classList.add('is-invalid');
+            return false;
+        }  else {
+            form.last_name.classList.remove('is-invalid');
+            form.last_name.classList.add('is-valid');
+            return true;
+        }
+    }
+
+    function validateAddress() {
+        let address = form.address.value.trim();
+        if (!address.match(/^[a-zA-Z0-9\s,./#-]{10,70}$/)) {
+            form.address.classList.add('is-invalid');
+            return false;
+        } else {
+            form.address.classList.remove('is-invalid');
+            form.address.classList.add('is-valid');
+            return true;
+        }
+    }
+
+    function validateGender() {
+        let gender = form.gender.value;
+        if (gender === "") {
+            form.gender.classList.add('is-invalid');
+            return false;
+        } else {
+            form.gender.classList.remove('is-invalid');
+            form.gender.classList.add('is-valid');
+            return true;
+        }
+    }
+
+    function validateMobileNo() {
+        let mobileNo = form.mobile_no.value.trim();
+        if (!mobileNo.match(/^[9876]\d{9}$/)) {
+        	mobileNumberError.classList.remove('text-primary');
+        	mobileNumberError.classList.add('text-danger');
+            if(!mobileNo.match(/^.\d+$/)){
+                mobileNumberError.innerHTML = "Mobile Number should have only Numbers.";
+            }else if(!mobileNo.match(/^.{10}$/)){
+                mobileNumberError.innerHTML = "Mobile Number should be 10 digits.";
+            }else if(!mobileNo.match(/^[9876]$/)){
+                mobileNumberError.innerHTML = "First digit should be between 6 to 9"
+            }
+            form.mobile_no.classList.add('is-invalid');
+            return false;
+        }else if(mobileNumbers.includes(mobileNo)){
+        	mobileNumberError.classList.remove('text-danger');
+        	mobileNumberError.classList.add('text-primary');
+        	 mobileNumberError.innerHTML = "Mobile Number Already Exist.";
+        	 form.mobile_no.classList.add('is-invalid');
+        	 return false;
+        } else {
+        	
+            form.mobile_no.classList.remove('is-invalid');
+            form.mobile_no.classList.add('is-valid');
+            return true;
+        }
+    }
+
+    function validateEmail() {
+        let email = form.emailid.value.trim();
+        if (!email.match(/^(?=.{6,44}$)[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z].{2,3}.{2}$/) && !email.match(/^(?=.{6,44}$)[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/)) {
+        	emailError.classList.remove('text-primary');
+            emailError.classList.add('text-danger');
+            emailError.innerHTML = 'Please enter a valid email address.';
+        	form.emailid.classList.add('is-invalid');
+            return false;
+        }else if(emails.includes(email)){
+        	emailError.classList.remove('text-danger');
+        	emailError.classList.add('text-primary');
+       	 	emailError.innerHTML = "Email address Already Exist.";
+       	 	form.emailid.classList.add('is-invalid');
+       	 	return false;
+        } else {
+            form.emailid.classList.remove('is-invalid');
+            form.emailid.classList.add('is-valid');
+            return true;
+        }
+    }
+
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ 
+</body>
+</html>

@@ -1,0 +1,99 @@
+@charset "ISO-8859-1";
+  body {
+      font-family: Arial, sans-serif;
+      background-color: rgb(238, 238, 238);
+    }
+
+    .navbar {
+      background-color: #23272b;
+    }
+
+    .navbar-brand img {
+      height: 50px;
+      border-radius: 50%;
+    }
+    .navbar-custom {
+      background-color: #23272b; /* Same as sidebar background color */
+    }
+
+    /*NOW EDIT*/
+    .sidebar .list-group-item {
+      background-color: #23272b;
+      color: white;
+      margin-bottom: 5%;
+      border: none;
+    }
+
+    .profile img {
+      height: 65px;
+      width: 70px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .sidebar {
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #23272b;
+      color: white;
+      width: 250px;
+      padding-top: 120px;
+      overflow-x: hidden;
+    }
+
+    .sidebar a,
+    .dropdown-toggle {
+      color: #23272b;
+      text-decoration: none;
+      padding: 10px 15px;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover,
+    .dropdown-toggle:hover {
+      background-color: #575d63;
+    }
+
+
+    .profile img {
+      height: 65px;
+      width: 70px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .content {
+      margin-left: 250px;
+      padding: 20px;
+    }
+
+    .breadcrumb {
+      margin-top: 70px;
+      margin-left: 10px;
+      background-color:  rgb(238, 238, 238);
+    }
+
+    .breadcrumb-item.active {
+      color: rgb(0, 0, 96);
+    }
+
+    .card-header {
+      background-color: #343a40;
+      color: #fff;
+    }
+
+    .card-body {
+      background-color: #ffffff;
+    }
+
+    .btn-primary {
+      background-color: #343a40;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #495057;
+    }
+  
