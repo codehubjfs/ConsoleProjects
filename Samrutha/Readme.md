@@ -207,7 +207,7 @@ Once the application is running, you can access it via http://localhost:8080 and
 Once the application is running, you can access it via http://localhost:8080 and perform the following operations:
 - **Employee:** Submit a leave request, cancel a leave request, update leave request details, view leave balance, view leave history.  
 - **Manager:** Approve or reject leave requests, view today's absentees, view calendar with absentees' names, view individual team member profiles.. 
-- *Admin:** (Not yet implemented)
+- **Admin:** (Not yet implemented)
 - **HR:** (Not yet implemented)
 
 
