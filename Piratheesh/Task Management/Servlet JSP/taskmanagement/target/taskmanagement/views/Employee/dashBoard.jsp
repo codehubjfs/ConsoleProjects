@@ -1,0 +1,300 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../../asserts/CSS/Employee/dashBoard.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            position: relative;
+            overflow-x: hidden;
+            font-size: 1.125rem;
+        }
+        .navbar {
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        .sidebar {
+            position: fixed;
+            top: 56px; /* Height of the navbar */
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            overflow-y: auto;
+            padding-top: 20px;
+        }
+        .main-content {
+            margin-left: 200px; /* Width of the sidebar */
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .sticky-top {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 56px; /* Height of the navbar */
+            z-index: 1020;
+            background-color: #fff;
+        }
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+            }
+            .sidebar {
+                position: static;
+            }
+        }
+    </style>
+    <!-- <style>
+        body{
+            font-size: 1.125rem;
+        }
+    </style> -->
+</head>
+<body>
+    <div class="container-fluid" style="margin: 0% !important; padding:0% !important">
+        <nav class="navbar navbar-expand-lg navbar-light" id="navtop" >
+            <a class="navbar-brand" href="#">
+                <img src="../../asserts/Image/Manager/taskmanagement1.jpg" alt="Logo" class="logo-img">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user-circle" aria-hidden="true" style="font-size: 25px;"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#editProfileModal">Edit Profile</a>
+                            <a class="dropdown-item" href="../../index.jsp">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row">
+            <nav id="sidebar" class="col-md-2 d-none d-md-block sidebar">
+                <div class="sidebar-sticky">
+                    <h5 class="sidebar-heading">${employeeName} Dashboard</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="dashBoard.jsp">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="team.jsp">My Team</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="calender.jsp" class="nav-link">Calendar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="personaltask.jsp" class="nav-link">Personal Task Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../../index.jsp" class="nav-link">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">-</h1>
+                </div>
+                <h1 class="h2">Good Morning, Employee</h1>
+                <hr>
+                <div class="row metrics">
+                    
+                    <div class="col-3">
+                        <a href="assignedtaskemp.jsp" style="list-style: none; text-decoration: none; color: black;">
+                            <div class="metric">
+                                <div class="icon"><img src="../../asserts/Image/Employee/assigned.png" alt="Assigned Task"></div>
+                                <div class="value">10</div>
+                                <div class="label">Total Task Assigned</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-3">
+                        <a href="completedtask.jsp" style="list-style: none; text-decoration: none; color: black;">
+                            <div class="metric">
+                                <div class="icon"><img src="../../asserts/Image/Employee/completed.png" alt="Completed Task"></div>
+                                <div class="value">15</div>
+                                <div class="label">Total Task Completed</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-3">
+                        <a href="pendingtask.jsp" style="list-style: none; text-decoration: none; color: black;">
+                            <div class="metric">
+                                <div class="icon"><img src="../../asserts/Image/Employee/pending.png" alt="Pending Task"></div>
+                                <div class="value">5</div>
+                                <div class="label">Total Task Pending</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-3">
+                        <a href="taskoverlayed.jsp" style="list-style: none; text-decoration: none; color: black;">
+                            <div class="metric">
+                                <div class="icon"><img src="../../asserts/Image/Employee/overlayed.png" alt="Overlayed Task"></div>
+                                <div class="value">30</div>
+                                <div class="label">Total Task Overlayed</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Recents</span>
+                                <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#recentsCollapse" aria-expanded="false" aria-controls="recentsCollapse">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M0 0h6v2H2v4H0V0zm14 14h-4v2h6V10h-2v4z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div id="recentsCollapse" class="collapse">
+                                <div class="card-body">
+                                    <ul>
+                                        <li>Task 2 - To be completed</li>
+                                        <li>Assigned Task - in Team Space</li>
+                                        <li>Task 1 - Updated</li>
+                                        <li>Team Space was created</li>
+                                        <li>Task 2 - Updated</li>
+                                        <li>Dashboard</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Assigned comments</span>
+                                <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#commentsCollapse" aria-expanded="false" aria-controls="commentsCollapse">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M0 0h6v2H2v4H0V0zm14 14h-4v2h6V10h-2v4z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div id="commentsCollapse" class="collapse">
+                                <div class="card-body">
+                                    <p>No Comments</p>
+                                    <p>You don't have any assigned comments. <a href="#">Learn more</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>My Work</span>
+                                <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#myWorkCollapse" aria-expanded="false" aria-controls="myWorkCollapse">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M0 0h6v2H2v4H0V0zm14 14h-4v2h6V10h-2v4z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div id="myWorkCollapse" class="collapse">
+                                <div class="card-body">
+                                    <p>No My Work</p>
+                                    <p>You don't have any tasks assigned to you. <a href="#">Learn more</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Agenda</span>
+                                <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#agendaCollapse" aria-expanded="false" aria-controls="agendaCollapse">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M0 0h6v2H2v4H0V0zm14 14h-4v2h6V10h-2v4z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div id="agendaCollapse" class="collapse">
+                                <div class="card-body">
+                                    <p>Agenda items from your calendars will show here.</p>
+                                    <button class="btn btn-primary">Add calendar integrations</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card mb-4 width:80%">
+                            <div class="card-header">
+                                Interactive Chart On Personal Task 
+                            </div>
+                            <div class="card-body">
+                                <canvas id="myChart" style="width:80%;max-width:1000px;height: 330px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfileForm" novalidate>
+                        <div class="form-group">
+                            <label for="profilePicture">Profile Picture</label>
+                            <img src="../../asserts/Image/Manager/profile.png" alt="Profile Picture" class="img-thumbnail" id="profilePicture">
+                        </div>
+                        <div class="form-group">
+                            <label for="profileName">Name</label>
+                            <input type="text" class="form-control" id="profileName" value="${employeeName}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="profileEmail">Email</label>
+                            <input type="email" class="form-control" id="profileEmail" value="${employeeMail}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="profilePhone">Phone Number</label>
+                            <input type="tel" class="form-control" id="profilePhone" value="${employeeNumber}">
+                        </div>
+                        <div class="form-group">
+                            <label for="profileOccupation">Occupation</label>
+                            <input type="text" class="form-control" id="profileOccupation" value="${employeeRole}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="profileCity">City</label>
+                            <input type="text" class="form-control" id="profileCity" value="${employeeCity}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../asserts/Javascript/Employee/dashBoard.js"></script>
+</body>
+</html>

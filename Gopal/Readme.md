@@ -1,6 +1,6 @@
 # Job Portal Application
 
-This Job Portal application offers functionalities for job seekers, employers, and admins. Depending on the project type, the application can be implemented as a Console-based Application, JSP-based Web Application, or Spring MVC Application.
+This Job Portal application offers functionalities for job seekers, employers, and admins. Depending on the project type, the application can be implemented as a Console-based Application, JSP-based Web Application, Spring MVC Application.
 
 ## Features
 
@@ -40,7 +40,7 @@ This Job Portal application offers functionalities for job seekers, employers, a
 ### Spring MVC Application
 - Spring Framework
 - Spring MVC
-- Thymeleaf (optional)
+- my batis(database)
 - Maven/Gradle
 
 ## Prerequisites
