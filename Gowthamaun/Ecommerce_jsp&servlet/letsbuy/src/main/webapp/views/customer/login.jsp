@@ -1,0 +1,147 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Including Bootstrap CSS from CDN for styling -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/customerstyles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Customer Login</title>
+   
+</head>
+
+<body>
+    <div class="d-flex align-items-center justify-content-center vh-100 bg-light">
+        <div class="bg-white shadow rounded px-0" id="outer-boxx">
+            <div class="row px-0 mx-0">
+                <div class="col-12 mt-0 px-0 pb-5">
+                    <div class="row rounded-top">
+                        <div class="col-5">
+                            <img src="${pageContext.request.contextPath}/images/logo.png" height="100" width="200" class="img-fluid rounded-top" alt="">
+                        </div>
+                        <div class="col-7 ">
+                            <div class="bg-custom rounded-top m-0 p-0 mb-5">
+                                <h3 class="text-white text-center p-5">Login</h3>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form action="${pageContext.request.contextPath}/CustomerLoginController" method="post" id="loginForm">
+                        <div class="mx-5 p-4 justify-content-center">
+                            <div class="form-group col-md-12">
+                                <label for="mobile_no" class="fs-5 clr-custom">Mobile Number</label>
+                                <input type="text" id="mobile_no" name="mobile_no" class="form-control rounded-pill mt-2">
+                                <div class="invalid-feedback" id="invalid-mobileNumber">Please enter a valid mobile number.</div>
+                            </div>
+                            <div class="form-group col-md-12 mt-4">
+                                <label for="password" class="fs-5 clr-custom">Password</label>
+                                <input type="password" id="password" name="password" class="form-control rounded-pill mt-2">
+                                <div class="invalid-feedback" id="invalid-password">Password is invalid.</div>
+                            </div>
+                            <div class="mt-2 text-end px-5">
+                                <a href="#" class="text-decoration-none clr-custom2">Forget password?</a>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn bg-outline-custom btn-lg rounded-pill px-5 mx-3" id="login-btn" disabled>Login</button>
+                            <!-- Sign Up button added -->
+                            <button type="button" class="btn bg-outline-custom2 btn-lg rounded-pill px-5" onclick="location.href='${pageContext.request.contextPath}/views/customer/register.jsp'">Sign up</button>
+                            <div id="errorMessage" class="text-danger mt-3" style="display:none"><%= request.getAttribute("statusmessage")!=null?request.getAttribute("statusmessage"):"fail" %></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <div class="toast-container mt-5" id="toast-msg-top">
+        <div class="toast  text-white bg-danger border-0 p-3" id="success-toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fs-6 msg">
+                    Loading....!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    var errorMessage = document.getElementById('errorMessage').textContent;
+    console.log(errorMessage);
+    function showToast(msg,isRed) {
+        const toastElement = document.getElementById('success-toast');
+        if(isRed){
+        toastElement.classList.remove('bg-success');
+        toastElement.classList.add('bg-danger');
+        }else{
+            toastElement.classList.remove('bg-danger');
+            toastElement.classList.add('bg-success'); 
+        }
+        toastElement.querySelector('.msg').innerHTML = msg;
+        const toast = new bootstrap.Toast(toastElement);
+        toast.show();
+    }
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            let form = document.getElementById('loginForm');
+            let submitBtn = document.getElementById('login-btn');
+            let inputs = form.querySelectorAll('input');
+
+            let passwordError = document.getElementById('invalid-password');
+            let mobileNumberError = document.getElementById('invalid-mobileNumber');
+
+            inputs.forEach(input => {
+                input.addEventListener('input', validateForm);
+            });
+            
+            if(errorMessage!=="fail"){
+            	console.log(errorMessage);
+            	showToast(errorMessage,true);
+            }
+            
+
+            function validateForm() {
+                let isFormValid = true;
+                isFormValid &= validatePassword();
+                isFormValid &= validateMobileNo();
+                submitBtn.disabled = !isFormValid;
+            }
+
+            function validatePassword() {
+                let password = form.password.value.trim();
+                if (!password.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/)) {
+                   // passwordError.textContent = "Password should be 8-20 characters long, and include at least one letter, one number, and one special character.";
+                    form.password.classList.add('is-invalid');
+                    return false;
+                } else {
+                    form.password.classList.remove('is-invalid');
+                    form.password.classList.add('is-valid');
+                    return true;
+                }
+            }
+
+            function validateMobileNo() {
+                let mobileNo = form.mobile_no.value.trim();
+                if (!mobileNo.match(/^[9876]\d{9}$/)) {
+                    //mobileNumberError.textContent = "Mobile Number should be 10 digits and start with 9, 8, 7, or 6.";
+                    form.mobile_no.classList.add('is-invalid');
+                    return false;
+                } else {
+                    form.mobile_no.classList.remove('is-invalid');
+                    form.mobile_no.classList.add('is-valid');
+                    return true;
+                }
+            }
+
+            validateForm();
+        });
+    </script>
+</body>
+</html>

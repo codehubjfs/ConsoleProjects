@@ -1,0 +1,161 @@
+body {
+    /* background-color: white; */
+    background-color: #e7e6fa;
+    font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+}
+
+
+
+header {
+    background-color: #17163B;
+    color: aliceblue;
+    height: 100px;
+    padding: 10px;
+    position: fixed;
+    z-index: 1;
+    
+}
+
+h1{
+	text-align:center;
+	margin-top:20px;
+}
+
+
+#hero{
+    margin-top: 20px;
+}
+
+
+
+.nav-icons {
+    background-color: #17163B;
+    /* background-color: #e7e6fa; */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    position: fixed;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    z-index: 300;
+   
+
+}
+
+.nav-icons .fixed-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.nav-icons .material-symbols-outlined {
+    font-size: 36px;
+    margin: 20px 0;
+    cursor: pointer;
+    color: white;
+}
+
+#nav-desc{
+    color: white;
+    text-align: center;
+}
+
+#profile{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30px;
+}
+
+#profile-img{
+	height: 100px;
+	width:100px;
+}
+
+#header.scrolled {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+#navigation.scrolled{
+    background-color: #000000;
+    color:white;
+}
+
+h5{
+    text-align: center;
+}
+
+
+.course-card {
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    height: 90%;
+    width:90%;
+    /* background-color: #e7e6fa; */
+}
+
+.course-card:hover{
+    transform: scale(1.05);
+    text-decoration: none;
+}
+
+.course-card .card-body {
+    display: flex;
+    flex-direction:column; 
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: #000000;
+    /* text-decoration: none; */
+}
+
+
+.course-card .course-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* a{
+    text-decoration: none;
+} */
+
+.course-info {
+    width: 45%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
+.badge.text-bg-primary {
+    background-color: #007bff;
+}
+
+.dropdown .material-symbols-outlined {
+    font-size: 36px;
+    cursor: pointer;
+}
+
+#badgesContainer{
+    margin-top: 150px;
+    text-align: center;
+    /* padding:150px; */
+    /* background-color: #e7e6fa; */
+    /* background-color: #dadada; */
+    /* margin-left: 100px; */
+}
+
+
+
+/* #progressChart{
+height: 1000%;
+width:100px;
+} */

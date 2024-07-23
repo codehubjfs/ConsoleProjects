@@ -1,0 +1,85 @@
+@charset "ISO-8859-1";
+
+body {
+    /* background-image: url('hostel.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; */
+    font-family: Arial, sans-serif;
+    
+}
+ 
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../../image/home/kirishnahostel.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    opacity:60%; /* Adjust the opacity to your preference */
+    z-index: -1; /* Ensure the background stays behind the content */
+}
+
+
+.card {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    transition: transform 0.5s, box-shadow 0.5s;
+}
+
+.card:hover {
+    transform: translateY(-15px) scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.animated-card {
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.password-toggle {
+    position: absolute;
+    top: 55%;
+    right: 10px;
+    transform: translateX(20%);
+    cursor: pointer;
+    color: #007bff;
+    transition: color 0.3s;
+}
+
+.password-toggle:hover {
+    color: #0056b3;
+}

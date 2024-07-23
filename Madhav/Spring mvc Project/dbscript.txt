@@ -1,0 +1,154 @@
+
+Admin Table
+
+CREATE TABLE  "ADMIN" 
+   (	"ADMINID" NUMBER, 
+	"MAILID" VARCHAR2(30), 
+	"PASSWORD" VARCHAR2(20), 
+	"NAME" VARCHAR2(20), 
+	 PRIMARY KEY ("ADMINID") ENABLE, 
+	 UNIQUE ("MAILID") ENABLE
+   ) ;
+
+insert into admin values(98765,'raja1900@gmail.com','raja@123','Raja');
+
+
+
+
+
+
+Student Table
+
+CREATE TABLE  "STUDENTS" 
+   (	"STUD_ID" NUMBER, 
+	"MAILID" VARCHAR2(30), 
+	"PASSWORD" VARCHAR2(20), 
+	"DEPARTMENT" VARCHAR2(20), 
+	"ROOMNO" NUMBER, 
+	"BLOCKNO" VARCHAR2(5), 
+	"PHONENUMBER" VARCHAR2(10), 
+	"ROLE" VARCHAR2(15), 
+	"NAME" VARCHAR2(20), 
+	 PRIMARY KEY ("STUD_ID") ENABLE, 
+	 UNIQUE ("MAILID") ENABLE, 
+	 UNIQUE ("PHONENUMBER") ENABLE
+   ) ;
+
+insert into students values(81,'bhoopathy2002@gmail.com','bhoopathy@123','CSE',102,'D','8543219876','Student','Bhoopathy');
+
+insert into students values(1,'madhavaprasad2002@gmail.com','madhava@123','CSE',101,'A','8610172466','Student','Madhavaprasad');
+
+insert into students values(2,'vigensh2002@gmail.com','ram@123','IT',103,'F','7543219876','Student','Vignesh');
+
+
+
+Sequence of student table
+
+create sequence student-sequence start with 1 increment by 1 nocache;
+
+
+
+
+
+
+
+Warden Table
+
+CREATE TABLE  "WARDEN" 
+   (	"WARDENID" NUMBER, 
+	"MAILID" VARCHAR2(30), 
+	"PASSWORD" VARCHAR2(20), 
+	"NAME" VARCHAR2(20), 
+	"ROLE" VARCHAR2(20), 
+	 PRIMARY KEY ("WARDENID") ENABLE, 
+	 UNIQUE ("MAILID") ENABLE
+   ) ;
+
+
+insert into warden values(1001,'jana02@gmail.com','jana@123','jana','warden');
+insert into warden values(1002,'gopal02@gmail.com','gopal@123','gopal','warden');
+
+Warden Sequence
+
+create sequence warden-sequence start with 100001 increment by 1 nocache;
+
+
+Supervisor Table
+
+CREATE TABLE  "SUPERVISOR" 
+   (	"SUPERVISORID" NUMBER, 
+	"MAILID" VARCHAR2(30), 
+	"PASSWORD" VARCHAR2(20), 
+	"NAME" VARCHAR2(20), 
+	"ROLE" VARCHAR2(20), 
+	"DEPARTMENT" VARCHAR2(15), 
+	 PRIMARY KEY ("SUPERVISORID") ENABLE, 
+	 UNIQUE ("MAILID") ENABLE
+   ) ;
+
+insert into supervisor values(10001,'ramesh20@gmail.com','ramesh@123','Ramesh','Supervisor','Electricity');
+insert into supervisor values(20001,'suresh20@gmail.com','suresh@123','Suresh','Supervisor','Food');
+
+
+Supervisor Sequence
+
+create sequence supervisor-sequence start with 1000001 increment by 1 nocache;
+
+
+
+
+
+Worker Table
+
+CREATE TABLE  "WORKERS" 
+   (	"WORKERSID" NUMBER, 
+	"NAME" VARCHAR2(20), 
+	"PHONENUMBER" VARCHAR2(10), 
+	"DEPARTMENT" VARCHAR2(20), 
+	 PRIMARY KEY ("WORKERSID") ENABLE, 
+	 UNIQUE ("PHONENUMBER") ENABLE
+   ) ;
+
+insert into workers values(700001,'Ganesh','8751011131','Food');
+insert into workers values(200001,'Sathish','7751011131','Electricity');
+
+
+Worker  Sequence
+
+create sequence issue-sequence start with 10000001 increment by 1 nocache;
+
+
+
+
+
+
+
+
+Issue Table
+
+CREATE TABLE  "ISSUE" 
+   (	"ISSUETITLE" VARCHAR2(20), 
+	"DESCRIPTION" VARCHAR2(100), 
+	"TICKETRAISEDATE" DATE, 
+	"RAISEDBY" VARCHAR2(30), 
+	"ALLOCATEDTO" VARCHAR2(20), 
+	"PRIORITY" VARCHAR2(20), 
+	"ISSUEDATE" DATE, 
+	"STATUS" VARCHAR2(20), 
+	"ISSUEID" NUMBER, 
+	 PRIMARY KEY ("ISSUEID") ENABLE
+   ) ;
+
+Issue Sequence
+
+create sequence issue-sequence start with 100000001 increment by 1 nocache;
+
+
+
+
+
+
+
+
+
+

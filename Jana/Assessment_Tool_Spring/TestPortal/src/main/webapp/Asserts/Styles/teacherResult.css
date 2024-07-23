@@ -1,0 +1,115 @@
+body {
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: rgb(240, 230, 255);
+}
+
+header{
+    background-color: #17163B;
+            color: aliceblue;
+            height: 100px;
+            padding: 10px;
+            position: fixed;
+            z-index: 1000;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+}
+
+h1{
+   
+    margin-top:20px;
+    margin-left: 70px;
+}
+
+h2{
+	margin-top:140px;
+	
+}
+
+
+#column1 {
+    background-color: #17163B;
+            color: #ffffff;
+            padding: 15px 0;
+            width: 100px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+}
+
+.breadcrumb {
+            margin-top: 60px;
+            border-radius: 5px;
+        }
+
+#column1 .material-symbols-outlined {
+    font-size: 36px;
+    margin-bottom: 20px;
+    padding-top:50px;
+    cursor:pointer;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table td{
+    background-color: aliceblue;
+}
+
+.table th{
+    background-color: rgb(47, 47, 47);
+    color: white;
+}
+
+.container {
+            margin-top: 20px;
+        }
+
+.text-success {
+    color: green;
+}
+.text-danger {
+     color: red;
+}
+
+.question-card {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .correct {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .incorrect {
+            color: #F44336;
+            font-weight: bold;
+        }
+        
+        .question-card h4 {
+            color: #333;
+        }
+        
+        .options {
+            margin-left: 20px;
+        }
+        
+        .option {
+            margin-bottom: 5px;
+        }
+        
+        .option span {
+            font-weight: bold;
+        }
