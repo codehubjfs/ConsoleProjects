@@ -1,23 +1,37 @@
 package com.testHub.bean;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class Assessment {
 	
 	private int aid;
 	private String aName;
-	private LocalTime stTime;
-	private LocalTime endTime;
+	private String stTime;
+	private String endTime;
 	private double duration;
 	private int tot_marks;
 	private int cid;
 	private int eid;
 	private LocalDate aDate;
+	private String status;
 	
 	public Assessment() {
 		
 	}
+	
+	
+
+	public String getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
 
 	public int getAid() {
 		return aid;
@@ -35,19 +49,19 @@ public class Assessment {
 		this.aName = aName;
 	}
 
-	public LocalTime getStTime() {
+	public String getStTime() {
 		return stTime;
 	}
 
-	public void setStTime(LocalTime localTime) {
+	public void setStTime(String localTime) {
 		this.stTime = localTime;
 	}
 
-	public LocalTime getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(LocalTime localTime) {
+	public void setEndTime(String localTime) {
 		this.endTime = localTime;
 	}
 

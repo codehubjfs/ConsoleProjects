@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" isELIgnored = "false" %>
+    pageEncoding="UTF-8" isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,11 +10,15 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700">
     <style>
-        *, *:before, *:after { box-sizing: border-box; }
+        *,
+        *:before,
+        *:after {
+            box-sizing: border-box;
+        }
 
         body {
             min-height: 100vh;
-            font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         }
 
         .container-fluid {
@@ -37,14 +42,17 @@
             transition-delay: 0.2s;
         }
 
-        .top, .bottom {
+        .top,
+        .bottom {
             position: absolute;
             width: 100%;
             height: 105%;
         }
 
-        .top:before, .top:after,
-        .bottom:before, .bottom:after {
+        .top:before,
+        .top:after,
+        .bottom:before,
+        .bottom:after {
             content: '';
             display: block;
             position: absolute;
@@ -60,10 +68,25 @@
             transition-delay: 0.2s;
         }
 
-        .top:before { transform: rotate(45deg); background: #e46569; }
-        .top:after { transform: rotate(135deg); background: #ecaf81; }
-        .bottom:before { transform: rotate(-45deg); background: #60b8d4; }
-        .bottom:after { transform: rotate(-135deg); background: #3745b5; }
+        .top:before {
+            transform: rotate(45deg);
+            background: #e46569;
+        }
+
+        .top:after {
+            transform: rotate(135deg);
+            background: #ecaf81;
+        }
+
+        .bottom:before {
+            transform: rotate(-45deg);
+            background: #60b8d4;
+        }
+
+        .bottom:after {
+            transform: rotate(-135deg);
+            background: #3745b5;
+        }
 
         .center {
             position: absolute;
@@ -72,7 +95,6 @@
             top: 30%;
             left: 50%;
             margin-left: -200px;
-            /* margin-top: 50px; */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -102,59 +124,136 @@
             height: 40px;
         }
 
-        h1{
+        h1 {
             text-align: center;
-            color:#0a1774;
+            color: #0a1774;
             font-style: italic;
         }
     </style>
 </head>
+
 <body>
 
-<div class="container-fluid">
-    <div class="top"></div>
-    <div class="bottom"></div>
-    <div class="center">
-        <h1>ASSESSMENT HUB</h1>
-        <!-- <h2>Login</h2> -->
-        <form action= '${pageContext.request.contextPath}/LoginAuthentication' method="get">
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
+    <div class="container-fluid">
+        <div class="top"></div>
+        <div class="bottom"></div>
+        <div class="center">
+            <h1>ASSESSMENT HUB</h1>
+            <!-- <h2>Login</h2> -->
 
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
 
-            <div class="form-group text-right">
-                <a href="/forgot-password" class="forgot-password">Forgot your password?</a>
-            </div>
+            <form action='${pageContext.request.contextPath}/LoginAuthentication' method="get" id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                    <span id="emailError" class="error-message text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <label for="user-type">Login As:</label>
-                <select class="form-control" id="user-type" name="user-type" required>
-                    <option value="Student">Student</option>
-                    <option value="Instructor">Instructor</option>
-                    <option value="Admin">Admin</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <span id="passwordError" class="error-message text-danger"></span>
+                </div>
 
-            <button type="submit" class="btn btn-primary btn-block" id="logButton">Login</button>
-        </form>
-        <h2>&nbsp;</h2>
+                <div class="form-group text-right">
+                    <a href="/forgot-password" class="forgot-password">Forgot your password?</a>
+                </div>
+
+                <div class="form-group">
+                    <label for="user-type">Login As:</label>
+                    <select class="form-control" id="user-type" name="user-type" required>
+                        <option value="Student">Student</option>
+                        <option value="Instructor">Instructor</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="logButton">Login</button>
+                <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+                <% if (errorMessage != null) { %>
+                <div class="alert alert-danger" role="alert">
+                    <%= errorMessage %>
+                </div>
+                <% } %>
+            </form>
+            <h2>&nbsp;</h2>
+        </div>
     </div>
-</div>
 
-<%
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        	var container = document.querySelector('.container-fluid');
+            var center = document.querySelector('.center');
+            var emailInput = document.getElementById("email");
+            var passwordInput = document.getElementById("password");
+            
+            emailInput.addEventListener('focus', keepFormOpen);
+            passwordInput.addEventListener('focus', keepFormOpen);
+            
+            function keepFormOpen() {
+                center.style.opacity = '1';
+            }
 
-%>
+            emailInput.addEventListener("input", function () {
+                document.getElementById("emailError").textContent = "";
+            });
 
+            passwordInput.addEventListener("input", function () {
+                document.getElementById("passwordError").textContent = "";
+            });
 
+            document.getElementById("logButton").addEventListener("click", function (event) {
+                var email = emailInput.value;
+                var password = passwordInput.value;
+                var userType = document.getElementById("user-type").value;
+                var formValid = true;
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                // Reset previous error messages
+                var errorMessages = document.querySelectorAll(".error-message");
+                errorMessages.forEach(function (element) {
+                    element.textContent = "";
+                });
+
+                // Validate email
+                if (!email) {
+                    var emailError = document.getElementById("emailError");
+                    emailError.textContent = "Email is required";
+                    formValid = false;
+                }
+
+                // Validate password
+                if (!password) {
+                    var passwordError = document.getElementById("passwordError");
+                    passwordError.textContent = "Password is required";
+                    formValid = false;
+                }
+
+                if (formValid) {
+                    // Form is valid, allow submission
+                    return true;
+                } else {
+                    // Prevent form submission
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        });
+        if (performance.navigation.type === 2) {
+            location.reload(true);
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!sessionStorage.getItem('testCompleted')) {
+                history.pushState(null, null, location.href);
+                window.onpopstate = function () {
+                    history.go(1);
+                };
+            }
+        });
+    </script>
+
 </body>
+
 </html>

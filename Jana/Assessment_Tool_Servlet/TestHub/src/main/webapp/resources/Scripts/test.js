@@ -1,79 +1,52 @@
-// script.js
-
-const questions = [
-    {
-        question: "What is the capital of France?",
-        options: ["Paris", "London", "Berlin", "Madrid"],
-        correct: 0
-    },
-    {
-        question: "What is 2 + 2?",
-        options: ["3", "4", "5", "6"],
-        correct: 1
-    },
-    {
-        question: "Which planet is known as the Red Planet?",
-        options: ["Earth", "Mars", "Jupiter", "Saturn"],
-        correct: 1
-    }
-];
-
 let currentQuestionIndex = 0;
-let answers = new Array(questions.length).fill(null);
-let timer;
+const questions = document.querySelectorAll('.question');
+const totalQuestions = questions.length;
+let answers = {};
+
+// Initialize answers with "NA"
+questions.forEach((question, index) => {
+    const qid = question.dataset.qid;
+    answers[qid] = "NA";
+});
 
 document.addEventListener('DOMContentLoaded', function () {
+    showQuestion(currentQuestionIndex);
     loadNavigation();
     $('#rulesModal').modal('show');
     preventBackNavigation();
+    handleTabNavigation();
+    handlePageReload();
 });
 
 function startExam() {
     $('#rulesModal').modal('hide');
-    loadQuestion(currentQuestionIndex);
     startTimer(3600); // Start a 60-minute timer
 }
 
-function loadQuestion(index) {
-    const questionContainer = document.getElementById('questionContainer');
-    const question = questions[index];
-
-    questionContainer.innerHTML = `
-        <div class="question">
-            <h4>${question.question}</h4>
-            ${question.options.map((option, i) => `
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="question${index}" id="option${i}" ${answers[index] === i ? 'checked' : ''} onclick="saveAnswer(${index}, ${i})">
-                    <label class="form-check-label" for="option${i}">
-                        ${option}
-                    </label>
-                </div>
-            `).join('')}
-            <div class="answer-saved" id="answer-saved-${index}">${answers[index] !== null ? 'Answer saved!' : ''}</div>
-        </div>
-    `;
-
+function showQuestion(index) {
+    questions.forEach((question, i) => {
+        question.style.display = i === index ? 'block' : 'none';
+    });
     document.getElementById('prevButton').disabled = index === 0;
-    document.getElementById('nextButton').disabled = index === questions.length - 1;
+    document.getElementById('nextButton').disabled = index === totalQuestions - 1;
+    updateNavigation();
 }
 
-function saveAnswer(questionIndex, answerIndex) {
-    answers[questionIndex] = answerIndex;
-    document.getElementById(`answer-saved-${questionIndex}`).innerText = 'Answer saved!';
+function saveAnswer(questionIndex, answer) {
+    const qid = questions[questionIndex].dataset.qid;
+    answers[qid] = answer;
     updateNavigation();
 }
 
 function nextQuestion() {
-    if (currentQuestionIndex < questions.length - 1) {
-        loadQuestion(++currentQuestionIndex);
-        updateNavigation();
+    if (currentQuestionIndex < totalQuestions - 1) {
+        showQuestion(++currentQuestionIndex);
     }
 }
 
 function prevQuestion() {
     if (currentQuestionIndex > 0) {
-        loadQuestion(--currentQuestionIndex);
-        updateNavigation();
+        showQuestion(--currentQuestionIndex);
     }
 }
 
@@ -93,27 +66,24 @@ function startTimer(seconds) {
 }
 
 function loadNavigation() {
-    const navigationContainer = document.getElementById('questionNavigation');
-    let navigationHtml = '<h4>Questions</h4>';
     questions.forEach((_, index) => {
-        navigationHtml += `
-            <button class="btn btn-unvisited" id="nav-button-${index}" onclick="jumpToQuestion(${index})">${index + 1}</button>
-        `;
+        const button = document.getElementById(`nav-button-${index}`);
+        button.addEventListener('click', () => jumpToQuestion(index));
     });
-    navigationContainer.innerHTML = navigationHtml;
-    updateNavigation();
+    updateNavigation(); // Ensure initial state is correct
 }
 
 function jumpToQuestion(index) {
     currentQuestionIndex = index;
-    loadQuestion(index);
-    updateNavigation();
+    showQuestion(index);
 }
 
 function updateNavigation() {
     questions.forEach((_, index) => {
         const button = document.getElementById(`nav-button-${index}`);
-        if (answers[index] !== null) {
+        const qid = questions[index].dataset.qid;
+
+        if (answers[qid] !== "NA") {
             button.classList.add('btn-answered');
             button.classList.remove('btn-unvisited', 'btn-unanswered');
         } else if (index === currentQuestionIndex) {
@@ -134,24 +104,14 @@ function submitTest() {
     clearInterval(timer);
     $('#confirmModal').modal('hide');
 
-    const score = calculateScore();
-    document.getElementById('score').innerText = score;
-    $('#resultModal').modal('show');
-    sessionStorage.setItem('testCompleted', true); // Set the flag in session storage
-}
+    // Convert the answers map to a JSON string
+    const answerMap = JSON.stringify(answers);
 
-function calculateScore() {
-    let score = 0;
-    answers.forEach((answer, index) => {
-        if (answer === questions[index].correct) {
-            score++;
-        }
-    });
-    return score;
-}
+    // Set the value of the hidden input field
+    document.getElementById('answerMap').value = answerMap;
 
-function redirectToHome() {
-    window.location.href = "../../views/Student/studentHome.jsp"; 
+    // Submit the form
+    document.getElementById('submitForm').submit();
 }
 
 function preventBackNavigation() {
@@ -164,4 +124,32 @@ function preventBackNavigation() {
             return "Are you sure you want to leave? Your progress will be lost.";
         }
     };
+}
+
+function handleTabNavigation() {
+    let tabSwitchCount = 0;
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+            tabSwitchCount++;
+            if (tabSwitchCount === 1 || tabSwitchCount === 2) {
+                alert(`You have switched tabs ${tabSwitchCount} time(s). On the third switch, the test will be submitted.`);
+            } else if (tabSwitchCount === 3) {
+                alert("You have switched tabs 3 times. The test will now be submitted.");
+                submitTest();
+            }
+        }
+    });
+}
+
+function handlePageReload() {
+    window.addEventListener('beforeunload', function (e) {
+        e.preventDefault();
+        e.returnValue = "Are you sure you want to reload the page? Your test will be submitted.";
+    });
+
+    window.addEventListener('unload', function () {
+        if (!sessionStorage.getItem('testCompleted')) {
+            submitTest();
+        }
+    });
 }

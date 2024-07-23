@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testophile</title>
+    <title>ASSESSMENT HUB</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="resources/Styles/style.css">
 </head>
@@ -17,7 +17,7 @@
                     <img src="resources/Images/logo.png" class="rounded mx-2" id="logo" alt="Logo">
                 </div>
                 <div class="col-8 text-center">
-                    <h1 class="mb-0">TESTOPHILE</h1>
+                    <h1 class="mb-0">ASSESSMENT HUB</h1>
                 </div>
                 <div class="col-2 d-flex justify-content-end">
                     <a href="views/Login/login.jsp" class="text-decoration-none">
@@ -38,6 +38,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#features">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#key">Specifications</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#testimonials">Reviews</a>
@@ -120,88 +123,54 @@
 
     </section> -->
 
-    <section class="wrapper" >
-        <div class="container-fluid" id="key">
-          <div class="row">
+    <section class="wrapper">
+    <div class="container-fluid" id="key">
+        <div class="row">
             <div class="col text-center mb-5">
-               <h2>Key Specifications</h2>
+                <h2 id="key-spec-head">Key Specifications</h2>
             </div>
-          </div>
-          <div class="row" id="key-container">
-            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-                <div class="card card-has-bg click-col" style="background-image:url('https://emergenetics.com/wp-content/uploads/2020/11/ThinkstockPhotos-125162794.jpg');">
-                    <img class="card-img d-none" src="https://source.unsplash.com/600x900/?tech,street" alt="Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?">
-                    <div class="card-img-overlay d-flex flex-column">
-                        <div class="card-body">
-                            <small class="card-meta mb-2">Thought Leadership</small>
-                            <h4 class="card-title mt-0 ">Web Development Lorem Ipsum Sit Amet Consectetur dipisi?</h4>
-                            <small><i class="far fa-clock"></i> October 15, 2020</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-                <div class="card card-has-bg click-col" style="background-image:url('https://emergenetics.com/wp-content/uploads/2020/11/ThinkstockPhotos-125162794.jpg');">
-                    <img class="card-img d-none" src="https://source.unsplash.com/600x900/?tree,nature" alt="Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?">
-                    <div class="card-img-overlay d-flex flex-column">
-                        <div class="card-body">
-                            <small class="card-meta mb-2">Thought Leadership</small>
-                            <h4 class="card-title mt-0 ">Creative Manner Lorem Ipsum Sit Amet Consectetur dipisi?</h4>
-                            <small><i class="far fa-clock"></i> October 15, 2020</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-                <div class="card card-has-bg click-col" style="background-image:url('https://emergenetics.com/wp-content/uploads/2020/11/ThinkstockPhotos-125162794.jpg');">
-                    <img class="card-img d-none" src="https://source.unsplash.com/600x900/?computer,design" alt="Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?">
-                    <div class="card-img-overlay d-flex flex-column">
-                        <div class="card-body">
-                            <small class="card-meta mb-2">Thought Leadership</small>
-                            <h4 class="card-title mt-0 "><a class="text-dark" href="https://creativemanner.com">Design Studio Lorem Ipsum Sit Amet Consectetur dipisi?</a></h4>
-                            <small><i class="far fa-clock"></i> October 15, 2020</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-                <div class="card card-has-bg click-col" style="background-image:url('https://images.spiceworks.com/wp-content/uploads/2024/02/26091442/Shutterstock_1133982038.jpg');">
-                    <img class="card-img d-none" src="https://images.spiceworks.com/wp-content/uploads/2024/02/26091442/Shutterstock_1133982038.jpg">
-                    <div class="card-img-overlay d-flex flex-column">
-                        <div class="card-body">
-                            <small class="card-meta mb-2">Thought Leadership</small>
-                            <h4 class="card-title mt-0 "><a class="text-dark" href="https://creativemanner.com">UI/UX Design Lorem Ipsum Sit Amet Consectetur dipisi?</a></h4>
-                            <small><i class="far fa-clock"></i> October 15, 2020</small>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-                <div class="card text-dark card-has-bg click-col" style="background-image:url('https://images.spiceworks.com/wp-content/uploads/2024/02/26091442/Shutterstock_1133982038.jpg');">
-                    <img class="card-img d-none" src="https://source.unsplash.com/600x900/?tree,nature" alt="Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?">
-                    <div class="card-img-overlay d-flex flex-column">
-                        <div class="card-body">
-                            <small class="card-meta mb-2">Thought Leadership</small>
-                            <h4 class="card-title mt-0 "><a class="text-dark" href="https://creativemanner.com">Mobile App Development Lorem Ipsum Sit Amet Consectetur dipisi?</a></h4>
-                            <small><i class="far fa-clock"></i> October 15, 2020</small>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-                <div class="card text-dark card-has-bg click-col" style="background-image:url('https://images.spiceworks.com/wp-content/uploads/2024/02/26091442/Shutterstock_1133982038.jpg');">
-                    <img class="card-img d-none" src="https://source.unsplash.com/600x900/?web,design" alt="Creative Manner Design Lorem Ipsum Sit Amet Consectetur dipisi?">
-                    <div class="card-img-overlay d-flex flex-column">
-                        <div class="card-body">
-                            <small class="card-meta mb-2">Thought Leadership</small>
-                            <h4 class="card-title mt-0 "><a class="text-dark" href="https://creativemanner.com">AI Development Lorem Ipsum Sit Amet Consectetur dipisi?</a></h4>
-                            <small><i class="far fa-clock"></i> October 15, 2020</small>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </div>
-    </section>
+        <div class="row" id="key-container">
+            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                <div class="card card-has-bg click-col" style="background-image:url('https://parakh.online/img/thumbnail/Mask%20Group%2012.webp');">
+                    <img class="card-img d-none" src="https://source.unsplash.com/600x900/?exam,students" alt="Exam Portal Image">
+                    <div class="card-img-overlay d-flex flex-column">
+                        <div class="card-body">
+                            <small class="card-meta mb-2">Practice Tests</small>
+                            <h4 class="card-title mt-0 ">Extensive Collection of Practice Tests</h4>
+                            <small><i class="far fa-clock"></i> Updated Regularly</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                <div class="card card-has-bg click-col" style="background-image:url('https://examonline.in/wp-content/uploads/2020/11/What-Is-Online-Exam-1024x622.png');">
+                    <img class="card-img d-none" src="https://source.unsplash.com/600x900/?study,books" alt="Exam Portal Image">
+                    <div class="card-img-overlay d-flex flex-column">
+                        <div class="card-body">
+                            <small class="card-meta mb-2">Study Resources</small>
+                            <h4 class="card-title mt-0 ">Comprehensive Study Guides</h4>
+                            <small><i class="far fa-clock"></i> Updated Regularly</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                <div class="card card-has-bg click-col" style="background-image:url('https://examonline.in/wp-content/uploads/2022/01/online-examination.png');">
+                    <img class="card-img d-none" src="https://source.unsplash.com/600x900/?exam,learning" alt="Exam Portal Image">
+                    <div class="card-img-overlay d-flex flex-column">
+                        <div class="card-body">
+                            <small class="card-meta mb-2">Exam Strategies</small>
+                            <h4 class="card-title mt-0 ">Effective Exam Taking Strategies</h4>
+                            <small><i class="far fa-clock"></i> Updated Regularly</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
       
 
     <!-- <section id="specification">

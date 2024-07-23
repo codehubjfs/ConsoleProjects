@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         metadata-complete="false"
+         version="5.0">
+  <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+    <description></description>
+    <display-name>UserValidation</display-name>
+    <servlet-name>UserValidation</servlet-name>
+    <servlet-class>com.taskmanagement.controller.UserValidation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserValidation</servlet-name>
+    <url-pattern>/UserValidation</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TaskCountController</display-name>
+    <servlet-name>TaskCountController</servlet-name>
+    <servlet-class>com.taskmanagement.controller.TaskCountController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TaskCountController</servlet-name>
+    <url-pattern>/TaskCountController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EmployeeServlet</display-name>
+    <servlet-name>EmployeeServlet</servlet-name>
+    <servlet-class>com.taskmanagement.controller.EmployeeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmployeeServlet</servlet-name>
+    <url-pattern>/EmployeeServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EmployeeDashBoard</display-name>
+    <servlet-name>EmployeeDashBoard</servlet-name>
+    <servlet-class>com.taskmanagement.controller.EmployeeDashBoard</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmployeeDashBoard</servlet-name>
+    <url-pattern>/EmployeeDashBoard</url-pattern>
+  </servlet-mapping>
+</web-app>

@@ -7,6 +7,7 @@ public class Educator {
 	private String password;
 	private String fname;
 	private String lname;
+	private String gender;
 	private String city;
 	private String country;
 	
@@ -14,6 +15,19 @@ public class Educator {
 		
 	}
 	
+	public Educator(int eid, String email, String password, String fname, String lname, String city,
+			String country, String gender) {
+		// TODO Auto-generated constructor stub
+		this.eid = eid;
+		this.email = email;
+		this.password = password;
+		this.fname = fname;
+		this.lname = lname;
+		this.city = city;
+		this.country = country;
+		this.gender = gender;
+	}
+
 	public int getEid() {
 		return eid;
 	}
@@ -52,6 +66,15 @@ public class Educator {
 
 	public void setLname(String lname) {
 		this.lname = lname;
+	}
+	
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public String getCity() {

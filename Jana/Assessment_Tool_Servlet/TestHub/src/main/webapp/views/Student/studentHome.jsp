@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+    <%
+    HttpSession session1 = request.getSession(false); 
+    if (session == null || session.getAttribute("email") == null) {
+        response.sendRedirect(request.getContextPath() + "/views/Login/login.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,14 +22,8 @@
 </head>
 <body>
 <header class="container-fluid" id="header">
-   <h1 style="text-align: center;">Assessment Hub</h1>
-    <div class="dropdown-menu dropdown-menu-right">
-        <span class="material-symbols-outlined" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">account_circle</span>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
-            <a class="dropdown-item" href="#">Edit Profile</a>
-            <a class="dropdown-item" href="#">Logout</a>
-        </div>
-    </div>
+   <h1>Assessment Hub</h1>
+   
 </header>
 
 <div class="container-fluid">
@@ -36,6 +38,8 @@
             <label for="assessment" id="nav-desc">Assessments</p>
             <div><span class="material-symbols-outlined" id="LeaderBoard">assessment</span></div>
             <label for="LeaderBoard" id="nav-desc">LeaderBoard</p>
+            <div><span class="material-symbols-outlined" id="logout">logout</span></div>
+            <label for="logout" class="nav-desc">Logout</label>
         </div>
     </div>
 
@@ -78,7 +82,7 @@
             <div class="row">
                 <c:forEach var="course" items="${courses}">
                     <div class="col-md-4">
-                        <a href="${pageContext.request.contextPath}/AssessmentServlet?courseId=${course.courseId}" style="text-decoration: none;">
+                        <a href="${pageContext.request.contextPath}/AssessmentServlet?courseId=${course.courseId}&courseName=${fn:escapeXml(course.courseName)}" style="text-decoration: none;">
                             <div class="card course-card">
                                 <img src="https://png.pngtree.com/background/20240112/original/pngtree-e-learning-in-a-digital-world-3d-books-and-mobile-devices-picture-image_7228456.jpg">
                                 <div class="card-body">

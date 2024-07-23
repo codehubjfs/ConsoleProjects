@@ -42,17 +42,22 @@ header {
     margin: 5px;
 }
 
+/* test.css */
 .btn-unvisited {
-    background-color: #f8f9fa;
-    border-color: #ced4da;
+    background-color: gray;
+    color: white;
 }
 
 .btn-unanswered {
-    background-color: #ffc107;
-    border-color: #ffc107;
+    background-color: red;
+    color: white;
 }
 
 .btn-answered {
-    background-color: #28a745;
-    border-color: #28a745;
+    background-color: green;
+    color: white;
+}
+
+.question.d-none {
+    display: none;
 }
