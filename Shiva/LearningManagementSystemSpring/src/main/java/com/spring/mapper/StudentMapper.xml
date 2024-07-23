@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.StudentMapper">
+   
+    <!-- Result Map Definition -->
+    <resultMap id="StudentResultMap" type="com.spring.model.Students">
+        <id property="studentId" column="studentid"/>
+        <result property="firstname" column="firstname"/>
+        <result property="lastname" column="lastname"/>
+        <result property="department" column="department"/>
+        <result property="dob" column="dob"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+    <!-- SQL Query to get students list -->
+    <select id="getStudentsList" resultMap="StudentResultMap">
+        select * from students
+    </select>
+    <resultMap id="StudentCourses" type="com.spring.model.Courses">
+    <id property="courseId" column="courseId"/>
+    <id property="coursename" column="coursename"/>
+    <id property="instructorId" column="instructorid"/>
+    <id property="startDate" column="startdate"/>
+    <id property="endDate" column="enddate"/>
+    </resultMap>
+    
+    <select id="studentViewCourses" resultMap="StudentCourses">
+    select * from courses
+    </select>
+    
+    <resultMap id="StudentModules" type="com.spring.model.ModulesBean">
+    <id property="moduleId" column="moduleid"/>
+    <id property="moduleName" column="modulename"/>
+    <id property="instructorId" column="instructorid"/>
+    <id property="courseId" column="courseid"/>
+    </resultMap>
+    <select id="studentViewModules" resultMap="StudentModules" parameterType="com.spring.model.Courses">
+    select * from module where courseid=#{courseId}
+    </select>
+   
+   <resultMap id="StudentTopics" type="com.spring.model.TopicsBean">
+   <id property="topicId" column="topicid"></id>
+   <id property="topicName" column="topicname"></id>
+   <id property="moduleId" column="moduleid"></id>   
+   </resultMap>
+   <select id="studentViewTopics" resultMap="StudentTopics" parameterType="com.spring.model.ModulesBean">
+   select * from topic where moduleid=#{moduleId}
+   </select>
+   
+   <resultMap id="StudentAssessments" type="com.spring.model.AssessmentBean">
+   <id property="assessmentId" column="assessmentid"></id>
+   <id property="assessmentName" column="assessmentname"></id>
+   <id property="topicId" column="topicid"></id>   
+   </resultMap>
+   <select id="studentViewAssessments" resultMap="StudentAssessments" >
+   select * from assessment
+   </select>
+   
+   <resultMap id="StudentTests" type="com.spring.model.TestBean">
+   <id property="questionId" column="questionid"></id>
+   <id property="assessmentid" column="assessmentid"></id>
+   <id property="answer" column="answer"></id>
+   <id property="question" column="question"></id>
+   <id property="optionA" column="optionA"></id>
+   <id property="optionB" column="optionB"></id>
+   <id property="optionC" column="optionC"></id>
+   <id property="optionD" column="optionD"></id>
+   </resultMap>
+   <select id="studentViewTest" resultMap="StudentTests">
+   select * from question
+   </select>
+   
+   <update id="editStudent" parameterType="com.spring.model.Students">
+   update students set firstname=#{firstname},lastname=#{lastname},department=#{department},dob=#{dob},username=#{username},password=#{password} where studentid=#{studentId}
+   </update>
+   
+   <!-- Marks -->
+   <resultMap id="marks" type="com.spring.model.Marks">
+   <id property="assessmentid" column="assessmentid"></id>
+   <id property="studentid" column="studentid"></id>
+   <id property="marks" column="marks"></id>
+   </resultMap>
+   <select id="viewMarks" resultMap="marks">
+   select * from marks
+   </select>
+   <insert id="insertMarks" parameterType="com.spring.model.Students">
+   insert into marks (assessmentid,studentid,marks) values(#{assessmentid},#{studentid},#{marks})
+   </insert>
+</mapper>

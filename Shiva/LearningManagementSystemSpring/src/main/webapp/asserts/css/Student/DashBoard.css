@@ -1,0 +1,191 @@
+@charset "ISO-8859-1";
+/* Custom styles for the dashboard */
+
+.circular-progress-bar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: conic-gradient(#4caf50 0% 70%, #e0e0e0 70% 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #4caf50;
+}
+
+.progress-bars .progress {
+    height: 20px;
+}
+
+.progress-bar {
+    background-color: #4caf50;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 48px 0 0;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .nav-link {
+    font-weight: 500;
+    color: #333;
+}
+
+.sidebar .nav-link:hover {
+    color: #007bff;
+}
+
+.main-content {
+    margin-left: 200px; /* Adjust according to sidebar width */
+    padding: 20px;
+}
+/*DashBoard*/
+:root {
+    --numDays: 5;
+    --numHours: 10;
+    --timeHeight: 60px;
+    --calBgColor: #fff1f8;
+    --eventBorderColor: #f2d3d8;
+    --eventColor1: #ffd6d1;
+    --eventColor2: #fafaa3;
+    --eventColor3: #e2f8ff;
+    --eventColor4: #d1ffe6;
+  }
+  
+  .calendar {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: auto 1fr;
+    margin: 2rem;
+  }
+  
+  .timeline {
+    display: grid;
+    grid-template-rows: repeat(var(--numHours), var(--timeHeight));
+  }
+  
+  .days {
+    display: grid;
+    grid-column: 2;
+    gap: 5px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  
+  .events {
+    display: grid;
+    grid-template-rows: repeat(var(--numHours), var(--timeHeight));
+    border-radius: 5px;
+    background: var(--calBgColor);
+  }
+  
+  
+  .start-10 {
+    grid-row-start: 2;
+  }
+  
+  .start-12 {
+    grid-row-start: 4;
+  }
+  
+  .start-1 {
+    grid-row-start: 5;
+  }
+  
+  .start-2 {
+    grid-row-start: 6;
+  }
+  
+  .end-12 {
+    grid-row-end: 4;
+  }
+  
+  .end-1 {
+    grid-row-end: 5;
+  }
+  
+  .end-3 {
+    grid-row-end: 7;
+  }
+  
+  .end-4 {
+    grid-row-end: 8;
+  }
+  
+  .end-5 {
+    grid-row-end: 9;
+  }
+  
+  
+  
+  .title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  
+  .event {
+    border: 1px solid var(--eventBorderColor);
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    background: white;
+  }
+  
+  .space,
+  .date {
+    height: 60px
+  }
+  
+
+  
+  body {
+    font-family: system-ui, sans-serif;
+  }
+  
+  .corp-fi {
+    background: var(--eventColor1);
+  }
+  
+  .ent-law {
+    background: var(--eventColor2);
+  }
+  
+  .writing {
+    background: var(--eventColor3);
+  }
+  
+  .securities {
+    background: var(--eventColor4);
+  }
+  
+  .date {
+    display: flex;
+    gap: 1em;
+  }
+  
+  .date-num {
+    font-size: 3rem;
+    font-weight: 600;
+    display: inline;
+  }
+  
+  .date-day {
+    display: inline;
+    font-size: 3rem;
+    font-weight: 100;
+  }
+  .vh-100 {
+    height: 100vh;
+}
+.vertical-nav {
+    width: 200px;
+    height: 100%;
+    position: fixed;
+    top: 56px; /* height of the top navbar */
+    left: 0;
+    padding-top: 20px;
+}

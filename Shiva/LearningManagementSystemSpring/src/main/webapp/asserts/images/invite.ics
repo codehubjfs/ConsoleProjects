@@ -1,0 +1,89 @@
+BEGIN:VCALENDAR
+METHOD:REQUEST
+PRODID:Microsoft Exchange Server 2010
+VERSION:2.0
+BEGIN:VTIMEZONE
+TZID:India Standard Time
+BEGIN:STANDARD
+DTSTART:16010101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:16010101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+ORGANIZER;CN=Sheeba Dhuruvaraj:mailto:sheeba.dhuruvaraj@smartcliff.in
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=krishnasri
+ nivasan41@gmail.com:mailto:krishnasrinivasan41@gmail.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=shivacse20
+ 02@gmail.com:mailto:shivacse2002@gmail.com
+DESCRIPTION;LANGUAGE=en-US:Team\,\n\nPlease join the connect\n_____________
+ ___________________________________________________________________\nMicro
+ soft Teams Need help?<https://aka.ms/JoinTeamsMeeting?omkt=en-US>\nJoin th
+ e meeting now<https://teams.microsoft.com/l/meetup-join/19%3ameeting_MjYxZ
+ TliOTgtNTE5OC00NWYwLTk2OTEtZWYzOTY3NjFlOGM3%40thread.v2/0?context=%7b%22Ti
+ d%22%3a%223c5dc4ae-0caa-4891-9541-3347e7215515%22%2c%22Oid%22%3a%2237de20f
+ 2-9be6-41c0-aaaf-9ff01b12682d%22%7d>\nMeeting ID: 439 584 913 726\nPasscod
+ e: s4KhgM\n________________________________\nFor organizers: Meeting optio
+ ns<https://teams.microsoft.com/meetingOptions/?organizerId=37de20f2-9be6-4
+ 1c0-aaaf-9ff01b12682d&tenantId=3c5dc4ae-0caa-4891-9541-3347e7215515&thread
+ Id=19_meeting_MjYxZTliOTgtNTE5OC00NWYwLTk2OTEtZWYzOTY3NjFlOGM3@thread.v2&m
+ essageId=0&language=en-US>\n______________________________________________
+ __________________________________\n\n\nThis e-mail message\, including an
+ y attachments\, is confidential and may contain legally privileged informa
+ tion. This message is intended solely for the use of the addressee. Use by
+  others is prohibited. Disclosure\, copying and distribution of this infor
+ mation to third parties is not permitted. If you have received this messag
+ e in error\, please notify us immediately and delete it from your system. 
+ The integrity and security of this message cannot be guaranteed and it may
+  be subject to data corruption\, interception and unauthorised amendment\,
+  for which we accept no liability\n\n\n
+UID:040000008200E00074C5B7101A82E00800000000306F5998CFB8DA01000000000000000
+ 0100000000ED4DD4BC050B7478F4D444CD314D382
+SUMMARY;LANGUAGE=en-US:UI Review
+DTSTART;TZID=India Standard Time:20240607T211500
+DTEND;TZID=India Standard Time:20240607T220000
+CLASS:PUBLIC
+PRIORITY:5
+DTSTAMP:20240607T061245Z
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+SEQUENCE:0
+LOCATION;LANGUAGE=en-US:Microsoft Teams Meeting
+X-MICROSOFT-CDO-APPT-SEQUENCE:0
+X-MICROSOFT-CDO-OWNERAPPTID:600270824
+X-MICROSOFT-CDO-BUSYSTATUS:TENTATIVE
+X-MICROSOFT-CDO-INTENDEDSTATUS:BUSY
+X-MICROSOFT-CDO-ALLDAYEVENT:FALSE
+X-MICROSOFT-CDO-IMPORTANCE:1
+X-MICROSOFT-CDO-INSTTYPE:0
+X-MICROSOFT-SKYPETEAMSMEETINGURL:https://teams.microsoft.com/l/meetup-join/
+ 19%3ameeting_MjYxZTliOTgtNTE5OC00NWYwLTk2OTEtZWYzOTY3NjFlOGM3%40thread.v2/
+ 0?context=%7b%22Tid%22%3a%223c5dc4ae-0caa-4891-9541-3347e7215515%22%2c%22O
+ id%22%3a%2237de20f2-9be6-41c0-aaaf-9ff01b12682d%22%7d
+X-MICROSOFT-SCHEDULINGSERVICEUPDATEURL:https://api.scheduler.teams.microsof
+ t.com/teams/3c5dc4ae-0caa-4891-9541-3347e7215515/37de20f2-9be6-41c0-aaaf-9
+ ff01b12682d/19_meeting_MjYxZTliOTgtNTE5OC00NWYwLTk2OTEtZWYzOTY3NjFlOGM3@th
+ read.v2/0
+X-MICROSOFT-SKYPETEAMSPROPERTIES:{"cid":"19:meeting_MjYxZTliOTgtNTE5OC00NWY
+ wLTk2OTEtZWYzOTY3NjFlOGM3@thread.v2"\,"private":true\,"type":0\,"mid":0\,"
+ rid":0\,"uid":null}
+X-MICROSOFT-DONOTFORWARDMEETING:FALSE
+X-MICROSOFT-DISALLOW-COUNTER:FALSE
+X-MICROSOFT-REQUESTEDATTENDANCEMODE:DEFAULT
+X-MICROSOFT-ISRESPONSEREQUESTED:TRUE
+X-MICROSOFT-LOCATIONS:[{"DisplayName":"Microsoft Teams Meeting"\,"LocationA
+ nnotation":""\,"LocationUri":""\,"LocationStreet":""\,"LocationCity":""\,"
+ LocationState":""\,"LocationCountry":""\,"LocationPostalCode":""\,"Locatio
+ nFullAddress":""}]
+BEGIN:VALARM
+DESCRIPTION:REMINDER
+TRIGGER;RELATED=START:-PT15M
+ACTION:DISPLAY
+END:VALARM
+END:VEVENT
+END:VCALENDAR

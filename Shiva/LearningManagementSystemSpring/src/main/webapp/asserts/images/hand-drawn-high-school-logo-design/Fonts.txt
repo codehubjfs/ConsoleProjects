@@ -1,0 +1,9 @@
+Fonts used in this design:
+
+Font: Calistoga
+Author: Yvonne Schüttler,Eben Sorkin
+Url: https://fonts.google.com/specimen/Calistoga
+
+Font: Baloo 2
+Author: Ek Type
+Url: https://fonts.google.com/specimen/Baloo+2

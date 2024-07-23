@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.mapper.AdminMapper">
+
+
+<resultMap id="AdminList" type="com.spring.model.Admin">
+		<id property="adminId" column="adminid"/>
+        <id property="username" column="username"/>
+        <id property="password" column="password"/>
+        <id property="name" column="name"/>
+        <id property="email" column="email"/>
+    </resultMap>
+<select id="loginAuthentication" resultMap="AdminList">
+        select * from admin
+    </select>
+
+<insert id="addCourse"  parameterType="com.spring.model.Courses">
+insert into courses (courseId,coursename,instructorId,startDate,endDate) values (#{courseId},#{coursename},#{instructorId},#{startDate},#{endDate})
+</insert>    
+    
+<resultMap id="CourseList" type="com.spring.model.Courses">
+			<id property="courseId" column="courseid"/>
+			<id property="coursename" column="coursename"/>
+			<id property="startDate" column="startdate"/>
+			<id property="endDate" column="enddate"/>
+</resultMap>
+<select id="viewCourses" resultMap="CourseList">
+select * from courses
+</select>
+<resultMap id="InstructorList" type="com.spring.model.Instructor">
+		<id property="instructorid" column="INSTRUCTORID"/>
+    	<id property="firstname" column="FIRSTNAME"/>
+    	<id property="lastname" column="LASTNAME"/>
+    	<id property="email" column="EMAIL"/>
+    	<id property="department" column="DEPARTMENT"/>
+    	<id property="username" column="USERNAME"/>
+    	<id property="password" column="PASSWORD"/>
+    	<id property="courseId" column="COURSEID"/>
+</resultMap>
+<select id="viewInstructors" resultMap="InstructorList">
+select * from instructor
+</select>
+
+<update id="editCourses" parameterType="com.spring.model.Courses">
+    UPDATE courses SET coursename = #{coursename}, instructorid = #{instructorId}, startdate = #{startDate}, enddate = #{endDate} WHERE courseid = #{courseId}
+</update>
+
+<delete id="deleteCourses" parameterType="com.spring.model.Courses">
+delete from courses where courseid=#{courseId}
+</delete>
+
+<resultMap id="viewmodules" type="com.spring.model.ModulesBean">
+	<id property="moduleId" column="moduleid"></id>
+	<id property="moduleName" column="modulename"></id>
+	<id property="instructorId" column="instructorid"></id>
+	<id property="courseId" column="courseid"></id>
+</resultMap>
+<select id="viewModules" resultMap="viewmodules" parameterType="com.spring.model.ModulesBean">
+select * from module
+</select>
+<update id="editModules" parameterType="com.spring.model.ModulesBean">
+  update module set modulename=#{moduleName} where moduleid=#{moduleId}
+</update>
+
+
+<insert id="addModules" parameterType="com.spring.model.ModulesBean">
+insert into module(moduleid,modulename,instructorid,courseId) values(moduleseq.nextval,#{moduleName},#{instructorId},#{courseId})
+</insert>
+
+<delete id="deleteModule" parameterType="com.spring.model.ModulesBean">
+delete from module where moduleid=#{moduleId}
+</delete>
+
+
+<!-- Student -->
+<!--view -->
+  <resultMap id="studentResultMap" type="com.spring.model.Student">
+    <id property="studentId" column="STUDENTID"/>
+    <result property="firstname" column="FIRSTNAME"/>
+    <result property="lastname" column="LASTNAME"/>
+    <result property="department" column="DEPARTMENT"/>
+    <result property="dob" 	column="DOB" />
+    <result property="username" column="USERNAME"/>
+    <result property="password" column="PASSWORD"/>
+  </resultMap>
+
+  <!-- Example of a select statement using the result map -->
+   <select id="getStudents"  resultMap="studentResultMap">
+    SELECT * FROM students
+  </select>
+  
+  <!-- insert students-->
+  <insert id="addStudents" parameterType="com.spring.model.Student">
+  insert into students values(studentseq.nextval,#{firstname},#{lastname},#{department},#{dob},#{username},#{password})
+  </insert>
+  
+  <!-- update students -->
+  <update id="editStudents" parameterType="com.spring.model.Student">
+  update students set firstname=#{firstname},lastname=#{lastname},department=#{department},dob=#{dob},username=#{username},password=#{password} where studentid=#{studentId}
+  </update>
+  
+  <delete id="deleteStudents" parameterType="com.spring.model.Student">
+  delete from students where studentid=#{studentId}
+  </delete>
+  
+  <!-- Instructors -->
+  <resultMap id="insResultMap" type="com.spring.model.Ins">
+    <result property="insid" column="INSID"/>
+    <result property="firstname" column="FIRSTNAME"/>
+    <result property="lastname" column="LASTNAME"/>
+    <result property="department" column="DEPARTMENT"/>
+    <result property="dob" 	column="DOB" />
+    <result property="username" column="USERNAME"/>
+    <result property="password" column="PASWORD"/>
+  </resultMap>
+  
+  <select id="viewIns" resultMap="insResultMap" >
+  select * from ins
+  </select>
+  
+   <!-- insert Instructors-->
+  <insert id="addins" parameterType="com.spring.model.Ins">
+  insert into ins values(insseq.nextval,#{firstname},#{lastname},#{department},#{dob},#{username},#{password})
+  </insert>
+  
+  <!-- update Instructors -->
+  <update id="editins" parameterType="com.spring.model.Ins">
+  update ins set firstname=#{firstname},lastname=#{lastname},department=#{department},dob=#{dob},username=#{username},pasword=#{password} where insid=#{insid}
+  </update>
+  
+  <!-- Delete -->
+  <delete id="deleteins" parameterType="com.spring.model.Student">
+  delete from ins where insid=#{insid}
+  </delete>
+  
+</mapper>
+
