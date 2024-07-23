@@ -40,7 +40,7 @@ This Job Portal application offers functionalities for job seekers, employers, a
 ### Spring MVC Application
 - Spring Framework
 - Spring MVC
-- Thymeleaf (optional)
+- my batis(database)
 - Maven/Gradle
 
 ## Prerequisites
