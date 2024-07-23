@@ -45,23 +45,23 @@ job-portal-console-app/
 │ ├── main/
 │ │ ├── java/
 │ │ │ ├── com/
-│ │ │ │ ├── com.consoleColors/
+│ │ │ │ ├── consoleColors/
 │ │ │ │ │ └── ConsoleColors.java
-│ │ │ │ ├── com.jdbcservice/
+│ │ │ │ ├── jdbcservice/
 │ │ │ │ │ └── JdbcConnection.java
-│ │ │ │ ├── com.jobportal.functionality/
+│ │ │ │ ├── jobportal/functionality/
 │ │ │ │ │ ├── App.java
 │ │ │ │ │ ├── Application.java
 │ │ │ │ │ ├── ApplicationStatus.java
 │ │ │ │ │ ├── Job.java
 │ │ │ │ │ ├── JobStatus.java
 │ │ │ │ │ └── Search.java
-│ │ │ │ ├── com.messageandnotificationservices/
+│ │ │ │ ├── messageandnotificationservices/
 │ │ │ │ │ └── Message.java
-│ │ │ │ ├── com.userdefinedexception/
-│ │ │ │ ├── com.jobportal.users/
-│ │ │ │ └── com.usersregisterlogin/
-│ │ │ └── UserRegistrationLogin.java
+│ │ │ │ ├── userdefinedexception/
+│ │ │ │ ├── jobportal/users/
+│ │ │ │ └── usersregisterlogin/
+│ │ │ │ │ └── UserRegistrationLogin.java
 │ ├── resources/
 │ │ └── application.properties
 ├── pom.xml
