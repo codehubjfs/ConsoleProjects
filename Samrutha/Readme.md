@@ -13,7 +13,7 @@ A comprehensive Leave Management System built with different technologies to sim
   - [Installation](#installation-1)
   - [Configuration](#configuration-1)
   - [Usage](#usage-1)
-- [Phase 2: JSP/Servlet](#phase-2-jsp/servlet)
+- [Phase 2: JSP/Servlet](#phase-2-jsps-ervlet)
   - [Features](#features-2)
   - [Technologies](#technologies-2)
   - [Installation](#installation-2)
@@ -82,7 +82,7 @@ Once the application is running, you can perform the following operations:
 - **Manager:** Approve or reject leave requests, view teams. 
 - **Admin:** Manage users and departments.
 
-## Leave Management System - Phase 2: JSP/Servlet
+## Phase 2: JSP/Servlet
 
 ### Features
 
@@ -146,7 +146,7 @@ Once the application is running, you can access it via http://localhost:8080 and
 - **HR:** (Not yet implemented)
 
 
-## Leave Management System - Phase 3: Spring web MVC
+## Phase 3: Spring web MVC
 
 ### Features
 
