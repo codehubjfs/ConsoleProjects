@@ -41,3 +41,9 @@ The Bus Ticket Booking System aims to streamline the process of booking bus tick
 - **Oracle SQL**
 - **JDBC**
 - **Maven**
+- **HTML**
+- **CSS**
+- **JavaScript**
+- **JSP**
+- **Servlet**
+- **Bootstrap**
