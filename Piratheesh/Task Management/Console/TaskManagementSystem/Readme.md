@@ -1,13 +1,8 @@
-#!/bin/bash
+cat <<EOL > TaskManagementApplication/ConsoleVersion/README.md
+# Task Management Application - Console Version
 
-# Create the repository structure
-mkdir -p TaskManagementApplication/{ConsoleVersion,SpringMVCVersion,ServletVersion}
-
-# Create the README file for the main project
-cat <<EOL > TaskManagementApplication/README.md
-# Task Management Application
-
-This repository contains three versions of a Task Management Application: Console Version, Spring MVC Version, and Servlet Version.
+## Introduction
+This Task Management application is a console-based tool developed using Java, Maven, and Oracle JDBC.
 
 ## Features
 
@@ -34,7 +29,6 @@ This repository contains three versions of a Task Management Application: Consol
 - Maven
 - Oracle Database
 - JDBC
-- MyBatis (for Spring MVC and Servlet versions)
 
 ## Prerequisites
 Before you begin, ensure you have the following installed on your machine:
@@ -42,3 +36,21 @@ Before you begin, ensure you have the following installed on your machine:
 - Maven
 - Oracle Database
 - IDE (Eclipse, IntelliJ, etc.)
+
+## Getting Started
+
+1. Clone the repository:
+   \`\`\`bash
+   git clone https://github.com/yourusername/TaskManagementApplication.git
+   \`\`\`
+2. Navigate to the console version directory:
+   \`\`\`bash
+   cd TaskManagementApplication/ConsoleVersion
+   \`\`\`
+3. Open the project in your IDE.
+4. Update the \`application.properties\` file with your Oracle DB credentials.
+5. Build and run the project using your IDE.
+
+## Contributing
+
+Contributions are welcome! Please fork this repository and submit pull requests.
