@@ -1,0 +1,79 @@
+@charset "ISO-8859-1";
+
+        /* Your existing custom CSS styles */
+        body {
+            background: rgba(0, 0, 0, 0.5) url('../../images/r4.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            backdrop-filter: blur(3px); 
+        }
+        .center-content {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            animation: fadeIn 1s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #343a40;
+            text-align: center;
+        }
+        .form-group label {
+            color: #495057;
+        }
+        .form-control {
+            border-radius: 0.25rem;
+        }
+        .btn-custom {
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease;
+            padding: 10px 20px; /* Adjusted padding for a smaller button */
+            font-size: 0.875rem; /* Slightly smaller font size */
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+        .social-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .social-buttons a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        .forgot-password {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .continue-with-google {
+            margin-top: 20px;
+        }
