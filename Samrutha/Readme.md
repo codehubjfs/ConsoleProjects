@@ -19,7 +19,7 @@ A comprehensive Leave Management System built with different technologies to sim
   - [Installation](#installation-2)
   - [Configuration](#configuration-2)
   - [Usage](#usage-2)
-- [Phase 3: Spring web MVC](#phase-3-spring-web-mvc)
+- [Phase 3: Spring web MVC](#phase-3-spring-mvc)
   - [Features](#features-3)
   - [Technologies](#technologies-3)
   - [Installation](#installation-3)
