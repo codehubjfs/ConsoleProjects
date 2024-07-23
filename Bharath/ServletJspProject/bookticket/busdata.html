@@ -1,0 +1,88 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Routes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .bus-card {
+            margin: 10px;
+            flex: 0 0 auto;
+        }
+        .scrolling-wrapper {
+            display: flex;
+            overflow-x: auto;
+            padding: 20px;
+        }
+        .scrolling-wrapper::-webkit-scrollbar {
+            height: 8px;
+        }
+        .scrolling-wrapper::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        .scrolling-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        .rating {
+            color: gold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="my-4">Bus Routes</h2>
+        <div id="busRoutesContainer" class="scrolling-wrapper">
+            <!-- Dynamic content will be inserted here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to generate star rating HTML
+            function generateStars(rating) {
+                let stars = '';
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= rating) {
+                        stars += '<span class="fa fa-star"></span>';
+                    } else {
+                        stars += '<span class="fa fa-star-o"></span>';
+                    }
+                }
+                return stars;
+            }
+
+            // Fetch bus routes from the server
+            fetch('busRoutes')
+                .then(response => response.json())
+                .then(data => {
+                    var container = document.getElementById('busRoutesContainer');
+                    container.innerHTML = ''; // Clear existing content
+
+                    data.forEach(function(route) {
+                        var card = `
+                            <div class="card bus-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">${route.busName}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">${route.busType}</h6>
+                                    <p class="card-text">
+                                        <strong>Estimated Duration:</strong> ${route.estimatedDuration}<br>
+                                        <strong>Starting Time:</strong> ${route.startingTime}<br>
+                                        <strong>Ending Time:</strong> ${route.endingTime}<br>
+                                        <strong>Total Seats:</strong> ${route.totalSeats}<br>
+                                        <strong>Total Price:</strong> ${route.totalPrice}<br>
+                                        <strong>Rating:</strong> <span class="rating">${generateStars(route.rating)}</span>
+                                    </p>
+                                </div>
+                            </div>`;
+                        container.innerHTML += card;
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</body>
+</html>
