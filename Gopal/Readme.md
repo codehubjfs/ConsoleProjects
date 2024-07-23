@@ -1,8 +1,6 @@
-# Job Portal Console Application
+# Job Portal Application
 
-## Introduction
-
-This is a console-based Job Portal application developed using Java, Maven, and Oracle JDBC. It allows job seekers to create profiles, search for jobs, and apply for them. Employers can post job listings, search for candidates, and manage applications. Admins can manage users, job listings, and platform content.
+This Job Portal application offers functionalities for job seekers, employers, and admins. Depending on the project type, the application can be implemented as a Console-based Application, JSP-based Web Application, or Spring MVC Application.
 
 ## Features
 
@@ -24,17 +22,43 @@ This is a console-based Job Portal application developed using Java, Maven, and 
 - Send notifications
 
 ## Technologies Used
+
+### Common Technologies
 - Java
-- Maven
 - Oracle Database
-- JDBC
+- JDBC (Java Database Connectivity)
+
+### Console-based Application
+- Java SE
+- Console I/O
+
+### JSP-based Web Application
+- Java Servlets
+- JSP (JavaServer Pages)
+- HTML, CSS, JavaScript, Bootstrap
+
+### Spring MVC Application
+- Spring Framework
+- Spring MVC
+- Thymeleaf (optional)
+- Maven/Gradle
 
 ## Prerequisites
 
 Before you begin, ensure you have the following installed on your machine:
 
-- Java 8 or higher
-- Maven
+- Java 17 or higher
 - Oracle Database
 - IDE (Eclipse, IntelliJ, etc.)
+
+### For JSP-based Web Application
+- Apache Tomcat (or any other Servlet container)
+
+### For Spring MVC Application
+- Apache Tomcat 
+- Maven/Gradle
+
+## Project Structure
+
+### Console-based Application
 
