@@ -1,0 +1,40 @@
+@charset "ISO-8859-1";
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
+
+header {
+    width: 100%;
+}
+
+.sidebar {
+    height: calc(100vh - 56px);
+    position: fixed;
+    top: 56px;
+    left: 0;
+    overflow-y: auto;
+}
+
+.contact-list {
+    max-height: calc(100vh - 136px);
+    overflow-y: auto;
+}
+
+.chat-area {
+    height: calc(100vh - 136px);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-box {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+}
