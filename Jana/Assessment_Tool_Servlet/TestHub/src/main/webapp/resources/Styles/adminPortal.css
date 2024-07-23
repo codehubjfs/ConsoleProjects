@@ -74,9 +74,16 @@ font-weight: 300;
 input:hover{
     cursor: pointer;
 }
+ .table-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
 /* input{
     height: 150px; 
 } */
-#addButton{
+#addStudentButton{
+    margin-top:20px;
+}
+#addTeacherButton{
     margin-top:20px;
 }

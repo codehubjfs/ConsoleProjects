@@ -6,7 +6,6 @@ import java.util.List;
 import com.testHub.bean.Student;
 import com.testHub.dao.StudentDao;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,10 +43,11 @@ public class ListStudentServlet extends HttpServlet {
 	private void listStudent(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Student> listStudent = studentDao.selectAllStudents();
-        request.setAttribute("listStudent", listStudent);
+        request.getSession().setAttribute("listStudent", listStudent);
         System.out.println("got list");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("views/Admin/admin.jsp");
-        dispatcher.forward(request, response);
+        response.sendRedirect("ListTeacherServlet");
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("views/Admin/admin.jsp");
+//        dispatcher.forward(request, response);
     }
 
 	/**
