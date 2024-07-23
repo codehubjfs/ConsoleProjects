@@ -1,0 +1,240 @@
+@charset "ISO-8859-1";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.body{
+    font-size: 15px;
+    font-family: sans-serif;
+    overflow-x: hidden;
+}
+.header {
+    box-shadow: 0 1px 5px rgb(155, 153, 153);
+    color: rgb(226, 226, 226);
+    height: 70px;
+    display: flex;
+    background-color: #0e0e27;
+    text-align: center;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0;
+    padding: 0 5px;
+}
+
+.sidebar {
+    top:50px;
+    background-color: #040430;
+    width: 14%;
+    height: calc(100vh - 40px);
+    overflow-y: auto;
+    position: fixed;
+    z-index: 1;
+    padding: 45px;
+    padding-left: 10px;
+    padding-right:5px;
+}
+.nav-link{
+    font-size: 13px;
+    color:white;
+    text-align: left;
+    padding: 10px;
+}
+.nav-link:hover{
+    background-color: white;
+    color: #040430;
+}
+.content {
+    padding: 5px;
+    margin: 0;
+    margin-top: 70px;
+    margin-left: 15%;
+}
+header img {
+    padding: 2px;
+    width: 100%;
+    height: 65px;
+}
+#icon img{
+    padding: 2px;
+    width: 100%;
+    height: 35px;
+}
+#header-content {
+    width: 100%;
+}
+.card-title{
+    color:white;
+}
+#header-content p {
+    margin: 0; 
+    text-align: right;
+}
+hr{
+    border: 1px solid #c5c5c5;
+    box-shadow: 1px 1px 5px #c5c5c5;
+}
+.activity{
+    display: flex;
+    padding-left: 5%;
+    padding-top:30px;
+    padding-bottom:30px;
+    padding-right: 25px;
+    align-items: center;
+}
+.activity a{
+    text-decoration: none;
+    color: white;
+}
+.card{
+    padding: 1px;
+    height: 8rem;
+    margin-right: 35px;
+    box-shadow: 1px 1px 5px #c5c5c5;
+    transform: 0.2s;
+}
+.card:hover{
+    transform: scale(1.05);
+}
+.card-body{
+    border-radius: 5px;
+    padding: 0;
+    text-align: center;
+    justify-content: center;
+}
+
+.more{
+            text-align: right; 
+            padding: 10px;
+        }
+        .more a{
+            color: blue; 
+            font-style: italic;
+        }
+        .more a:hover{
+            text-decoration: underline;
+            color: rgb(85, 85, 252);
+        }
+
+h6{
+    padding: 7px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #040430;
+    color: white;
+}
+.thumb-lg {
+    height: 50px;
+    width: 50px;
+}
+.img-thumbnail {
+    justify-content: flex-start;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 2px;
+    max-width: 100%;
+    height: 50px;
+}
+.card-body p{
+    padding: 15px;
+    font-size: 30px;
+    font-weight:bolder;
+    padding-bottom: 20px;
+}
+.card-link {
+    padding: 0;
+    text-decoration: none;
+    font-size: 10px;
+    text-align: right;
+    justify-content: flex-end;
+}
+/* .activity .btn{
+    background-color: #040430;
+    border: 1px solid #040430;
+}
+.activity.btn:hover{
+    background-color: #272777;
+    border: 1px solid #040430;
+} */
+table{
+    text-align: left;
+}
+th a{
+    color: #040430;
+}
+button a{
+    text-decoration: none;
+    color: white;
+}
+#tables{
+    color: #040430;
+    margin-left: 25px;
+    margin-right: 0px;
+}
+.breadcrumb{
+    font-size: 12px;
+}
+
+canvas{
+    padding-bottom: 30px;
+    padding-top: 10px;
+    padding-left: 2px;
+    padding-right: 10px;
+}
+#graph{
+    height: 600px;
+}
+#analysisChart{
+    padding-top: 50px;
+}
+
+#container-leave{
+    padding: 0;
+    margin-left: 0%;
+    margin-top: 50px;
+}
+
+/* Leave management*/
+/* .card-box {
+    font-size: 12px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #040430;
+    border-radius: 20px;
+    transform: 0.2s;
+    height: 25rem;
+    width: 18rem;
+}
+.card-box:hover{
+    transform: scale(1.05);
+}
+.card-box h1{
+    font-size: 12px;
+}*/
+
+
+
+/*Calender*/
+
+  .nav-link.active{
+    background-color: white;
+    color: #040430;
+  }
+
+  .content-container {
+    display: flex;
+    padding: 10px;
+    margin-top: 0px;
+    align-items: left;
+    gap: 25px;
+}
+.content-container h4 {
+    font-size: 20px;
+    font-weight: bolder;
+    color: #fff;
+}
+
+.card-title p {
+    color: white;
+    font-size: 12px;
+}  
