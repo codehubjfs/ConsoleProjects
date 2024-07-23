@@ -13,13 +13,13 @@ A comprehensive Leave Management System built with different technologies to sim
   - [Installation](#installation-1)
   - [Configuration](#configuration-1)
   - [Usage](#usage-1)
-- [Phase 2: JSP/Servlet](#phase-2-jsps-ervlet)
+- [Phase 2: JSP/Servlet](#phase-2-jsp/servlet)
   - [Features](#features-2)
   - [Technologies](#technologies-2)
   - [Installation](#installation-2)
   - [Configuration](#configuration-2)
   - [Usage](#usage-2)
-- [Phase 3: Spring web MVC](#phase-3-spring-mvc)
+- [Phase 3: Spring web MVC](#phase-3-spring-web-mvc)
   - [Features](#features-3)
   - [Technologies](#technologies-3)
   - [Installation](#installation-3)
@@ -27,20 +27,6 @@ A comprehensive Leave Management System built with different technologies to sim
   - [Usage](#usage-3)
 - [Contributing](#contributing)
 - [Contact](#contact)
-
-## Features
-
-- Employee leave request submission
-- Employee leave cancellation and updating leave requests
-- Employees can view their leave history
-- Leave balance tracking
-- Manager leave approval/rejection
-- Manager can view today's absentees
-- Manager has a calendar display for a month with absentees' names
-- Manager can view individual team member profiles
-- All employees can view their profiles and update their passwords.
-- Role-based access control
-- Reports and analytics
 
 ## Phase 1: Console-based
 
@@ -54,6 +40,7 @@ A comprehensive Leave Management System built with different technologies to sim
 - Managers can view teams
 - Admins can manage users and departments
 - Basic leave balance tracking
+- Role-based access control
 
 ### Technologies
 
@@ -108,7 +95,7 @@ Once the application is running, you can perform the following operations:
 - Manager leave approval/rejection
 - View today's absentees
 - View team count and individual profiles
-- Basic leave balance and reporting functionality
+- Role-based access control
 
 ### Technologies
 
@@ -173,7 +160,7 @@ Once the application is running, you can access it via http://localhost:8080 and
 - View today's absentees
 - View team count and individual profiles
 - Calendar view displaying absentees' names for the month
-- Basic leave balance and reporting functionality
+- Role-based access control
 
 ### Technologies
 
