@@ -1,0 +1,131 @@
+@charset "ISO-8859-1";
+
+        
+      body {
+        font-family: Arial, sans-serif;
+        background-color: rgb(238, 238, 238);
+      }
+
+      .navbar {
+        background-color: #23272b;
+      }
+
+      .navbar-brand img {
+        height: 50px;
+        border-radius: 50%;
+      }
+      .navbar-custom {
+        background-color: #23272b; /* Same as sidebar background color */
+      }
+
+      /*NOW EDIT*/
+      .sidebar .list-group-item {
+        background-color: #23272b;
+        color: white;
+        margin-bottom: 5%;
+        border: none;
+      }
+
+      .profile img {
+        height: 65px;
+        width: 70px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      .sidebar {
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: #23272b;
+        color: white;
+        width: 250px;
+        padding-top: 120px;
+        overflow-x: hidden;
+      }
+
+      .sidebar a,
+      .dropdown-toggle {
+        color: #23272b;
+        text-decoration: none;
+        padding: 10px 15px;
+        display: block;
+        transition: 0.3s;
+      }
+
+      .sidebar a:hover,
+      .dropdown-toggle:hover {
+        background-color: #575d63;
+      }
+
+      .content {
+        margin-left: 250px;
+        padding: 20px;
+      }
+
+      .card-deck {
+        margin-top: 20px;
+      }
+
+      .card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .table-container {
+        overflow-x: auto;
+        margin-top: 20px;
+      }
+
+      .table th,
+      .table td {
+        text-align: left;
+      }
+
+      .table th {
+        background-color: #343a40;
+        color: white;
+      }
+
+      .table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      .table tbody tr:hover {
+        background-color: #e2e6ea;
+      }
+      .breadcrumb {
+        margin-right: 840px;
+        justify-content: center;
+        margin-top: 90px; /* Adjust as needed to prevent overlap with navbar */
+    }
+
+    .breadcrumb-item.active {
+        color:rgb(0, 0, 96); /* Active breadcrumb item color */
+    }
+    
+  
+    .profile {
+        display: flex;
+        align-items: center;
+    }
+    .profile img {
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    .modal-header {
+        background-color: #343a40;
+        color: white;
+    }
+    .card {
+        margin-top: 30px;
+    }
+    .card-header {
+        background-color: #343a40;
+        color: white;
+    }
+    
+    .list-group-item.active {
+      background-color: rgb(155, 153, 153) !important;
+    }
+
+    
