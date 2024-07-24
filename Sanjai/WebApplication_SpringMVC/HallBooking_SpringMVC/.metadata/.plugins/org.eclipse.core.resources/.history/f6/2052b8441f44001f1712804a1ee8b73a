@@ -1,0 +1,326 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page isELIgnored = "false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="<%= request.getContextPath() %>/assert/image/LogoFavIcon.jpg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.17/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.1.1/docx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css" rel="stylesheet"/>
+    
+    <title>Booking Management</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assert/css/AdminStyle.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assert/css/bookingmanagement.css">
+    <style>
+    	.subcontainer{
+    		margin-left:220px !important;
+    	}
+    </style>
+	</head>
+</head>
+<body>
+<!--Logout modal-->
+		<div class="modal" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+			 <form action="logout" method="get">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      	</div>
+			     	 <div class="modal-body">
+			        	<p>Are you sure you want to logout?</p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+			        <button type="submit" class="btn btn-outline-danger">Logout</button>
+			      </div>
+			    </div>
+			  </div> 
+			  </form>
+		</div>
+    <header class="header">
+        <div class="logo">
+            <img src="<%= request.getContextPath() %>/assert/image/Logo.1.1.png"  alt="" id="company-logo"/>
+        </div>
+        <div class="profile d-inline-block">
+    <a class="d-flex align-items-center" href="#" id="profile-menu" role="button" aria-expanded="false" data-bs-toggle="tooltip" title="Edit Profile">
+	    <div class="d-flex align-items-center">
+	        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+	            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+	            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+	        </svg>
+	        <div class="mt-3 ms-2 me-4">
+	            <h4 class="p-0 m-0">Administrator</h4>
+	            <p>${sessionScope.userName.getUserName()}</p>
+	        </div>
+	    </div>
+	</a>
+</div>
+    </header>
+    <div class="subcontainer">
+       <div class="innerContainer" style="margin-top:70px !important">
+            <div class="sideNavBar">
+            <div class="vertical-nav">
+                <nav class="navbar navbar-expand-lg navbar-light main-left-nav" id="sideNav">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= request.getContextPath() %>/dashBoard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link booking-active" id="booking-active"  href="<%= request.getContextPath() %>/showManagebooking">Booking Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"  href="<%= request.getContextPath() %>/showHallManagement">Hall Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= request.getContextPath() %>/customerManagement">Customer Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= request.getContextPath() %>/paymentManagement">Payment Management</a>
+                        </li>
+                   
+                         <li class="nav-item" style="margin-top:300px">
+                            <a class="nav-link" href= '<%= request.getContextPath() %>/index.jsp'>Sign Out</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        </div>
+        <% if (request.getAttribute("bookingStatusChanged") != null) {%>
+		    <div class="alert alert-success mt-3" role="alert" id ="statusAlert">
+		        <p><%= request.getAttribute("bookingStatusChanged") %></p>
+		    </div>
+		<%}%>
+        
+        <div class="bookingTable mt-4" >
+            <h1>Booking Details</h1>
+                            <button id="export-pdf" class="btn btn-outline-dark btn-sm mb-3 mt-3">Export to PDF</button>
+            <div class="table-responsive-lg">
+                <table class="table table-hover table-bordered" id ="bookingTable" style="width:80%;">
+                    <thead class="thead-dark">
+                        <tr>
+                        	<th style="display:none"></th>
+                        	<th>SNo</th>
+                            <th>User Name</th>
+                            <th>Requested Hall</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                   <tbody>
+					    <c:set var="count" value="1" />
+					    <c:forEach items="${bookingList}" var="booking" varStatus="status">
+					           
+					            <tr>
+					                	<td style="display:none" class="bookId">${booking.bookingId}</td>
+					                    <td>${count}</td>
+					                    <td>${booking.customer.userName}</td>
+					                    <td>${booking.hall.hallName}</td>
+					                    <td>${booking.startDate}</td>
+					                    <td>${booking.endDate}</td>
+					                    <td>
+					                        <span class="status-text ${booking.bookStatus.toLowerCase()}" style="text-align: center; justify-content: center;">${booking.bookStatus}</span>
+					                        <select class="form-select status-select" name="newStatus" style="display: none;">
+					                            <option value="PENDING" <c:if test="${booking.bookStatus == 'PENDING'}">selected</c:if>>PENDING</option>
+					                            <option value="APPROVED" <c:if test="${booking.bookStatus == 'APPROVED'}">selected</c:if>>APPROVED</option>
+					                            <option value="CONFIRMED" <c:if test="${booking.bookStatus == 'CONFIRMED'}">selected</c:if>>CONFIRMED</option>
+					                            <option value="CANCEL" <c:if test="${booking.bookStatus == 'CANCEL'}">selected</c:if>>CANCEL</option>
+					                        </select>
+					                    </td>
+					                    <td>
+					                        <button type="button" class="btn btn-outline-primary btn-sm edit-btn">
+					                            <i class="fas fa-edit"></i>
+					                        </button>
+					                        <button type="submit" class="btn btn-outline-success btn-sm save-btn" style="display: none;">
+					                            <i class="fas fa-save"></i>
+					                        </button>
+					                        <button type="button" class="btn btn-outline-danger btn-sm cancel-btn" style="display: none;">
+					                            <i class="fas fa-times-circle"></i>
+					                        </button>
+					                        <input type="hidden" name="userId" value="${booking.bookingId}">
+					                    </td>
+					            </tr>
+					             <c:set var="count" value="${count + 1}" />
+					    </c:forEach>
+					    <c:if test="${empty bookingList}">
+					        <tr>
+					            <td colspan="6" class="text-center">No bookings available.</td>
+					        </tr>
+					    </c:if>
+					</tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="conflict-modal" tabindex="-1" role="dialog">
+    <form action="change-booking" method="get">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Booking Conflict occur</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		       <input  name="currentBookId" id="currentBookId"/>
+		       <input  name="changeBookId" id="changeBookId">
+		      <p><strong><span id="conf-username"></span> is already in Confirmed booking</strong></p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="submit" class="btn btn-outline-warning" class="conflict-close">Continue</button>
+		        <button type="button" class="btn btn-secondary" id="conf-close" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+	  </form>
+	</div>
+    
+    <form id="editStatusForm" action="edit-status" method="get">
+		    <input type="hidden" name="status" id="statusInput">
+		    <input type="hidden" name="bookId" id="bookIdInput">
+	</form>
+
+   
+    <div class="alert-container" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
+    <!-- jQuery -->
+	<script src='https://code.jquery.com/jquery-3.7.0.js'></script>
+	<!-- Data Table JS -->
+	<script src='https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js'></script>
+	<script src='https://cdn.datatables.net/responsive/2.1.0/js/dataTables.responsive.min.js'></script>
+	<script src='https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js'></script>
+	
+	<!-- Include jQuery and Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	
+    <script>
+    
+    $(document).ready(function() {
+        setTimeout(function() {
+            $('#statusAlert').alert('close');
+        }, 3000);
+    });
+    
+    
+    
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                let row = this.closest('tr');
+                let status = row.querySelector('.status-text').innerText.trim();
+                row.querySelector('.status-text').style.display = 'none';
+                row.querySelector('.status-select').style.display = 'block';
+                row.querySelector('.edit-btn').style.display = 'none';
+                row.querySelector('.save-btn').style.display = 'inline-block';
+                row.querySelector('.cancel-btn').style.display = 'inline-block';
+            });
+        });
+    });
+    
+        document.querySelectorAll('.cancel-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                let row = this.closest('tr');
+                let statusSelect = row.querySelector('.status-select');
+                let statusText = row.querySelector('.status-text');
+                statusSelect.value = statusText.textContent.trim();
+                statusText.style.display = 'block';
+                statusSelect.style.display = 'none';
+                row.querySelector('.edit-btn').style.display = 'inline-block';
+                row.querySelector('.save-btn').style.display = 'none';
+                row.querySelector('.cancel-btn').style.display = 'none';
+            });
+        });
+        document.querySelectorAll('.save-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                let row = this.closest('tr');
+                let cid = row.querySelector('.bookId');
+                let statusSelect = row.querySelector('.status-select');
+                let statusText = row.querySelector('.status-text');
+
+                // Update the status text and toggle visibility
+                statusText.textContent = statusSelect.value;
+                statusText.style.display = 'block';
+                statusSelect.style.display = 'none';
+                row.querySelector('.edit-btn').style.display = 'inline-block';
+                row.querySelector('.save-btn').style.visibility = 'hidden';
+                row.querySelector('.cancel-btn').style.visibility = 'hidden';
+
+                // Set the form input values
+                document.getElementById('statusInput').value = statusSelect.value;
+                document.getElementById('bookIdInput').value = cid.textContent;
+
+                // Submit the form
+                document.getElementById('editStatusForm').submit();
+            });
+        });
+
+       
+        document.getElementById('export-pdf').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.autoTable({ html: '#hallTable' });
+
+            doc.save('Hall_detail.pdf');
+        });
+    
+ /* 
+ document.getElementById('confirmLogoutButton').addEventListener('click', function() {
+        // Add your logout logic here
+        window.location.href = '<%= request.getContextPath() %>/LogoutServlet'; // Replace 'logoutURL' with the actual URL to log out
+      }); 
+ 
+ */
+    
+ document.getElementById("conf-close").addEventListener("click", function(){
+ 	$('#conflict-modal').modal('hide');
+ });
+ 
+	
+
+      // Show the modal when the logout dropdown item is clicked
+     	document.getElementById('logout').addEventListener('click', function(event) {
+        event.preventDefault();
+        var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+        logoutModal.show();
+      });
+    </script>
+    <script type="text/javascript">
+
+    <% if (request.getSession().getAttribute("conflictBooking") != null && request.getSession().getAttribute("changeBooking") != null ) { %>	
+            document.addEventListener('DOMContentLoaded', function() {
+                var conflictModalElement = document.getElementById('conflict-modal');
+                var conflictModal = new bootstrap.Modal(conflictModalElement);
+          		document.getElementById("conf-username").textContent = "${conflictBooking.customer.userName}";
+          		document.getElementById("changeBookId").value = "${changeBooking}"
+          		document.getElementById("currentBookId").value = "${conflictBooking.bookingId}"
+                conflictModal.show();
+            });
+    <% } %>
+    
+    
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+</html>
+

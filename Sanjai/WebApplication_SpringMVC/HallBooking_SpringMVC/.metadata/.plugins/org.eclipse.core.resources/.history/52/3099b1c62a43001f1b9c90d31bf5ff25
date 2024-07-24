@@ -1,0 +1,164 @@
+package com.hallbookingmanagement.beans;
+
+
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.stereotype.Component;
+
+/**
+ * This class represents a hall in the hall booking system.
+ * A hall has properties like hall ID, name, price, AC availability,
+ * capacity, availability status, a set of seats it contains,
+ * and a set of events associated with it.
+ * @author Sanjai
+ * @since 13-May-2024
+ */
+
+
+@Component
+public class Hall{
+    public  int hallId;
+    private String hallName;
+    private double price;
+    private boolean isAcHall;
+    private int capacity;
+    private boolean isAvail;
+    public String location;
+    private String locationLink;
+	private List<Amenity> amenities;
+    private List<Seats> seat;
+    private List<Event> events;
+
+
+    // Empty constructor (for potential object initialization)
+    public Hall(){}
+
+
+	public int getHallId() {
+		return hallId;
+	}
+
+
+	public void setHallId(int hallId) {
+		this.hallId = hallId;
+	}
+
+
+	public String getHallName() {
+		return hallName;
+	}
+
+
+	public void setHallName(String hallName) {
+		this.hallName = hallName;
+	}
+
+
+	public double getPrice() {
+		return price;
+	}
+
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+
+	public boolean getIsAcHall() {
+		return isAcHall;
+	}
+
+
+	public void setIsAcHall(boolean isAcHall) {
+		this.isAcHall = isAcHall;
+	}
+
+
+	public int getCapacity() {
+		return capacity;
+	}
+
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
+
+	public boolean getIsAvail() {
+		return isAvail;
+	}
+
+
+	public void setIsAvail(boolean isAvail) {
+		this.isAvail = isAvail;
+	}
+
+
+	public String getLocation() {
+		return location;
+	}
+
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+
+	public String getLocationLink() {
+		return locationLink;
+	}
+
+
+	public void setLocationLink(String locationLink) {
+		this.locationLink = locationLink;
+	}
+
+
+	public List<Amenity> getAmenities() {
+		return amenities;
+	}
+
+
+	public void setAmenities(List<Amenity> amenities) {
+		this.amenities = amenities;
+	}
+
+
+	public List<Seats> getSeat() {
+		return seat;
+	}
+
+	public void setSeat(List<Seats> seat) {
+		this.seat = seat;
+	}
+
+	public List<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
+	}
+	
+	public boolean hasAmenityType(String amenityType) {
+        if (amenities != null) {
+            for (Amenity amenity : amenities) {
+                if (amenityType.equals(amenity.getAmenityType())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+	@Override
+	public String toString() {
+		return "Hall [hallId=" + hallId + ", hallName=" + hallName + ", price=" + price + ", isAcHall=" + isAcHall
+				+ ", capacity=" + capacity + ", isAvail=" + isAvail + ", location=" + location + ", locationLink="
+				+ locationLink + ", amenities=" + amenities + ", seat=" + seat + ", events=" + events + "]";
+	}
+}

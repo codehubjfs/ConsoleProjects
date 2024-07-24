@@ -1,0 +1,375 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ page isELIgnored = "false" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="image/LogoFavIcon.jpg">
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assert/css/CustomerHeaderFooter.css"/>
+    <title>Facilities</title>
+    <style>
+      .container{
+        margin-top: 10% !important;
+      }
+      /* General checkbox styling */
+      input[type="checkbox"] {
+          accent-color: black;
+      }
+
+      .form-check {
+          margin-bottom: 10px;
+      }
+
+      .form-check-input {
+          margin-right: 10px;
+      }
+      .card {
+          border: none;
+          border-radius: 5px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .card-img-top {
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+          width:280px;
+          height: 150px;
+      }
+
+      .card-body {
+          background-color: #f9f9f9;
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
+      }
+
+      .card-text {
+          color: #333;
+          font-size: 18px;
+          font-weight: bold;
+          text-align: center;
+      }
+    </style>
+</head>
+<body>
+  <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="customNavbar">
+            <a class="navbar-brand" href="<%= request.getContextPath() %>/index.jsp"><img src="${pageContext.request.contextPath}/assert/image/Logo.1.1.png" id="company-logo" alt="Company Logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left:40% ">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href= '<%= request.getContextPath() %>/index.jsp'>Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href='<%= request.getContextPath() %>/blogs'>Blogs</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Hall Events
+                  </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="Events-DropDown">
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Wedding</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Corporate Party</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Conference</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Concert</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Exhibition</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Product Launch</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Training Session</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href='<%= request.getContextPath() %>/facilites'>Facilities</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href='<%= request.getContextPath() %>/contact'>Contact</a>
+                </li>
+                <% if(session.getAttribute("customer")==null){%>
+                <li class="nav-item">
+                  <a class="nav-link"  id="login"   href="<%= request.getContextPath() %>/viewLogin" >Login</a>
+                </li>
+                <%}
+                else{ %>
+                <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                            </svg>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="userMenu">
+                            <li><a class="dropdown-item ms-0" href="<%= request.getContextPath() %>/viewBooking" style ="color: #4e4332 !important;">My Bookings</a></li>
+                             <li><a class="dropdown-item ms-0" href="<%= request.getContextPath() %>/RequestHall" style ="color: #4e4332 !important;">Booking Request</a></li>
+                               <li><a class="dropdown-item ms-0" href="<%= request.getContextPath() %>/logout" style ="color: #4e4332 !important;" id="logout">Logout</a></li>
+                      	</ul>
+                </li>
+                <%} %>
+              </ul>
+            </div>
+          </nav>
+    </header>
+    <!--Logout modal-->
+ <div class="modal" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+ <form action="logout" method="get">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      	</div>
+     	 <div class="modal-body">
+        	<p>Are you sure you want to logout?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-outline-danger">Logout</button>
+      </div>
+    </div>
+  </div> 
+  </form>
+</div> 
+		
+    <div class="container">
+    <nav aria-label="breadcrumb" class="breadcrumbs large-font">
+			 <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+				  <ol class="breadcrumb">
+				    <li class="breadcrumb-item"><a href="<%= request.getContextPath() %>/index.jsp" style="color:#6c757d">Home</a></li>
+				    <li class="breadcrumb-item active" aria-current="page" style="color:#ffc107">Blogs</li>
+				  </ol>
+			</nav>
+		</nav>
+        <div class="row mb-5 ">
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="<%= request.getContextPath() %>/assert/image/Pohang-Apartment.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Parking Facilities</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="<%= request.getContextPath() %>/assert/image/Premium Photo _ Air conditioner compressor installed outdoors.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Ac Facilities</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="<%= request.getContextPath() %>/assert/image/8539-dance-floor-white-frog-production-carpet-diem.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Dance Floor</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="<%= request.getContextPath() %>/assert/image/download (2).jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Dj System</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="<%= request.getContextPath() %>/assert/image/5 Super Fun Playgrounds in Worthington.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Parks</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="<%= request.getContextPath() %>/assert/image/room.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Room Facilities</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="<%= request.getContextPath() %>/assert/image/download (3).jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Decoration</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="<%= request.getContextPath() %>/assert/image/9 Tips for Choosing the Best Catering Staff.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Catring</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="<%= request.getContextPath() %>/assert/image/Elegant, Minimalistic Architecture And Interior Design For The Function Hall Of Vedant Banquets _ AndSpaces - The Architects Diary.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Handle huge polpulation</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="<%= request.getContextPath() %>/assert/image/Security Companies Calgary 2019.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Security</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="<%= request.getContextPath() %>/assert/image/Free Photo _ Toilet seem from below.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Clean Toilet</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="<%= request.getContextPath() %>/assert/image/Free Photo _ Bartender making a delicious refreshing cocktail.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">Bar</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+  <footer class="text-center text-lg-start bg-body-tertiary text-muted">
+
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+
+      <div class="me-5 d-none d-lg-block">
+        <span>Get connected with us on social networks:</span>
+      </div>
+      <div>
+        <a href="" class="me-4 text-reset social-media">
+          <img src="<%= request.getContextPath() %>/assert/image/social_12942327.png">
+        </a>
+        <a href="" class="me-4 text-reset social-media">
+          <img src="<%= request.getContextPath() %>/assert/image/twitter-alt_12107622.png">
+        </a>
+        <a href="" class="me-4 text-reset social-media">
+          <img src="<%= request.getContextPath() %>/assert/image/instagram_2111463.png" alt="">
+        </a>
+        <a href="" class="me-4 text-reset social-media">
+          <img src="<%= request.getContextPath() %>/assert/image/youtube_1384060.png" alt="">
+        </a>
+      </div>
+    </section>
+    <section class="">
+      <div class="container text-center text-md-start mt-5">
+
+        <div class="row mt-3">
+
+          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">
+              <i class="fas fa-gem me-3"></i>Royal Halls
+            </h6>
+            <p>
+              Manage all your event details,
+              sales and billings and enhance the
+              client experience with 20+ online
+              booking, event planning.
+            </p>
+          </div>
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">Search Planning</h6>
+            <p>
+              <a href="Hall.jsp" class="text-reset">Search by Events</a>
+            </p>
+            <p>
+              <a href="Hall.jsp" class="text-reset">Search by Seating Arrangements</a>
+            </p>
+            <p>
+              <a href="Hall.jsp" class="text-reset">Search by Price</a>
+            </p>
+            <p>
+              <a href="Hall.jsp" class="text-reset">Search by Hall</a>
+            </p>
+          </div>
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">Useful links :</h6>
+            <p>
+              <a href="Home1.0.jsp" class="text-reset">Home</a>
+            </p>
+            <p>
+              <a href="Hall.jsp" class="text-reset">Venues</a>
+            </p>
+            <p>
+              <a href="facilities.html" class="text-reset">Facilities</a>
+            </p>
+            <p>
+              <a href="contact.html" class="text-reset">Contact</a>
+            </p>
+          </div>
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+            <p><i class="fas fa-home me-3"></i> Singa, Coimbatore</p>
+            <p>
+              <i class="fas fa-envelope me-3"></i>
+              info@example.com
+            </p>
+            <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+            <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script type="text/javascript">
+    document.getElementById('confirmLogoutButton').addEventListener('click', function() {
+        // Add your logout logic here
+        window.location.href = '<%= request.getContextPath() %>/LogoutServlet'; // Replace 'logoutURL' with the actual URL to log out
+      });
+      // Show the modal when the logout dropdown item is clicked
+     	document.getElementById('logout').addEventListener('click', function(event) {
+        event.preventDefault();
+        var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+        logoutModal.show();
+      });
+	
+	</script>
+    <div class="text-center p-4 copyright">
+      © 2021 Copyright:
+      <a class="text-reset fw-bold" href="https://RoyalHalls.com/">RoyalHalls.com</a>
+    </div>
+  </footer>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7ie1LQQa9U52EXv7aQZL2RHB5SEc5HB5nh9" crossorigin="anonymous">
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+7HAuoD6z7VVvNK15MWEhPJwW/7mo" crossorigin="anonymous">
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"></script>
+    <div class="text-center p-4 copyright">
+  </body>
+</html>

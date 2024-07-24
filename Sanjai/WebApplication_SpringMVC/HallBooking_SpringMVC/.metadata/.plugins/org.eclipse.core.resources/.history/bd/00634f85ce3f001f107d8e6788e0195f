@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hallbookingmanagement.mapper.HallsMapper">
+
+    <!-- Result Map for Hall Object -->
+     <resultMap id="hallResultMap" type="com.hallbookingmanagement.beans.Hall">
+        <id property="hallId" column="hall_id"/>
+        <result property="hallName" column="hall_name"/>
+        <result property="price" column="hall_price"/>
+        <result property="isAcHall" column="is_ac" typeHandler="com.hallbookingmanagement.BooleanYesNoTypeHandler"/>
+        <result property="capacity" column="hallCapacity"/>
+        <result property="isAvail" column="hallAvail" typeHandler="com.hallbookingmanagement.BooleanAvailOrNotAvailTypeHandler"/>
+        <result property="location" column="location"/>
+        <result property="locationLink" column="HALL_LINK"/>
+        <collection property="amenities" ofType="Amenity" column="hall_id" select="selectAmenitiesByHallId"/>
+        <collection property="seat" ofType="Seats" column="hall_id" select="selectSeatsByHallId"/>
+        <collection property="events" ofType="Event" column="hall_id" select="selectEventsByHallId"/>
+    </resultMap>
+    
+	 <resultMap id="amenityResultMap" type="com.hallbookingmanagement.beans.Amenity">
+        <id property="amenityId" column="amenity_id"/>
+        <result property="amenityType" column="amenity_name"/>
+    </resultMap>
+
+    <resultMap id="seatResultMap" type="com.hallbookingmanagement.beans.Seats">
+        <id property="seatId" column="ARRANGEMENT_ID"/>
+        <result property="arrangementType" column="arrangement_type"/>
+        <result property="capacity" column="capacity"/>
+    </resultMap>
+
+    <resultMap id="eventResultMap" type="com.hallbookingmanagement.beans.Event">
+        <id property="eventId" column="event_id"/>
+        <result property="eventName" column="event_name"/>
+        <result property="eventDate" column="event_date"/>
+    </resultMap>
+    
+    <select id="selectAmenitiesByHallId" resultMap="amenityResultMap" parameterType="int">
+        SELECT a.amenity_id, a.amenity_name FROM AMENITIES a JOIN AMENTIES_HALL ha ON a.amenity_id = ha.amenity_id WHERE ha.hall_id = #{hallId}
+    </select>
+    
+    <select id="selectSeatsByHallId" resultMap="seatResultMap" parameterType="int">
+    	SELECT sa.ARRANGEMENT_ID, sa.arrangement_type, hs.capacity FROM Hall_Seating hs JOIN Seating_Arrangement sa ON hs.arrangement_id = sa.arrangement_id WHERE hs.hall_id = #{hallId}
+	</select>
+
+    <select id="selectEventsByHallId" resultMap="eventResultMap" parameterType="int">
+       SELECT e.event_id, e.event_name FROM event e JOIN book_event be ON e.event_id = be.event_id WHERE be.hall_id = #{hallId}
+    </select>
+
+    <select id="selectHallById" resultMap="hallResultMap" parameterType="int">
+        SELECT h.hall_id, h.hall_name, h.hall_price, h.is_Ac, h.hallCapacity, h.hallAvail, h.location, h.hall_link
+        FROM halls h
+        WHERE h.hall_id = #{hallId}
+    </select>
+
+    <!-- New select query to get all halls -->
+    <select id="getAllHalls" resultMap="hallResultMap">
+        SELECT h.hall_id, h.hall_name, h.hall_price, h.is_Ac, h.hallCapacity, h.hallAvail, h.location, h.hall_link
+        FROM halls h
+    </select>
+    
+    <!-- Insert Hall -->
+    <insert id="insertHall" parameterType="com.hallbookingmanagement.beans.Hall">
+        INSERT INTO halls (hall_id, hall_name, hall_price, is_ac, hallCapacity, hallAvail, location, hall_link)
+        VALUES (#{hallId}, #{hallName}, #{price}, #{isAcHall, typeHandler=com.hallbookingmanagement.BooleanYesNoTypeHandler}, #{capacity}, #{isAvail, typeHandler=com.hallbookingmanagement.BooleanAvailOrNotAvailTypeHandler}, #{location}, #{locationLink})
+    </insert>
+
+    <!-- Insert Amenity for a Hall -->
+    <insert id="insertAmenityForHall" parameterType="com.hallbookingmanagement.beans.AmenityHallRelation">
+        INSERT INTO AMENTIES_HALL (hall_id, amenity_id)
+        VALUES (#{hallId}, #{amenityId})
+    </insert>
+
+    <!-- Insert Seat Arrangement for a Hall -->
+    <insert id="insertSeatForHall" parameterType="com.hallbookingmanagement.beans.ArrangementHallRelation">
+        INSERT INTO Hall_Seating (hall_id, arrangement_id, capacity)
+        VALUES (#{hallId}, #{arrangmentId}, #{capacity})
+    </insert>
+
+    <!-- Insert Event for a Hall -->
+    <insert id="insertEventForHall" parameterType="com.hallbookingmanagement.beans.HallEventRelation">
+        INSERT INTO book_event (hall_id, event_id)
+        VALUES (#{hallId}, #{eventId})
+    </insert>
+    <update id="deleteHall" parameterType="int">
+    	update halls set HALLAVAIL ='N' where hall_id = #{hallId}
+    </update>
+    
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hallbookingmanagement.mapper.CustomerMapper">
+<resultMap id="CustomerResultMap" type="com.hallbookingmanagement.beans.Customer">
+        <id property="userId" column="user_id"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="emailId" column="email_id"/>
+        <result property="number" column="phone_number"/>
+        <result property="address" column="address"/>
+        <result property="accountType" column="account_type"/>
+        <result property="accountStatus" column="account_status"/>
+        <result property="userName" column="username"/>
+        <result property="password" column="password"/>
+</resultMap>
+
+<select id="getAllCustomer" resultMap="CustomerResultMap">
+	select * from users
+</select>
+
+ <select id="getCustomer" parameterType="int" resultType="boolean">
+        SELECT * FROM users WHERE user_id = #{userId}
+ </select>
+ 
+<update id="changePassword" parameterType="com.hallbookingmanagement.beans.Customer">
+        UPDATE users SET password = #{password} WHERE user_id = #{userId}
+</update>
+<insert id="addCustomer" parameterType="com.hallbookingmanagement.beans.Customer">
+	 INSERT INTO users (user_id,name, gender, email_id, phone_number, address, account_type, account_status, username, password)
+        VALUES (#{userId},#{name}, #{gender}, #{emailId}, #{number}, #{address}, #{accountType}, #{accountStatus}, #{userName}, #{password})
+</insert>
+ 
+ <update id="updateStatus" parameterType="com.hallbookingmanagement.beans.Customer">
+        UPDATE users SET ACCOUNT_STATUS = #{accountStatus} WHERE user_id = #{userId}
+</update>
+
+</mapper>

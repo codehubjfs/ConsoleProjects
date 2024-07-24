@@ -1,0 +1,31 @@
+package com.hallbookingmanagement.service;
+
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.hallbookingmanagement.beans.Booking;
+import com.hallbookingmanagement.beans.Hall;
+import com.hallbookingmanagement.beans.Payment;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+public interface CustomerServices {
+	boolean validateUsers(String name, String password,HttpServletRequest request);
+	HashMap<String,String> registerUser(String name, String gender, String emailId,String phone, String Address,String userName, String Password);
+	int addCustomer(String name,String gender,String email, String phone,String address, String username,String password);
+	List<Hall> showHall();
+	Hall getHallDetails(int hallId);
+	List<Booking> listAllBooking();
+	List<Booking> getMyRequest(int userId,HttpServletRequest request);
+	boolean requestHall(HttpServletRequest request, String event, String seat, LocalDate date, int numberOfDays);
+	boolean cancelBooking(int bookId);
+	Map<String, String> forgetPassword(HttpServletRequest request, HttpServletResponse response, String mail);
+	Booking showBookingDetails(int bookId);
+	List<Payment> paymentList();
+	boolean paymentbooking(int bookId, String paymentType, double paymentPrice);
+	List<Payment> showPaymentDetails(HttpServletRequest request);
+	Booking getPayment(int paymentId);
+}

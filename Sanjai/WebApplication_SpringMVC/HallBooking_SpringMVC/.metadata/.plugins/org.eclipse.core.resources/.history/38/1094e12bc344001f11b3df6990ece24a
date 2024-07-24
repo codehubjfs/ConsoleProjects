@@ -1,0 +1,391 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<% %>
+<%@ page isELIgnored = "false" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <title>Dash Board</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assert/css/AdminDashBoard.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assert/css/AdminStyle.css">
+    <link rel="icon" type="image/x-icon" href="<%= request.getContextPath() %>/assert/image/LogoFavIcon.jpg">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/billboard.js/dist/billboard.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+	<style>
+	.container-fluid{
+		margin-left:100px !important;
+	}
+	</style>
+	
+	    	<% 
+    request.getSession().getAttribute("userName");
+    if (session == null || session.getAttribute("user") == null) {
+        response.sendRedirect("viewLogin");
+    }
+	%>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <img src="<%= request.getContextPath() %>/assert/image/Logo.1.1.png" alt="Logo"  id="company-logo"/>
+        </div>
+        <div class="profile d-inline-block">
+            <a class="d-flex align-items-center" href="<%= request.getContextPath() %>/AdminEditProfile" >
+                <div class="d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                      </svg>
+                    <div class="mt-3 ms-2 me-4">
+                        <h4 class="p-0 m-0">Administrator</h4>
+                        <p>${sessionScope.userName.getUserName()}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </header>
+    <!--Logout modal-->
+		<div class="modal" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+			 <form action="logout" method="get">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      	</div>
+			     	 <div class="modal-body">
+			        	<p>Are you sure you want to logout?</p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+			        <button type="submit" class="btn btn-outline-danger">Logout</button>
+			      </div>
+			    </div>
+			  </div> 
+			  </form>
+		</div>
+    <div class="subContainer" >
+        <div class="innerContainer" style="margin-top:70px !important">
+            <div class="sideNavBar">
+            <div class="vertical-nav">
+                <nav class="navbar navbar-expand-lg navbar-light main-left-nav" id="sideNav">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= request.getContextPath() %>/dashBoard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link booking-active" id="booking-active"  href="<%= request.getContextPath() %>/showManagebooking">Booking Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"  href="<%= request.getContextPath() %>/showHallManagement">Hall Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= request.getContextPath() %>/customerManagement">Customer Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= request.getContextPath() %>/paymentManagement">Payment Management</a>
+                        </li>
+                        
+                        <li class="nav-item" style="margin-top:300px">
+                            <a class="dropdown-item ms-2" href="<%= request.getContextPath() %>/logout" id="logout">Sign Out</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        </div>
+        <div class="container-fluid" style="margin-top:70px !important; margin-left:200px !important;">
+            <div class="row">
+                <div class="col-md-3 col-xl-3">
+                    <div class="bookingCard card1">
+                        <h3 class="bookingtitle card1-title">Booking Cycle</h3>
+                        <div class="innerCard" id="checkin-checkout">
+                            <div class="thisMonth"><p>Previous Month</p></div>
+                            <div class="thisMonth"><p>This Month</p></div>
+                        </div>
+                        <div class="number" style="display: flex; justify-content: space-around;">
+                            <div id="checkin" class="Previous Month"  ><p style="font-size: 30px;"><strong>
+                            <% if (request.getAttribute("previous") != null) { %>
+                            <%= request.getAttribute("previous") %>
+                        	<% } %> </strong></p></p></div>
+                            <div id="checkout" class="This Month"><p style="font-size: 30px;"><strong>
+                            <% if (request.getAttribute("thisMonth") != null) { %>
+                            <%= request.getAttribute("thisMonth") %>
+                        	<% } %></strong> </p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xl-3">
+                    <div class="bookingCard">
+                        <h3 class="bookingtitle">Total Booking</h3>
+                        <div class="innerCard">
+                            <div class="thisMonth"><p>This Month</p></div>
+                            <div class="thisMonth"><p>This Year</p></div>
+                        </div>
+                        <div class="number" style="display: flex; justify-content: space-around;">
+                            <div class="thisMonthPercent"><p>23% &#8593;</p></div>
+                            <div class="thisMonthPercent"><p>20% &#8593;</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xl-3">
+                    <div class="bookingCard">
+                        <h3 class="bookingtitle">Hall Status</h3>
+                        <div class="innerCard">
+                            <div class="thisMonth"><p>Available</p></div>
+                            <div class="thisMonth"><p>Booked</p></div>
+                        </div>
+                        <div class="percentage" style="display: flex; justify-content: space-around;">
+                            <div class="thisMonthPercent"><p>5</p></div>
+                            <div class="thisMonthPercent"><p>7</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xl-2">
+                    <div class="PendingBookings">
+                        <h3 class="pending">Pending Bookings</h3>
+                        <div style="display: flex;">
+                            <div class="pendingimage"><img src="<%= request.getContextPath() %>/assert/image/pending_actions_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="pending icon"></div>
+                            <p class="pendingCount">
+                            <% if (request.getAttribute("pending") != null) { %>
+                            <%= request.getAttribute("pending") %>
+                        	<% } %>   
+                     		</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ms-3 gap-5 mt-5">
+                <div class="col-5 p-0 mt-4 me-5" style=" box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; max-width: 300px;" >
+                    <h5 style="text-align: center;">This Month Event Bookings</h5>
+                    <div class="row-graph p-0 m-0"> 
+                        <canvas id="myChart" ></canvas>
+                    </div>
+                </div>
+                <div class="col-5  p-0 mt-4 ms-5" style=" box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; max-width: 300px;">
+                    <h5 class="m-2" style="align-items: center;text-align: center;">Seating Arrangements</h5>
+                    <div id="donut-chart" width="100px"></div>
+                    <script>
+                        let chart = bb.generate({
+                            data: {
+                                columns: [
+                                    ["Theater", 2],
+                                    ["BoardRoom", 4],
+                                    ["U-shaped", 3],
+                                ],
+                                type: "donut",
+                                onclick: function (d, i) {
+                                    console.log("onclick", d, i);
+                                },
+                                onover: function (d, i) {
+                                    console.log("onover", d, i);
+                                },
+                                onout: function (d, i) {
+                                    console.log("onout", d, i);
+                                },
+                            },
+                            donut: {
+                                title: "70",
+                            },
+                            bindto: "#donut-chart",
+                        });
+                    </script>
+                </div>
+            </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const data = [100, 150, 80]; // Example data for the bars
+
+        const barGraph = document.getElementById('barGraph');
+
+        data.forEach((value, index) => {
+            const bar = document.createElement('div');
+            bar.classList.add('bar');
+            bar.style.height = value + 'px'; // Set the height of the bar
+            bar.style.backgroundColor = getRandomColor(); // Random color for each bar
+
+            const label = document.createElement('span');
+            label.classList.add('bar-label');
+            label.textContent = 'Bar ' + (index + 1);
+
+            barGraph.appendChild(bar);
+            barGraph.appendChild(label);
+        });
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var ctx = document.getElementById('barChart').getContext('2d');
+        var barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Hall 1', 'Hall 2', 'Hall 3', 'Hall 4', 'Hall 5'],
+                datasets: [{
+                    label: 'Bookings',
+                    data: [12, 19, 3, 5, 2],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 3
+                    
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Number of Bookings per Hall'
+                    }
+                }
+            }
+        });
+    });
+</script>
+          </div>
+            </div>
+                    <script>
+                            var ctxBar = document.getElementById('issuesBarChart').getContext('2d');
+            var ctxPie = document.getElementById('issuesPieChart').getContext('2d');
+            var ctxCategory = document.getElementById('issueCategoryChart').getContext('2d');
+
+            var barChart = new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: ['Total Issues', 'Issue Raised', 'Issue Assigned', 'In Progress', 'Completed Issues'],
+                    datasets: [{
+                        label: 'Number of Issues',
+                        data: [300, 10, 25, 50, 75],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+         </script>
+                    
+        </div>
+    </div>            
+</div>
+</div>
+    <script>
+        const xValues = ["Wedding", "Baby Shower", "Bachelor Party", "Corporate Party", "Expo"];
+        const yValues = [34, 32, 14, 25, 25];
+        const barColors = [
+            "#b91d47",
+            "#00aba9",
+            "#2b5797",
+            "#e8c3b9",
+            "#1e7145"
+            ];
+
+            new Chart("myChart", {
+                type: "pie",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    
+                }
+            });
+
+            xValues = [50,60,70,80,90,100,110,120,130,140,150];
+            yValues = [7,8,8,9,9,9,10,11,14,14,15];
+
+            new Chart("myChart", {
+            type: "line",
+            data: {
+                labels: xValues,
+                datasets: [{
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "rgba(0,0,255,1.0)",
+                borderColor: "rgba(0,0,255,0.1)",
+                data: yValues
+                }]
+            },
+            options: {
+                legend: {display: false},
+                scales: {
+                yAxes: [{ticks: {min: 6, max:16}}],
+                }
+            }
+            });
+            
+            
+            </script>
+            
+            <script type="text/javascript">
+            
+            document.getElementById('logout').addEventListener('click', function(event) {
+                event.preventDefault();
+                var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+                logoutModal.show();
+              });</script>
+
+</body>
+</html>
+

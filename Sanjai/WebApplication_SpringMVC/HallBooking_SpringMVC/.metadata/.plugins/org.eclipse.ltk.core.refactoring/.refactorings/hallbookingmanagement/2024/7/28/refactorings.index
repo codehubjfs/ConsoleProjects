@@ -1,0 +1,26 @@
+1720328033734	Rename package 'hallbookingmanagement'
+1720328067147	Move compilation unit
+1720330526533	Delete element
+1720330619583	Copy package
+1720330625466	Delete element
+1720330778895	Copy package
+1720330786498	Delete element
+1720352654716	Delete element
+1720404400046	Rename type 'CustomerServices'
+1720417688637	Move 'view' to 'WEB-INF'
+1720417693660	Move 'assert' to 'WEB-INF'
+1720419429185	Move 'assert' to 'webapp'
+1720419430777	Move 'view' to 'webapp'
+1720419535357	Move 'view' to 'WEB-INF'
+1720420009833	Move 'assert' to 'WEB-INF'
+1720422411116	Move 'assert' to 'webapp'
+1720424590226	Delete element
+1720427102995	Delete element
+1720564560517	Rename type 'HallDetailRequest'
+1720584458762	Move 'assert' to 'view'
+1720584496293	Move 'assert' to 'webapp'
+1720606351063	Delete element
+1720656967747	Delete element
+1720662737550	Delete element
+1720757536397	Delete element
+1720758027356	Delete element

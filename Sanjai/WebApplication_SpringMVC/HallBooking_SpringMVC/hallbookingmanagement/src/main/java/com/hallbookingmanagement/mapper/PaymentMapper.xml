@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.hallbookingmanagement.mapper.PaymentMapper">
+    <resultMap type="com.hallbookingmanagement.beans.Payment" id="PaymentResultMap">
+        <id property="paymentId" column="payment_id"/>
+        <result property="paymentTime" column="payment_time"/>
+        <result property="paidStatus" column="paid_status"/>
+        <result property="price" column="price"/>
+        <association property="book" javaType="com.hallbookingmanagement.beans.Booking">
+            <id property="bookingId" column="book_id" />
+        </association>
+    </resultMap>
+    
+    <!-- Get all Payments -->
+    <select id="getAllPayments" resultMap="PaymentResultMap">
+        SELECT payment_id, book_id, payment_time, paid_status, price FROM PAYMENT
+    </select>
+    
+    <!-- Insert Payment -->
+    <insert id="insertPayment" parameterType="com.hallbookingmanagement.beans.Payment">
+        INSERT INTO PAYMENT (payment_id, book_id, payment_time, paid_status, price)
+        VALUES (#{paymentId}, #{book.bookingId}, #{paymentTime}, #{paidStatus}, #{price})
+    </insert>
+
+    <!-- Select Payment by ID -->
+    <select id="selectPaymentById" parameterType="int" resultMap="PaymentResultMap">
+        SELECT payment_id, book_id, payment_time, paid_status, price FROM PAYMENT WHERE payment_id = #{paymentId}
+    </select>
+
+    <!-- Update Payment -->
+    <update id="updatePayment" parameterType="com.hallbookingmanagement.beans.Payment">
+        UPDATE PAYMENT SET book_id = #{book.bookId}, payment_time = #{paymentTime}, paid_status = #{paidStatus}, price = #{price}
+        WHERE payment_id = #{paymentId}
+    </update>
+    
+</mapper>

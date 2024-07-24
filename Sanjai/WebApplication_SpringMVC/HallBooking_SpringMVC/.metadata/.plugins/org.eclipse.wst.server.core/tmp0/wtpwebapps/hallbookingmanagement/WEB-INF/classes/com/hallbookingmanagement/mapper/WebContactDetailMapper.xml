@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hallbookingmanagement.mapper.WebContactDetailMapper">
+
+    <resultMap id="WebContactDetailsResultMap" type="com.hallbookingmanagement.beans.WebContactDetails">
+        <id property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <result property="whatsapp" column="whatsapp"/>
+        <result property="websiteLink" column="websiteLink"/>
+        <result property="address" column="address"/>
+        <result property="locationLink" column="locationLink"/>
+    </resultMap>
+
+    <select id="getAllWebContactDetails" resultMap="WebContactDetailsResultMap">
+        SELECT email, phone, whatsapp, websiteLink, address, locationLink FROM webContactDetails
+    </select>
+    
+     <update id="updateWebContactDetails" parameterType="com.hallbookingmanagement.beans.WebContactDetails">
+        UPDATE webContactDetails SET phone = #{phone}, whatsapp = #{whatsapp}, websiteLink = #{websiteLink} WHERE email = #{email};
+    </update>
+
+</mapper>

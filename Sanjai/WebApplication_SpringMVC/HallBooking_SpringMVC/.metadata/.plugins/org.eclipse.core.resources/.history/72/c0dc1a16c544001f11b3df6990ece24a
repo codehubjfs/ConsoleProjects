@@ -1,0 +1,835 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page isELIgnored = "false" %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" defer></script>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assert/css/AdminStyle.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"/>
+    <script defer src="https://cdn.datatables.net/2.0.8/js/dataTables.js" type="text/javascript"></script>
+    <script defer src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js" type="text/javascript"></script>
+    
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.17/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.1.1/docx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+     <link href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css" rel="stylesheet"/>
+    
+    <link rel="icon" type="image/x-icon" href="<%= request.getContextPath() %>/assert/image/LogoFavIcon.jpg">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assert/css/hallManagement.css">
+    <style>
+    	.subContainer{
+    		margin-left:230px !important;
+    	}
+    </style>
+    <% 
+    request.getSession().getAttribute("userName");
+    if (session == null || session.getAttribute("user") == null) {
+        response.sendRedirect("viewLogin");
+    }
+	%>
+    
+</head>
+
+<body>
+<!--Logout modal-->
+		<div class="modal" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+ <form action="logout" method="get">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      	</div>
+     	 <div class="modal-body">
+        	<p>Are you sure you want to logout?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-outline-danger">Logout</button>
+      </div>
+    </div>
+  </div> 
+  </form>
+</div>
+    <header class="header">
+        <div class="logo">
+            <img src="<%= request.getContextPath() %>/assert/image/Logo.1.1.png" alt="" id="company-logo" />
+        </div>
+        <div class="profile d-inline-block">
+            <a class="d-flex align-items-center" data-bs-toggle="collapse" href="#profileMenu" role="button" aria-expanded="false" aria-controls="profileMenu">
+                <div class="d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                      </svg>
+                    <div class="mt-3 ms-2 me-4">
+                        <h4 class="p-0 m-0">Administrator</h4>
+                        <p>${sessionScope.userName.getUserName()}</p>
+                    </div>
+                </div>
+            </a>
+    </header>
+    <div class="subContainer">
+        <div class="innerContainer " style="margin-top:70px !important">
+            <div class="sideNavBar">
+            <div class="vertical-nav ">
+                <nav class="navbar navbar-expand-lg navbar-light main-left-nav " id="sideNav">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= request.getContextPath() %>/dashBoard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link booking-active" id="booking-active"  href="<%= request.getContextPath() %>/showManagebooking">Booking Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"  href="<%= request.getContextPath() %>/showHallManagement">Hall Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= request.getContextPath() %>/customerManagement">Customer Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= request.getContextPath() %>/paymentManagement">Payment Management</a>
+                        </li>
+                        
+                       
+                        <li class="nav-item" style="margin-top:300px">
+                            <a class="nav-link" href= '<%= request.getContextPath() %>/index.jsp'>Sign Out</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        	</div>
+        </div>
+        <div class="hallManagementTable ms-5 mt-5"style="margin-top:90px !important">
+            <div class="container " >
+            <% if (request.getAttribute("addhall") != null) {%>
+		    <div class="alert alert-success mt-3" role="alert" id ="addAlert">
+		        <p><%= request.getAttribute("update") %></p>
+		    </div>
+			<%}%>
+             <% if (request.getAttribute("update") != null) {%>
+		    <div class="alert alert-success mt-3" role="alert" id ="updateAlert">
+		        <p><%= request.getAttribute("update") %></p>
+		    </div>
+			<%}%>
+                <h2>Hall Management</h2>
+                <button id="export-pdf" class="btn btn-outline-dark btn-sm mb-3 mt-3">Export to PDF</button>
+                <div class="table-responsive-lg">
+                    <table id="hallTable" class="table table-bordered table-hover table-sm" style="width:100%;">
+                        <thead class="thead">
+                            <tr>
+                                <th colspan="5"></th>
+                                <th colspan="2"><button type="button" class="btn btn-primary"  id ="add-btn" >Add Hall</button></th>
+                            </tr>
+                            <tr>
+                            <th style="display:none;">Id</th>
+                                <th>Sno</th>
+                                <th>Hall Name</th>
+                                <th>Floating Capacity</th>
+                                <th>Price per Day</th> 
+                                <th>Location</th>
+                                <th id="action">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <c:set var="count" value="${1}"/>
+                            <c:forEach var="hall" items="${hallList}" varStatus="loop">
+                            <c:if test='${hall.isAvail}'>
+							    <tr>
+							    	<td style="display: none" class="hallId">${hall.hallId}</td>
+							        <td>${count}</td> <!-- loop.index starts from 0, so adding 1 gives 1-based index -->
+							        <td class="hallname">${hall.hallName}</td>
+							        <td class="capacity">${hall.capacity}</td>
+							        <td class="price">${hall.price}</td>
+							        <td class="location">${hall.location}</td>
+							        <td class="locationLink" style="display: none">${hall.locationLink}</td>
+							        <td class="d-flex justify-content-center">
+							            <button class="btn btn-outline-primary edit-btn ms-1" data-toggle="tooltip" title="Edit"><i class="bi bi-pencil-square"></i></button>
+            							<button class="btn btn-outline-secondary view-btn ms-1" data-bs-toggle="tooltip" title="View" onclick="showDetails(
+									        '${hall.hallName}', 
+									        '${hall.price}', 
+									        '${hall.isAcHall}', 
+									        '${hall.capacity}', 
+									        '${hall.location}', 
+									        <c:set var="resultString" value=""/>
+									        <c:forEach var="event" items="${hall.events}">
+													<c:set var="resultString" value="${resultString}${event.eventName}, " />
+											</c:forEach>
+											<c:set var="resultString" value="${fn:substring(resultString, 0, fn:length(resultString)-2)}" />
+											'${resultString}', 
+											
+									        <c:set var="amenityStr" value=""/>
+									        <c:forEach var="amenity" items="${hall.amenities}"> 
+									         	 	<c:set var="amenityStr" value="${amenityStr}${amenity.amenityType}," />
+									        </c:forEach>
+									        <c:set var="amenityStr" value="${fn:substring(amenityStr, 0, fn:length(amenityStr)-2)}" />
+									        '${amenityStr}',
+									        '${hall.location}'
+									    )">
+									    <img src="<%= request.getContextPath() %>/assert/image/search.png" width="15px" />
+									</button>
+            							<button class="btn btn-outline-danger del-btn ms-1" id="del-btn" data-toggle="tooltip" title="Delete"><i class="bi bi-trash3" width="10px"></i></button>
+							        </td>
+							    </tr>
+							    <c:set var="count" value="${count+1}"/>
+							    </c:if>
+							</c:forEach>
+							<c:if test="${empty hallList}">
+					        <tr>
+					            <td colspan="6" class="text-center">No Halls are available.</td>
+					        </tr>
+					    </c:if>
+						</tbody>
+                    </table>
+                </div>
+            </div>
+         </div>
+    </div>
+    <!-- Edit Modal -->
+		    <div class="modal" id="editModal" tabindex="-1" role="dialog">
+        <form action="EditHall" class="needs-validation" method="post" novalidate>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Hall Details</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input name="hallId" id="editHallID" style="display:none;">
+                        <div class="mb-3">
+                            <label for="editHallName" class="form-label">Hall Name</label>
+                            <input type="text" class="form-control" name="hallName" id="editHallName" required>
+                            <div class="invalid-feedback" id = "erroreditHallName">Please enter hall name.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCapacity" class="form-label">Capacity</label>
+                            <input type="number" class="form-control" name="capacity" id="editCapacity" required>
+                            <div class="invalid-feedback" id="erroreditCapacity">Please enter capacity of hall.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPrice" class="form-label">Price per Day in RS</label>
+                            <input type="number" class="form-control" name="price" id="editPrice" required>
+                            <div class="invalid-feedback" id="erroreditPrice">Please enter price per day of the hall.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editLocation" class="form-label">Location</label>
+                            <input type="text" class="form-control" name="location" id="editLocation" required>
+                            <div class="invalid-feedback" id="erroreditlocation">Please enter location of hall.</div>
+                        </div>
+                        <div class="mb-3">
+		                        <label for="locationLink" class="form-label">Location Link (Google Map HTML Link)</label>
+		                        <input type="text" class="form-control" name="locationLink" id="editLocationLink" required>
+		                         <div class="invalid-feedback" id="erroreditLocationlink">Please embed the html link location of hall</div>
+		                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="edit-save-btn" disabled>Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+                    </div>
+                </div>  
+            </div>
+        </form>
+    </div>
+
+     <!-- View Details Modal -->
+    <!-- Modal for Viewing Details -->
+    <div class="modal fade" id="viewDetailsModal" tabindex="-1" aria-labelledby="viewDetailsModalLabel" aria-hidden="true">
+			    <div class="modal-dialog modal-dialog-centered">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <h5 class="modal-title" id="viewDetailsModalLabel">Hall Details</h5>
+			                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+			                    <span aria-hidden="true">&times;</span>
+			                </button>
+			            </div>
+			            <div class="modal-body">
+			                <!-- Hall details content -->
+			                <p><strong>Hall Name:</strong> <span id="detailHallName"></span></p>
+			                <p><strong>Price per Day:</strong> <span id="detailPricePerDay"></span></p>
+			                <p><strong>Floating Capacity:</strong> <span id="detailFloatingCapacity"></span></p>
+			                <p><strong>Location:</strong> <span id="detailLocation"></span></p>
+			                <p><strong>Events:</strong> <span id="detailEvents"></span></p>
+			                <p><strong>Amenities:</strong> <span id="detailAmenities"></span></p>
+			            </div>
+			            <div class="modal-footer">
+			                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			<!--  Delete Modal -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <form action="deleteHall" method = "get">
+			    <div class="modal-dialog modal-dialog-centered">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			            	<input id="deleteHallId" name="hallId" style="display:none"></input>
+			                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+			                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			            </div>
+			            <div class="modal-body">
+			                <p>Are you sure you want to delete the hall: <strong id="deleteHallName"></strong>?</p>
+			            </div>
+			            <div class="modal-footer">
+			                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+			                <button type="submit" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+			            </div>
+			        </div>
+			    </div>
+		    </form>
+		</div>
+		 <!-- Add Hall Modal -->
+		<div class="modal fade" id="addHallModal" tabindex="-1" aria-labelledby="addHallModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-dialog-centered" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title" id="addHallModalLabel">Add Hall</h5>
+		                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		            </div>
+		            <div class="modal-body">
+		                <form id="addHallForm" class="needs-validation" action="add-hall" method="post" novalidate>
+		                    <div class="mb-3">
+		                        <label for="hallName" class="form-label">Hall Name</label>
+		                        <input type="text" class="form-control" id="hallName" name="hallName" required >
+		                        <div class="invalid-feedback" id="invalidName">Please enter only alphabets.</div>
+		                        <div class="invalid-feedback" id="duplicateName" style="display:none;">Hall name must be unique. Please enter a different hall name.</div>
+		                    </div>
+		                    <div class="mb-3">
+		                        <label class="form-label">Is AC</label>
+		                        <div class="form-check">
+		                            <input class="form-check-input" type="radio" name="isAc" id="isAcYes" value="yes" required>
+		                            <label class="form-check-label" for="isAcYes">
+		                                Yes
+		                            </label>
+		                        </div>
+		                        <div class="form-check">
+		                            <input class="form-check-input" type="radio" name="isAc" id="isAcNo" value="no" required>
+		                            <label class="form-check-label" for="isAcNo">
+		                                No
+		                            </label>
+		                        </div>
+		                    </div>
+		                     <div class="invalid-feedback" id="isAcAvail" style="display:none;">Select any one input</div>
+		                    <div class="mb-3">
+		                        <label for="pricePerDay" class="form-label">Price per Day</label>
+		                        <input type="number" class="form-control" id="pricePerDay" name="pricePerDay" required>
+		                        <div class="invalid-feedback" id="invalidPrice">Please enter a positive number.</div>
+		                    </div>
+		                    <div class="mb-3">
+		                        <label for="capacity" class="form-label">Floating Capacity</label>
+		                        <input type="number" class="form-control" name="floatingCapacity" id="capacity" required>
+		                        <div class="invalid-feedback" id="invalidCapacity">Please enter a positive number.</div>
+		                    </div>
+		                    <div class="mb-3">
+		                        <label for="location" class="form-label">Location</label>
+		                        <input type="text" class="form-control" name="location" id="location" required>
+		                        <div class="invalid-feedback" id="invalidLocation">Location should be minimum 8 characters.</div>
+		                    </div>
+		                    <div class="mb-3">
+		                        <label for="locationLink" class="form-label">Location Link (Google Map HTML Link)</label>
+		                        <input type="text" class="form-control" name="locationLink" id="locationlink" required>
+		                         <div class="invalid-feedback" id="invalidLocationLink">Please embed the html link location of hall</div>
+		                    </div>
+		                    <div class="mb-3">
+		                        <label for="amenities" class="form-label">Amenities</label>
+		                        <select class="form-control" id="amenities" name="amenities" required oninput="validateAmenities()" multiple>
+		                            <option value="Catering Services">Catering Services</option>
+		                            <option value="Music-Band">Music-Band</option>
+		                            <option value="Sound system">Sound system</option>
+		                            <option value="Parking">Parking</option>
+		                            <option value="Bar setup">Bar setup</option>
+		                            <option value="Ice-cream Bar">Ice-cream Bar</option>
+		                            <option value="Additional Security">Additional Security</option>
+		                        </select>
+		                        <div class="invalid-feedback" id="invalidAmenities">Please select at least three amenities.</div>
+		                    </div>
+		                    <div class="mb-3">
+		                        <label for="events" class="form-label">Events</label>
+		                        <select class="form-control" id="events" name="events" required oninput="validateEvents()" multiple>
+		                            <option value="Wedding">Wedding</option>
+		                            <option value="Baby Shower">Baby Shower</option>
+		                            <option value="Birthday Party">Birthday Party</option>
+		                            <option value="Corporate Party">Corporate Party</option>
+		                            <option value="Exhibition">Exhibition</option>
+		                            <option value="Product Launch">Product Launch</option>
+		                            <option value="Award Ceremony">Award Ceremony</option>
+		                            <option value="Conference">Conference</option>
+		                            <option value="Concert">Concert</option>
+		                            <option value="Seminar">Seminar</option>
+		                        </select>
+		                        <div class="invalid-feedback" id="invalidEvents">Please select at least one event.</div>
+		                    </div>
+		                    <div class="mb-3">
+		                        <label class="form-label">Seating Arrangement (No such arrangements give 0)</label>
+		                        <div class="row">
+		                            <div class="col-6">
+		                                <label for="theaterStyle">Theater Style</label>
+		                                <input type="number" class="form-control" id="theaterStyle" name="theater" required oninput="validateSeatingArrangements()">
+		                                <div class="invalid-feedback" id="invalidTheaterStyle">Please enter a positive number or 0.</div>
+		                            </div>
+		                            <div class="col-6">
+		                                <label for="clusterStyle">Cluster Style</label>
+		                                <input type="number" class="form-control" id="clusterStyle" name="cluster" required oninput="validateSeatingArrangements()">
+		                                <div class="invalid-feedback" id="invalidClusterStyle">Please enter a positive number or 0.</div>
+		                            </div>
+		                            <div class="col-6">
+		                                <label for="uShapedStyle">Banquet Style</label>
+		                                <input type="number" class="form-control" id="uShapedStyle" name="banquet" required oninput="validateSeatingArrangements()">
+		                                <div class="invalid-feedback" id="invalidUShapedStyle">Please enter a positive number or 0.</div>
+		                            </div>
+		                            <div class="col-6">
+		                                <label for="banquetStyle">U-Shape Style</label>
+		                                <input type="number" class="form-control" id="banquetStyle" name="uShaped" required oninput="validateSeatingArrangements()">
+		                                <div class="invalid-feedback" id="invalidBanquetStyle">Please enter a positive number or 0.</div>
+		                            </div>
+		                            <div class="col-6">
+		                                <label for="boardroomStyle">Hollow Square Style</label>
+		                                <input type="number" class="form-control" id="boardroomStyle" name="hallowSquare" required oninput="validateSeatingArrangements()">
+		                                <div class="invalid-feedback" id="invalidBoardroomStyle">Please enter a positive number or 0.</div>
+		                            </div>
+		                            <div class="col-6">
+		                                <label for="cabaretStyle">Cabaret Style</label>
+		                                <input type="number" class="form-control" id="cabaretStyle" name="cabaretStyle" required oninput="validateSeatingArrangements()">
+		                                <div class="invalid-feedback" id="invalidCabaretStyle">Please enter a positive number or 0.</div>
+		                            </div>
+		                        </div>
+		                        <div class="invalid-feedback" id="invalidSeatingArrangements">Please enter capacities for at least one seating arrangement.</div>
+		                    </div>
+		                    <div class="modal-footer">
+		                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		                        <button type="submit" class="btn btn-primary" id="add-btn-form" onClick="validateAddHall()" disabled >Add Hall</button>
+		                    </div>
+		                </form>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+	    <script src='https://code.jquery.com/jquery-3.7.0.js'></script>
+    <script>
+    
+    $(document).ready(function() {
+        setTimeout(function() {
+            $('#updateAlert').alert('close');
+        }, 3000);
+    });
+    $(document).ready(function() {
+        setTimeout(function() {
+            $('#addAlert').alert('close');
+        }, 3000);
+    });
+
+
+    function showDetails(hallName, pricePerDay, isAcHall, capacity, location, events, amenities, seat) {
+        document.getElementById("detailHallName").textContent = hallName;
+        document.getElementById("detailPricePerDay").textContent = pricePerDay;
+        document.getElementById("detailFloatingCapacity").textContent = capacity;
+        document.getElementById("detailLocation").textContent = location;
+        document.getElementById("detailAmenities").textContent = amenities; // Assuming amenities is an array
+        document.getElementById("detailEvents").textContent = events; // Assuming events is an array
+        var viewDetailsModal = new bootstrap.Modal(document.querySelector('#viewDetailsModal'));
+        viewDetailsModal.show();
+    }
+    
+    var isNameValidate = false;
+    var isPriceValidate = false;
+    var isFloatingValidate = false;
+    var isLocationValidate = false;
+    var isMultipleAmenties = false;
+    var isLocationLink = false;
+    var isMultipleEvents = false;
+    var isSeats = false;
+    var isAcYes = false;
+    var isAcNo = false;
+    
+    var isAcSelected = false;
+    var isAcYes = false;
+    var isAcNo = false;
+
+    document.getElementById("isAcYes").addEventListener("input", function () {
+        isAcYes = true;
+        isAcSelected =true;
+    });
+
+    document.getElementById("isAcNo").addEventListener("input", function () {
+        isAcNo = true;
+        isAcSelected =true;
+    });
+    
+
+    document.getElementById("hallName").addEventListener("input", function () {
+        var hallName = document.getElementById("hallName").value.trim();
+        var hallNamePattern = /^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z\s]{3,30}$/;
+        if (!hallNamePattern.test(hallName)) {
+            document.getElementById("invalidName").style.display = "block";
+            isNameValidate = false;
+        } else {
+            document.getElementById("invalidName").style.display = "none";
+            console.log("hallname");
+            isNameValidate = true;
+        }
+        checkAllValidations();
+    });
+   
+    document.getElementById("pricePerDay").addEventListener("input", function() {
+        var pricePerDay = document.getElementById("pricePerDay").value;
+        var priceFeedback = document.getElementById("invalidPrice");
+
+        var price = parseFloat(pricePerDay);
+
+        // Check conditions and set validation messages
+        if (isNaN(price) || price <= 0) {
+            priceFeedback.textContent = "Please enter a positive price."; // Message for invalid input
+            priceFeedback.style.display = "block";
+            isPriceValidate = false;
+        } else if (price > 10000000) {
+            priceFeedback.textContent = "Price cannot exceed 10,000,000."; // Message for exceeding limit
+            priceFeedback.style.display = "block";
+            isPriceValidate = false;
+        } else {
+            priceFeedback.style.display = "none"; // Hide feedback for valid input
+            isPriceValidate = true;
+            console.log("pricePerDay");
+        }
+        checkAllValidations();
+    });
+    
+    document.getElementById("capacity").addEventListener("input", function() {
+        var capacity = document.getElementById("capacity").value;
+        var capacityFeedback = document.getElementById("invalidCapacity");
+
+        // Convert the input value to a number
+        var numericCapacity = parseFloat(capacity);
+
+        // Check conditions and set validation messages
+        if (isNaN(numericCapacity) || numericCapacity <= 50) {
+            capacityFeedback.textContent = "Please enter a minimum 50 capacity."; // Message for invalid input
+            capacityFeedback.style.display = "block";
+            isFloatingValidate = false;
+        } else if (numericCapacity > 10000000) {
+            capacityFeedback.textContent = "Capacity cannot exceed 10,000,000."; // Message for exceeding limit
+            capacityFeedback.style.display = "block";
+            isFloatingValidate = false;
+        } else {
+            capacityFeedback.style.display = "none"; // Hide feedback for valid input
+            isFloatingValidate = true;
+            console.log("Capacity");
+        }
+        checkAllValidations();
+    });
+
+    document.getElementById("location").addEventListener("input", function() {
+        var locationInput = document.getElementById("location");
+        var locationValue = locationInput.value;
+        var locationFeedback = document.getElementById("invalidLocation");
+
+        // Check the length of the location value
+        if (locationValue.length < 8) {
+            locationFeedback.style.display = "block"; // Show feedback for invalid input
+            isLocationValidate = false;
+        } else {
+            locationFeedback.style.display = "none"; // Hide feedback for valid input
+            isLocationValidate = true;
+            console.log("location");
+        }
+        checkAllValidations();
+    });
+
+    document.getElementById("locationlink").addEventListener("input", function() {
+        var locationLinkInput = document.getElementById("locationlink");
+        var locationLinkValue = locationLinkInput.value;
+        var locationLinkFeedback = document.getElementById("invalidLocationLink");
+
+        if (locationLinkValue.length < 50) {
+            locationLinkFeedback.style.display = "block"; // Show feedback for invalid input
+            isLocationLink = false;
+        } else {
+            locationLinkFeedback.style.display = "none"; // Hide feedback for valid input
+            isLocationLink = true;
+            console.log("locationLink");
+        }
+        checkAllValidations();
+    });
+
+    function validateAmenities() {
+        var selectElement = document.getElementById("amenities");
+        var count = selectElement.selectedOptions.length;
+        var isValid = (count >= 3);
+        isMultipleAmenties = isValid;
+        selectElement.classList.toggle('is-invalid', !isValid);
+        if(isValid){
+        	isMultipleAmenties = true;
+        	console.log("amenities")
+        }
+        checkAllValidations();
+    }
+
+    function validateEvents() {
+        var eventInput = document.getElementById("events");
+        var count = eventInput.selectedOptions.length;
+        var isValid = (count > 0);
+        isMultipleEvents = isValid;
+        if(isValid){
+        	isMultipleEvents = true;
+        	console.log("events");
+        }
+        eventInput.classList.toggle('is-invalid', !isValid);
+        checkAllValidations();
+    }
+
+    function validateSeatingArrangements() {
+        const seatingInputs = [
+            document.getElementById("clusterStyle"),
+            document.getElementById("theaterStyle"),
+            document.getElementById("uShapedStyle"),
+            document.getElementById("banquetStyle"),
+            document.getElementById("boardroomStyle"),
+            document.getElementById("cabaretStyle")
+        ];
+
+        var isValid = seatingInputs.some(input => parseInt(input.value, 10) > 49);
+        seatingInputs.forEach(input => {
+            input.classList.toggle("is-invalid", !isValid);
+            
+            if(isValid){
+            	isSeats = true;
+            	console.log("Seating arrangment");
+            }
+        });
+
+        const feedbacks = [
+            document.getElementById("invalidClusterStyle"),
+            document.getElementById("invalidTheaterStyle"),
+            document.getElementById("invalidUShapedStyle"),
+            document.getElementById("invalidBanquetStyle"),
+            document.getElementById("invalidBoardroomStyle"),
+            document.getElementById("invalidCabaretStyle")
+        ];
+
+        feedbacks.forEach(feedback => {
+            feedback.textContent = !isValid ? "At least one seating arrangement should be above 49." : "";
+            feedback.style.display = !isValid ? "block" : "none";
+        });
+
+        isSeats = isValid;
+        checkAllValidations();
+    }
+
+    function checkAllValidations() {
+        if (isNameValidate && isPriceValidate && isFloatingValidate && isLocationValidate && isLocationLink && isMultipleAmenties && isMultipleEvents && isSeats && isAcSelected) {
+        	console.log("working");
+            document.getElementById("add-btn-form").removeAttribute("disabled");
+        } else {
+        	console.log("not - working");
+        	document.getElementById("add-btn-form").setAttribute("disabled",'true');
+        }
+    }
+
+    document.getElementById("add-btn").addEventListener("click", function(){
+        var addModal = new bootstrap.Modal(document.querySelector('#addHallModal'));
+        addModal.show();
+    });
+
+        
+        document.querySelectorAll('.edit-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var row = button.closest('tr');
+                var hallId = row.querySelector('.hallId').textContent;
+                var hallName = row.querySelector('.hallname').textContent;
+                var capacity = row.querySelector('.capacity').textContent;
+                var price = row.querySelector('.price').textContent;
+                var location = row.querySelector('.location').textContent;
+                var locationLink = row.querySelector('.locationLink').textContent;
+                
+				document.getElementById('editHallID').value = hallId;
+                document.getElementById('editHallName').value = hallName;
+                document.getElementById('editCapacity').value = capacity;
+                document.getElementById('editPrice').value = price;
+                document.getElementById('editLocation').value = location;
+                document.getElementById('editLocationLink').value = locationLink;
+                
+                var editModal = new bootstrap.Modal(document.getElementById('editModal'));
+                editModal.show();
+            });
+        });
+
+        document.querySelectorAll('.del-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                let row = this.closest('tr');
+                let id = row.querySelector('.hallId').textContent;
+                document.getElementById('deleteHallId').value = id;
+                document.getElementById('deleteHallName').innerHTML = row.querySelector('.hallname').textContent;
+          		
+                var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+                deleteModal.show();
+            });
+        });
+        
+        
+        function handleInputValidation(event) {
+            const input = event.target;
+            if (input.checkValidity()) {
+                input.classList.remove('is-invalid');
+                input.classList.add('is-valid');
+            } else {
+                input.classList.remove('is-valid');
+                input.classList.add('is-invalid');
+            }
+        }
+
+        // Adding event listeners to all input fields
+        document.querySelectorAll('.modal-body input').forEach(input => {
+            input.addEventListener('input', handleInputValidation);
+        });
+        
+        document.getElementById('export-pdf').addEventListener('click', function () {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.autoTable({ html: '#hallTable' });
+
+            doc.save('Hall_detail.pdf');
+        });
+        
+        
+        var isValidateHallName = false;
+        var isValidatePrice = false;
+        var isValidateCapacity = false;
+        var isValidateLocation = false;
+        var isValidateLocationLink = false; 
+        
+        
+        document.getElementById("editHallName").addEventListener("input", function () {
+            var hallName = document.getElementById("editHallName").value.trim();
+            var hallNamePattern = /^(?=.*[A-Za-z].*[A-Za-z].*[A-Za-z])[A-Za-z\s]{3,30}$/;
+            if (!hallNamePattern.test(hallName)) {
+                document.getElementById("erroreditHallName").style.display = "block";
+                isValidateHallName = false;
+            } else {
+                document.getElementById("erroreditHallName").style.display = "none";
+                isValidateHallName = true;
+            }
+            checkEditAllValidations();
+        });
+        
+        
+        document.getElementById("editPrice").addEventListener("input", function() {
+            var pricePerDay = document.getElementById("editPrice").value;
+            var priceFeedback = document.getElementById("erroreditPrice");
+
+            var price = parseFloat(pricePerDay);
+
+            // Check conditions and set validation messages
+            if (isNaN(price) || price <= 0) {
+                priceFeedback.textContent = "Please enter a positive price."; // Message for invalid input
+                priceFeedback.style.display = "block";
+                isValidatePrice = false;
+            } else if (price > 10000000) {
+                priceFeedback.textContent = "Price cannot exceed 10,000,000."; // Message for exceeding limit
+                priceFeedback.style.display = "block";
+                isValidatePrice = false;
+            } else {
+                priceFeedback.style.display = "none"; // Hide feedback for valid input
+                isValidatePrice = true;
+                console.log("pricePerDay");
+            }
+            checkEditAllValidations();
+        });
+        
+        
+        document.getElementById("editCapacity").addEventListener("input", function() {
+            var capacity = document.getElementById("editCapacity").value;
+            var capacityFeedback = document.getElementById("erroreditCapacity");
+
+            // Convert the input value to a number
+            var numericCapacity = parseFloat(capacity);
+
+            // Check conditions and set validation messages
+            if (isNaN(numericCapacity) || numericCapacity <= 50) {
+                capacityFeedback.textContent = "Please enter a minimum 50 capacity."; // Message for invalid input
+                capacityFeedback.style.display = "block";
+                isValidateCapacity = false;
+            } else if (numericCapacity > 10000000) {
+                capacityFeedback.textContent = "Capacity cannot exceed 10,000,000."; // Message for exceeding limit
+                capacityFeedback.style.display = "block";
+                isValidateCapacity = false;
+            } else {
+                capacityFeedback.style.display = "none"; // Hide feedback for valid input
+                isValidateCapacity = true;
+                console.log("Capacity");
+            }
+            checkEditAllValidations();
+        });
+        
+
+        document.getElementById("editLocation").addEventListener("input", function() {
+            var locationInput = document.getElementById("editLocation");
+            var locationValue = locationInput.value;
+            var locationFeedback = document.getElementById("erroreditlocation");
+
+            // Check the length of the location value
+            if (locationValue.length < 8) {
+                locationFeedback.style.display = "block"; // Show feedback for invalid input
+                isValidateLocation = false;
+            } else {
+                locationFeedback.style.display = "none"; // Hide feedback for valid input
+                isValidateLocation = true;
+                console.log("location");
+            }
+            checkEditAllValidations();
+        });
+        
+        
+        document.getElementById("editLocationLink").addEventListener("input", function() {
+            var locationLinkInput = document.getElementById("editLocationLink");
+            var locationLinkValue = locationLinkInput.value;
+            var locationLinkFeedback = document.getElementById("erroreditLocationlink");
+
+            if (locationLinkValue.length < 50) {
+                locationLinkFeedback.style.display = "block"; // Show feedback for invalid input
+                isValidateLocationLink = false;
+            } else {
+                locationLinkFeedback.style.display = "none"; // Hide feedback for valid input
+                isValidateLocationLink = true;
+                console.log("locationLink");
+            }
+            checkEditAllValidations();
+        });
+        
+        function checkEditAllValidations() {
+            var saveButton = document.getElementById("edit-save-btn");
+            if (isValidateHallName && isValidatePrice && isValidateCapacity && isValidateLocation && isValidateLocationLink) {
+                saveButton.disabled = false;
+            } else {
+                saveButton.disabled = true;
+            }
+        }
+        
+        document.getElementById('logout').addEventListener('click', function(event) {
+            event.preventDefault();
+            var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+            logoutModal.show();
+          });
+        
+    </script>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+

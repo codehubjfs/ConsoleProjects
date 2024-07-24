@@ -1,0 +1,47 @@
+package com.hallbookingmanagement.beans;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class AmenityHallRelation {
+	public int hallId;
+	public int amenityId;
+	
+	public AmenityHallRelation(){
+		
+	}
+
+	
+
+	public AmenityHallRelation(int hallId, int amenityId) {
+		super();
+		this.hallId = hallId;
+		this.amenityId = amenityId;
+	}
+
+
+
+	public int getHallId() {
+		return hallId;
+	}
+
+	public void setHallId(int hallId) {
+		this.hallId = hallId;
+	}
+
+	public int getAmenityId() {
+		return amenityId;
+	}
+
+	public void setAmenityId(int amenityId) {
+		this.amenityId = amenityId;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "AmenityHallRelation [hallId=" + hallId + ", amenityId=" + amenityId + "]";
+	}
+	
+}

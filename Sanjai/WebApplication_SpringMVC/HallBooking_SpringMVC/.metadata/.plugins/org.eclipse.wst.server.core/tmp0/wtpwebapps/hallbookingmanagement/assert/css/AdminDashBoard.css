@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+ .row .col-md-3 {
+     margin-left: 5px;
+     margin-right: 5px;
+ }
+ .pendingimage img {
+     margin-left: 10px;
+     width: 40px;
+     margin-top: 25px;
+     fill: #ff0000;
+ }
+ .bg-light {
+     background-color: #e0cab2 !important;
+     grid-column: 4;
+     grid-row: 1;
+ }
+ .subContainer {
+
+     display: flex;
+ }
+
+ .bookingCard {
+     background-color: #FFF2DE;
+     border-radius: 20px;
+     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+     margin-top: 30px;
+     margin-left: 10px;
+     width: 270px;
+     height: 160px;
+     padding: 2px;
+ }
+ .bookingtitle {
+     margin-left: 30px;
+     margin-bottom: 20px;
+     margin-top: 20px;
+ }
+ .innerCard {
+     display: flex;
+     justify-content: space-around;
+     margin-top: 8px;
+ }
+ .innerCard .thisMonth p, .thisMonthPercent p {
+     font-weight: 600;
+ }
+ .bookingCard h6 {
+     margin-left: 30px;
+ }
+ .card1-title {
+     margin-bottom: 8px;
+ }
+ #checkin {
+     margin-top: 0px;
+ }
+ #checkin-checkout {
+     margin-bottom: 0px !important;
+ }
+ .thisMonth .booking {
+     justify-content: flex-start;
+ }
+ .PendingBookings {
+     border-radius: 20px;
+     background-color: #FFF2DE;
+     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+     margin-top: 30px;
+     margin-left: 10px;
+     width: 270px;
+     height: 160px;
+     padding: 2px;
+ }
+ .PendingBookings h3 {
+     margin-left: 30px;
+     margin-bottom: 20px;
+     margin-top: 20px;
+ }
+ .PendingBookings p {
+     border-radius: 20px;
+     font-weight: 600;
+     font-size: 50px;
+     margin-left: 10px;
+     color: red;
+     margin-bottom: 2px;
+ }
+ .graph {
+     border: rgb(255, 255, 255) solid;
+     margin-top: 40px;
+ }
+ .profile a {
+     text-decoration: none;
+     color: rgb(255, 255, 255);
+ }

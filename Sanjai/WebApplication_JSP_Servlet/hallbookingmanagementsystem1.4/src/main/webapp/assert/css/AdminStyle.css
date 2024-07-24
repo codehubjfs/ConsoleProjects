@@ -1,0 +1,120 @@
+@charset "UTF-8";
+
+.header {
+    overflow-x: hidden;
+    position: fixed !important;
+    z-index: 1000;
+    width: 100%;
+    top: 20;
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffeed3;
+}
+
+
+.container{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+	height: 100%;
+    margin: 0;
+    margin: 0px;
+    padding: 0px;
+}
+
+.header .logo img{
+    width: 120px;
+    height: 100px ;
+    margin: 0px;
+    padding: 0px;
+} 
+
+/* Global styles */
+* {
+    margin: 0px;
+    padding: 0px;
+  }
+  
+
+  .header .profile img{
+    width: 50px;
+  }
+
+  .profile h3{
+    margin-left: 10px;
+    margin-right: 30px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+  }
+  .profile h4{
+    margin-left: 30px;
+
+  }
+
+  .profile{
+    display: flex;
+    position: relative;
+  }
+
+  .vertical-nav {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    background-color:  #e0cab2;
+    height: 100vh;
+    top:20;
+    left:0;
+    overflow-y: hidden;
+    transition: 0.5s;
+    position: fixed;
+    width:208px; /* Adjust the width as needed */
+}
+.vertical-nav .nav-link {
+    color: rgb(0, 0, 0);
+}
+
+.vertical-nav nav ul li:hover {
+    background-color:#ffeed3 ;
+    
+}
+.vertical-nav nav ul li a:hover {
+    color: #000000;
+}
+
+.vertical-nav nav{
+    padding-right: 0px;
+    margin-right: 0px;
+  
+} 
+
+.main-left-nav{
+    padding-top:0px;
+    padding-bottom: 0px;
+      
+}
+
+.vertical-nav nav ul li{
+    padding-top:5px ;
+    padding-bottom:5px ;
+    margin-top:0px;
+    margin-bottom: 0px;
+}
+#company-logo{
+    margin-top: 10%;
+    width: 200px;
+    height: 50px;
+}
+
+.profile a{
+    text-decoration: none;
+    color:#000000 !important;
+}
+
+.sideNavBar .nav-link:active{
+    color:aliceblue;
+}
+
+
+.main-left-nav ul li a{
+    font-weight: 500;
+}

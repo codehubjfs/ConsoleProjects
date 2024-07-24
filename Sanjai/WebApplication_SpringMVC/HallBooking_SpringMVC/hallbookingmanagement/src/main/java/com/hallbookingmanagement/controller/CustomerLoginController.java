@@ -1,0 +1,36 @@
+package com.hallbookingmanagement.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import com.hallbookingmanagement.service.CustomerServicesImp;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@Controller
+public class CustomerLoginController {
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String login(@RequestParam("name") String name, @RequestParam("password") String password, Model model, HttpServletRequest request,HttpServletResponse response) {
+		 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
+	     response.setHeader("Pragma", "no-cache");
+	     response.setDateHeader("Expires", 0);
+		try {
+			System.out.println("Inside the controller");
+			boolean validUser = new CustomerServicesImp().validateUsers(name, password,request);
+			if (!validUser) {
+				model.addAttribute("error", "Invalid username or password");
+				return "login"; 
+			}
+			model.addAttribute("loginSuccess", true);
+			 
+			return "login"; // Return to the same page to show the modal
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+}

@@ -1,0 +1,31 @@
+package com.hallbookingmanagement.controller;
+
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+public class CustomerLogoutController {
+	
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+	    HttpSession session = request.getSession(false);
+	    if (session != null) {
+	        session.removeAttribute("customer");
+	        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
+	        response.setHeader("Pragma", "no-cache");
+	        response.setDateHeader("Expires", 0);
+	        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	        if (auth != null){    
+	            new SecurityContextLogoutHandler().logout(request, response, auth);
+	        }
+	    }
+	    return "redirect:/index.jsp";
+	}
+
+}

@@ -1,0 +1,23 @@
+package com.hallbookingmanagement.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.hallbookingmanagement.service.CustomerServices;
+
+@Controller
+public class PaymentGatewayController {
+	
+	@Autowired
+	CustomerServices customerServices;
+	
+	@GetMapping("/payBooking")
+	public String payBooking(@RequestParam("paytype") int paymentNum, @RequestParam("paybookId") int bookId, @RequestParam("totpay") double paidAmount, ModelAndView model) {
+		String paymentType = paymentNum==1?"ADVANCED":"PAID";
+		customerServices.paymentbooking(bookId,paymentType,paidAmount);
+		return "redirect:viewBooking";
+	}
+}

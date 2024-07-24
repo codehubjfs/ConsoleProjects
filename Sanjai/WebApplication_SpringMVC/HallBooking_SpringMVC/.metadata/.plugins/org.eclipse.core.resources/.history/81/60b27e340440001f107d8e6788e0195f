@@ -1,0 +1,30 @@
+package com.hallbookingmanagement.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+@Controller
+public class CustomerLogoutController {
+	
+	@GetMapping
+	public String logout(HttpServletRequest request , HttpServletResponse response ) {
+		 HttpSession session = request.getSession(false);
+	        if (session != null) {
+	            // Remove specific customer-related session attributes
+	            session.removeAttribute("customer");
+	            // Add any other customer-related attributes to be removed
+	            // session.removeAttribute("anotherCustomerAttribute");
+
+	            // Set headers to prevent caching
+	            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1
+	            response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+	            response.setDateHeader("Expires", 0); // Proxies
+	        }
+	        return "/index";
+	}
+
+}

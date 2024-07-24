@@ -1,0 +1,38 @@
+@charset "UTF-8";
+.addHallForm small {
+    color: red;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.modal-backdrop {
+    display: none !important;
+}
+
+.subContainer {
+    display: inline-flex;
+}
+
+#hallTable td {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+.innerContainer {
+    display: inline-flex;
+}
+th {
+    text-align: center;
+    align-items: center;
+}
+
+.profile a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+
+table .td,
+table .tr {
+    white-space: nowrap;
+    padding-left: 30px;
+    padding-right: 30px;
+}

@@ -1,0 +1,46 @@
+package com.hallbookingmanagement.controller;
+
+
+import java.util.HashMap;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.hallbookingmanagement.beans.Customer;
+import com.hallbookingmanagement.service.CustomerServices;
+
+@Controller
+public class RegisterController {
+	
+	@Autowired
+	CustomerServices customerServices;
+	@Autowired
+	Customer customer;
+	
+	
+	@PostMapping("/registerUser")
+	public ModelAndView registerUser(@RequestParam(name="name") String name, 
+			@RequestParam(name="gender") String gender,
+			@RequestParam(name="email") String email, 
+			@RequestParam(name="phone") String phone, 
+			@RequestParam(name="address") String address,
+			@RequestParam(name="username") String username,
+			@RequestParam(name="password") String password) {
+			System.out.println("I'm in register");
+			ModelAndView model = new ModelAndView();
+			HashMap<String,String> map = customerServices.registerUser(name,gender,email,phone,address,username,password);
+			if(map.size()>0) {
+				model.setViewName("register");
+				model.addAllObjects(map);
+				return model;
+			}
+			System.out.println("-------");
+			customerServices.addCustomer(name,gender,email,phone,address,username,password);
+			model.setViewName("redirect:/index");
+			return model;
+	} 
+}

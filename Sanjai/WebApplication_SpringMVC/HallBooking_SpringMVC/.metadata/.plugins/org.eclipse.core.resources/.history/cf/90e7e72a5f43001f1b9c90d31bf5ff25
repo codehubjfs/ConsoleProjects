@@ -1,0 +1,26 @@
+package com.hallbookingmanagement.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.hallbookingmanagement.beans.Hall;
+import com.hallbookingmanagement.service.AdminServices;
+
+@Controller
+public class HallManagementController {
+
+	@Autowired
+	AdminServices adminServices;
+	
+	@GetMapping("/showHallManagement")
+	public ModelAndView showHallDetails( ModelAndView model) {
+		List<Hall> listHalls = adminServices.showAllHalls();
+		model.addObject("hallList",listHalls);
+		model.setViewName("Admin/hallManagement2");
+		return model;
+	} 
+}

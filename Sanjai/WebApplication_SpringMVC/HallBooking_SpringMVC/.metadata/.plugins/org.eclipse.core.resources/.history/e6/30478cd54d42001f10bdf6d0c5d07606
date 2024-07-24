@@ -1,0 +1,5 @@
+package com.hallbookingmanagement.controller;
+
+public class FullPaymentController {
+
+}

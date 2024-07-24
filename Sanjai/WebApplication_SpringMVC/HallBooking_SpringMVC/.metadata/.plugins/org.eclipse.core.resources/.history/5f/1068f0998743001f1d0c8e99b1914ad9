@@ -1,0 +1,259 @@
+package com.hallbookingmanagement.service;
+
+import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.hallbookingmanagement.beans.AmenityHallRelation;
+import com.hallbookingmanagement.beans.ArrangementHallRelation;
+import com.hallbookingmanagement.beans.Booking;
+import com.hallbookingmanagement.beans.Customer;
+import com.hallbookingmanagement.beans.Hall;
+import com.hallbookingmanagement.beans.HallEventRelation;
+import com.hallbookingmanagement.beans.Payment;
+import com.hallbookingmanagement.mapper.CustomerMapper;
+import com.hallbookingmanagement.util.DAOFactory;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+
+@Service
+public class AdminServiceImp implements AdminServices {
+
+	
+	@Autowired
+	CustomerServices customerServices;
+	@Override
+	public HashMap<String, String> viewDashboardDetail() {
+		HashMap<String,String> dashBoard = new HashMap<>();
+		
+		YearMonth lastMonth = YearMonth.now().minusMonths(1);
+		YearMonth currentMonth = YearMonth.now();
+		long previousMonthCount = customerServices.listAllBooking().stream().filter(x->x.getStartDate().isAfter(lastMonth.atDay(1).minusDays(1)) && x.getStartDate().isBefore(lastMonth.plusMonths(1).atDay(1).minusDays(1))).count();
+		long currentMonthCount = customerServices.listAllBooking().stream().filter(x->x.getStartDate().isAfter(currentMonth.atDay(1).minusDays(1)) && x.getStartDate().isBefore(currentMonth.plusMonths(1).atDay(1).minusDays(1))).count();
+		long pendings = customerServices.listAllBooking().stream().filter(x->x.getBookStatus().equals("PENDING")).count();
+
+		dashBoard.put("previous", String.valueOf(previousMonthCount) );
+		dashBoard.put("thisMonth",String.valueOf(currentMonthCount) );
+		dashBoard.put("pending", String.valueOf(pendings));
+
+		return dashBoard;
+	}
+	@Override
+	public List<Booking> listBooking() {
+		List<Booking> listBooking = customerServices.listAllBooking();
+		return listBooking;
+	}
+	@Override
+	public List<Customer> listCustomer() {
+		try {
+			List<Customer> customerList = DAOFactory.getCustomerDao().getAllCustomer();
+			return customerList;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<Payment> viewPaymentList() {
+		List<Payment> paymentList = customerServices.paymentList();
+		return paymentList;
+	}
+	
+	@Override
+	public boolean validateAdmin(String name,String password, HttpServletRequest request){
+		try {
+			CustomerMapper mapper = DAOFactory.getCustomerDao();
+			List<Customer> customerList = mapper.getAllCustomer();
+			boolean isUser = customerList.stream().anyMatch(x->x.getUserName().equals(name) && x.getPassword().equals(password) && x.getAccountType().equals("ADMIN"));
+			if (isUser) {
+	            Customer customer = customerList.stream().filter(x -> x.getUserName().equals(name) && x.getPassword().equals(password) && x.getAccountType().equals("ADMIN")).findFirst().orElse(null);
+	            if (customer != null && request != null) {
+	                request.getSession().setAttribute("userName", customer);
+	            }
+			}
+			return isUser;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	return true;
+	}
+	
+	@Autowired
+	Customer customer;
+	
+	
+	
+	
+	@Override
+	public boolean changeCustomerStatus(int userId,String status) {
+		try {
+				customer.setUserId(userId);
+				customer.setAccountStatus(status);
+				int updatedRows = DAOFactory.getCustomerDao().updateStatus(customer);
+				Customer customer = customerServices.getAllCustomer().stream().filter(x->x.getUserId()==userId).findFirst().orElse(null);
+				return updatedRows>0?true:false;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	@Override
+	public List<Hall> showAllHalls() {
+		try {
+			List<Hall> listHall = DAOFactory.getHallDao().getAllHalls();
+			return listHall;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public boolean deleteHall(int bookId) {
+		try {
+				return DAOFactory.getHallDao().deleteHall(bookId)>0?true:false;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	@Autowired
+	Hall hall;
+	
+	
+	
+	@Override
+	public boolean addHallAndProperties(String name, String isAc, double price, int capacity, String location,
+			String locationLink, String[] amenities, String[] events, int theater, int cluster, int banquet,
+			int uShaped, int hallowSquare, int cabaretStyle) {
+		try {
+			int hallId = customerServices.showHall().stream().mapToInt(Hall::getHallId).max().orElseThrow(() -> new RuntimeException("No customers found"))+1;
+			System.out.println("hall Id"+hallId);
+			hall.setHallId(hallId);
+			hall.setHallName(name);
+			hall.setIsAcHall(isAc.equals("yes"));
+			hall.setPrice(price);
+			hall.setCapacity(capacity);
+			hall.setLocation(location);
+			hall.setLocationLink(locationLink);
+			DAOFactory.getHallDao().insertHall(hall);
+			List<ArrangementHallRelation> seatingArrangements = new ArrayList<>();
+            seatingArrangements.add(new ArrangementHallRelation(hallId,1, theater));
+            seatingArrangements.add(new ArrangementHallRelation(hallId,10, cluster));
+            seatingArrangements.add(new ArrangementHallRelation(hallId,3, banquet));
+            seatingArrangements.add(new ArrangementHallRelation(hallId,4, uShaped));
+            seatingArrangements.add(new ArrangementHallRelation(hallId,7, hallowSquare));
+            seatingArrangements.add(new ArrangementHallRelation(hallId,6, cabaretStyle));
+            for(ArrangementHallRelation arrangement: seatingArrangements) {
+            	if(arrangement.getCapacity()!=0) {
+            		DAOFactory.getHallDao().insertSeatForHall(arrangement);
+            	}
+            }
+            
+            List<String> amenityList = Arrays.asList(amenities);
+            
+            List<AmenityHallRelation> hallsAmenity = DAOFactory.getHallDao().getAllAmenities().stream()
+            	    .filter(x -> amenityList.contains(x.getAmenityType()))
+            	    .map(x -> new AmenityHallRelation(hallId, x.getAmenityId()))
+            	    .collect(Collectors.toList());  
+            
+            List<String> eventList = Arrays.asList(events);
+            
+            List<HallEventRelation> hallsEvent = DAOFactory.getHallDao().getAllEvents().stream()
+            	    .filter(x -> eventList.contains(x.getEventName()))
+            	    .map(x -> new HallEventRelation(hallId, x.getEventId()))
+            	    .collect(Collectors.toList());  
+            
+            for(HallEventRelation eventForHall:hallsEvent) {
+            	DAOFactory.getHallDao().insertEventForHall(eventForHall);
+            }
+            for(AmenityHallRelation amenityForHall:hallsAmenity) {
+            	DAOFactory.getHallDao().insertAmenityForHall(amenityForHall);
+            }
+            
+            System.out.println(hallsEvent);
+            System.out.println(hallsAmenity);
+           
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public Booking checkConflict(int bookId) {
+		List<Booking> bookingList = customerServices.listAllBooking();
+		Booking changeBooking  = bookingList.stream().filter(x->x.getBookingId()==bookId).findFirst().orElse(null);
+		
+		Booking conflictBooking = new Booking();
+		for(Booking book: bookingList) {
+			if (book.getBookStatus().equals("CONFIRMED") && changeBooking.getHall().getHallId()==book.getHall().getHallId()) {
+	            if ((book.getStartDate().isBefore(changeBooking.getEndDate()) || book.getStartDate().isEqual(changeBooking.getEndDate())) &&
+	                (book.getEndDate().isAfter(changeBooking.getStartDate()) || book.getEndDate().isEqual(changeBooking.getStartDate()))) {
+	            	conflictBooking = book; // Conflict found
+	            }
+	        }
+		}
+		return conflictBooking;
+	}
+	
+	@Autowired
+	Booking booking;
+	
+	@Override
+	public void changeBookingStatus(String status, int bookId) {
+		try {
+			booking.setBookingId(bookId);
+			booking.setBookStatus(status);
+			int num = DAOFactory.getBookingDao().updateBooking(booking);
+			if(num>0) {
+				System.out.println("update Booking Status");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Autowired
+	Booking changeBook;
+	
+	@Autowired
+	Booking currentBook;
+	
+	
+
+	@Override
+	public void changeBooking(int currentBooking, int changeBookId, HttpServletRequest request) {
+		try {
+			changeBook.setBookingId(changeBookId);
+			changeBook.setBookStatus("CONFIRMED");
+			DAOFactory.getBookingDao().updateBooking(changeBook);
+			
+			currentBook.setBookingId(currentBooking);
+			currentBook.setBookStatus("CANCELED");
+			DAOFactory.getBookingDao().updateBooking(currentBook);
+			
+			request.getSession().removeAttribute("conflictBooking");
+			request.getSession().removeAttribute("changeBooking");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

@@ -1,0 +1,57 @@
+package com.hallbookingmanagement.util;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.hallbookingmanagement.mapper.BookingMapper;
+import com.hallbookingmanagement.mapper.CustomerMapper;
+import com.hallbookingmanagement.mapper.HallsMapper;
+import com.hallbookingmanagement.mapper.PaymentMapper;
+
+
+public class DAOFactory {
+
+	private DAOFactory() {
+
+	}
+	
+	private static SqlSession createSession() throws IOException {
+		
+		String resource = "mybatis-config.xml";
+		
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        SqlSession session = sqlSessionFactory.openSession(true);
+		return session;
+		
+	}
+	
+	@Bean
+	public static CustomerMapper getCustomerDao() throws IOException{
+        return createSession().getMapper(CustomerMapper.class);
+	}
+	
+	@Bean
+	public static HallsMapper getHallDao() throws IOException{
+        return createSession().getMapper(HallsMapper.class);
+	}
+	
+	@Bean
+	public static BookingMapper getBookingDao() throws IOException{
+        return createSession().getMapper(BookingMapper.class);
+	}
+	
+	@Bean
+	public static PaymentMapper getPaymentDao() throws IOException{
+        return createSession().getMapper(PaymentMapper.class);
+	}
+}

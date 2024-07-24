@@ -1,0 +1,43 @@
+package com.hallbookingmanagement.mapper;
+
+import com.hallbookingmanagement.beans.Hall;
+import com.hallbookingmanagement.beans.HallEventRelation;
+import com.hallbookingmanagement.beans.Amenity;
+import com.hallbookingmanagement.beans.AmenityHallRelation;
+import com.hallbookingmanagement.beans.ArrangementHallRelation;
+import com.hallbookingmanagement.beans.Seats;
+import com.hallbookingmanagement.beans.Event;
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+
+@Repository
+public interface HallsMapper {
+
+    Hall selectHallById(int hallId);
+
+    List<Hall> getAllHalls();
+    
+    int updateHall(Hall hall);
+
+    List<Amenity> selectAmenitiesByHallId(int hallId);
+
+    List<Seats> selectSeatsByHallId(int hallId);
+
+    List<Event> selectEventsByHallId(int hallId);
+    
+    List<Amenity> getAllAmenities();
+    
+    List<Event> getAllEvents();
+
+    void insertHall(Hall hall);
+
+    void insertAmenityForHall(AmenityHallRelation amenityAdd);
+
+    void insertSeatForHall(ArrangementHallRelation addArrangement );
+
+    void insertEventForHall(HallEventRelation eventAdd);
+    
+    int deleteHall(int hallId);
+}

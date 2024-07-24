@@ -1,0 +1,37 @@
+package com.hallbookingmanagement.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.hallbookingmanagement.beans.Hall;
+import com.hallbookingmanagement.service.CustomerServices;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+
+@Controller
+public class HallDetailController {
+	
+	@Autowired
+	Hall hall;
+	
+	@Autowired
+	CustomerServices customerServices;
+
+	@PostMapping("/showHallDetail")
+	public ModelAndView showHallDetails( @RequestParam("hallId") int hallId , HttpServletRequest request ,ModelAndView model, HttpServletResponse response) {
+		
+	    response.setHeader("Pragma", "no-cache");
+		
+		hall =  customerServices.getHallDetails(hallId);
+		System.out.println("Hall Detail"+ hall);
+		model.addObject("hallDetail",hall);
+		request.getSession().setAttribute("hallDetail", hall);
+		model.setViewName("hallDetails");
+		return model;
+	}
+}

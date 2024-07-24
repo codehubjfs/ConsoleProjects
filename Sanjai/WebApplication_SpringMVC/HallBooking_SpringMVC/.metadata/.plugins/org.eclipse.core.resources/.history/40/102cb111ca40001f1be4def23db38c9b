@@ -1,0 +1,50 @@
+//package com.hallbookingmanagement.controller;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestMethod;
+//import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.servlet.ModelAndView;
+//
+//import com.hallbookingmanagement.beans.Booking;
+//import com.hallbookingmanagement.service.AdminServices;
+//
+//import jakarta.servlet.http.HttpServletRequest;
+//import jakarta.servlet.http.HttpServletResponse;
+//
+//
+//@Controller
+//public class BookingStatusController {
+//	
+//	@Autowired
+//	AdminServices adminServices;
+//	@GetMapping()
+//	public ModelAndView editStatus(@RequestParam("status") String status,@RequestParam("bookId") int bookId, HttpServletRequest request) {
+//		try {
+//			System.out.println("I'm in controller");
+//			if(status.equals("CONFIRMED")) {
+//				Booking conflictBook = adminServices.checkConflict(bookId);
+//				if(conflictBook==null) {
+//					adminServices.changeBookingStatus(status,bookId);
+//				}
+//				else {
+//					System.out.print("conflict occurs");
+//					request.getSession().setAttribute("conflictBooking", conflictBook);
+//					request.getSession().setAttribute("changeBooking", bookId);
+//				}
+//			}
+//			else {
+//				adminServices.changeBookingStatus(status,bookId);
+//			}
+//			
+//		}
+//		catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return new ModelAndView("forward:/showManagebooking");
+//	}
+//}
+//

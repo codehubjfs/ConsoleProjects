@@ -1,0 +1,320 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="icon" type="image/x-icon" href="../assert/image/LogoFavIcon.jpg">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assert/css/CustomerHeaderFooter.css">>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css"
+      rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+        	background-image: url("<%= request.getContextPath() %>/assert/image/loginbg.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 50%;
+        }
+        .card {
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            padding: 20px;
+            margin-bottom: 10%;
+        }
+        .hr-with-text {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .hr-with-text::before,
+        .hr-with-text::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #4c4444;
+        }
+        .hr-with-text::before {
+            margin-right: 10px;
+        }
+        .hr-with-text::after {
+            margin-left: 10px;
+        }
+        .form-label {
+            color: #2B1535;
+            font-family: sans-serif;
+            font-weight: 400;
+        }
+        .text-center {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+        .context {
+            margin-bottom: 20%;
+            margin-left: 10%;
+            font-size: 70px;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 600;
+        }
+        .already-account {
+            text-align: center;
+            margin-top: 20px;
+        }
+        sup {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="customNavbar">
+            <a class="navbar-brand" href="<%= request.getContextPath() %>/index.jsp"><img src="<%= request.getContextPath() %>/assert/image/Logo.1.1.png" id="company-logo" alt="Company Logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left:40% ">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href= '<%= request.getContextPath() %>/index.jsp'>Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href='<%= request.getContextPath() %>/blogs'>Blogs</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Hall Events
+                  </a>
+                   <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="Events-DropDown">
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Wedding</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Corporate Party</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Conference</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Concert</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Exhibition</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Product Launch</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Training Session</a>
+                  </div>
+                </li>
+               <li class="nav-item">
+                  <a class="nav-link" href='<%= request.getContextPath() %>/facilites'>Facilities</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href='<%= request.getContextPath() %>/contact'>Contact</a>
+                </li>
+                <% if(session.getAttribute("customer")==null){%>
+                <li class="nav-item">
+                  <a class="nav-link"  id="login">Login</a>
+                </li>
+                <%}
+                else{ %>
+                <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                            </svg>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="userMenu">
+                            <li><a class="dropdown-item ms-0" href="<%= request.getContextPath() %>/viewBooking" style ="color: #4e4332 !important;">My Bookings</a></li>
+                             <li><a class="dropdown-item ms-0" href="<%= request.getContextPath() %>/RequestHall" style ="color: #4e4332 !important;">Booking Request</a></li>
+                               <li><a class="dropdown-item ms-0" href="<%= request.getContextPath() %>/logout" style ="color: #4e4332 !important;" id="logout">Logout</a></li>
+                      	</ul>
+                </li>
+                <%} %>
+              </ul>
+            </div>
+          </nav>
+    </header>
+    <div class="row mt-5" style="margin-top: 1000px;">
+        <div class="col-4"></div>
+        <div class="col-8">
+            <div class="container">
+                <div class="card">
+                    <h2 class="text-center" style="color : #4c4444;">Sign Up</h2>
+                    <form id="registerForm" class="needs-validation" novalidate action="registerUser" method="post">
+                        <div class="row">
+                            <div class="col">
+                                <label for="name" class="form-label">Name:</label> <span><sup>*</sup></span>
+                                <input type="text" class="form-control" id="name" name="name" required oninput="validateField(this, nameRegex)">
+                                <div class="invalid-feedback">Allow only Alphabets and atleast 3 characters</div>
+                            </div>
+                            <div class="col">
+                                <label class="form-label">Gender:</label><span><sup>*</sup></span><br>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="male" value="male" required onchange="validateGender()">
+                                    <label class="form-check-label" for="male">Male</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="female" value="female" onchange="validateGender()">
+                                    <label class="form-check-label" for="female">Female</label>
+                                </div>
+                                <div id="genderFeedback" class="invalid-feedback">Please select your gender.</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="email" class="form-label">Email ID:</label> <span><sup>*</sup></span>
+                                <input type="email" class="form-control" id="email" name="email" required oninput="validateField(this, emailRegex)">
+                                <div class="invalid-feedback">Please enter a valid email address.</div>
+                                <div class="error" style="color:red"><%= request.getAttribute("emailError") != null ? request.getAttribute("emailError") : "" %></div>
+                            </div>
+                            <div class="col">
+                                <label for="phone" class="form-label">Phone Number:</label> <span><sup>*</sup></span>
+                                <input type="tel" class="form-control" id="phone" name="phone" pattern="[0-9]{10}" required oninput="validateField(this, phoneRegex)">
+                                <div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
+                                <div class="error" style="color:red"><%= request.getAttribute("phoneError") != null ? request.getAttribute("phoneError") : "" %></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="address" class="form-label">Address:</label> <span><sup>*</sup></span>
+                                <input type="text" class="form-control" id="address" name="address" required oninput="validateField(this, addressRegex)">
+                                <div class="invalid-feedback" >Please enter your address.</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="username" class="form-label">Username:</label> <span><sup>*</sup></span>
+                                <input type="text" class="form-control" id="username" name="username" required oninput="validateField(this, usernameRegex)">
+                                <div class="invalid-feedback"> It must be at least 5 characters long, contain at least one uppercase letter, one lowercase letter, one numeric digit, and may allowed underscores.</div>
+                                <div class="error" style="color:red" ><%= request.getAttribute("usernameError") != null ? request.getAttribute("usernameError") : "" %></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-label">Password:</label> <span><sup>*</sup></span>
+                                <div class="input-group mb-3">
+                                    <input class="form-control password" id="password" type="password" name="password" required oninput="validateField(this, passwordRegex)">
+                                    <span class="input-group-text togglePassword" id="">
+                                        <i data-feather="eye" style="cursor: pointer"></i>
+                                    </span>
+                                    <div class="invalid-feedback">Password must be at least 8 characters long and contain at least one letter, one number, and one special character.</div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <label for="confirmPassword" class="form-label">Confirm Password:</label> <span><sup>*</sup></span>
+                                <input type="password" class="form-control" id="confirmPassword" required oninput="validateConfirmPassword()">
+                                <div class="invalid-feedback">Re-entered password does not match.</div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary" id="registerButton" >Register</button>
+                            <hr>
+                        <div class="already-account">
+                            Already have an account? <a href="<%= request.getContextPath() %>/viewLogin">Login</a>
+                        </div>
+                        <div class="already-account">
+                            Forgot Password? <a href="forgotpassword.jsp">Reset Password</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+//Regex patterns
+const nameRegex = /^[A-Za-z]{3,}$/;
+const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+const phoneRegex = /^[0-9]{10}$/;
+const addressRegex = /.+/; // Adjust regex as needed
+const usernameRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d_]{5,}$/;
+const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
+function validateField(input, regex) {
+    if (regex.test(input.value)) {
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+    } else {
+        input.classList.remove('is-valid');
+        input.classList.add('is-invalid');
+    }
+}
+
+function validateGender() {
+    const genderInputs = document.getElementsByName('gender');
+    let genderSelected = false;
+    genderInputs.forEach(input => {
+        if (input.checked) {
+            genderSelected = true;
+        }
+    });
+
+    const genderFeedback = document.getElementById('genderFeedback');
+    if (genderSelected) {
+        genderInputs.forEach(input => {
+            input.classList.remove('is-invalid');
+        });
+        genderFeedback.style.display = 'none';
+    } else {
+        genderInputs.forEach(input => {
+            input.classList.add('is-invalid');
+        });
+        genderFeedback.style.display = 'block';
+    }
+}
+
+function validateConfirmPassword() {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (password === confirmPassword) {
+        document.getElementById('confirmPassword').classList.remove('is-invalid');
+        document.getElementById('confirmPassword').classList.add('is-valid');
+    } else {
+        document.getElementById('confirmPassword').classList.remove('is-valid');
+        document.getElementById('confirmPassword').classList.add('is-invalid');
+    }
+}
+
+document.getElementById('registerForm').addEventListener('submit', function(event) {
+    // Perform custom validation
+    const genderInputs = document.getElementsByName('gender');
+    let genderSelected = false;
+    genderInputs.forEach(input => {
+        if (input.checked) {
+            genderSelected = true;
+        }
+    });
+
+    if (!genderSelected) {
+        validateGender();
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    const form = this;
+    if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    form.classList.add('was-validated');
+}, false);
+
+</script>
+
+    <div class="text-center p-4 copyright">
+        © 2021 Copyright:
+        <a class="text-reset fw-bold" href="https://RoyalHalls.com/">RoyalHalls.com</a>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    </div>
+
+</body>
+</html>
+

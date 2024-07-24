@@ -1,0 +1,488 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page isELIgnored = "false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Booking</title>
+    <link rel="icon" type="image/x-icon" href="<%= request.getContextPath() %>/assert/image/LogoFavIcon.jpg">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">   
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assert/css/CustomerHeaderFooter.css"/>
+    <style>
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 2.5rem;
+        }
+    </style>
+    	 <% 
+    if (request.getSession().getAttribute("customer") == null) {
+        response.sendRedirect("viewLogin");
+    }
+	%>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="customNavbar">
+            <a class="navbar-brand" href="<%= request.getContextPath() %>/index.jsp"><img src="${pageContext.request.contextPath}/assert/image/Logo.1.1.png" id="company-logo" alt="Company Logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left:40% ">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href= '<%= request.getContextPath() %>/index.jsp'>Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href='<%= request.getContextPath() %>/blogs'>Blogs</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Hall Events
+                  </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="Events-DropDown">
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Wedding</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Corporate Party</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Conference</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Concert</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Exhibition</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Product Launch</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Training Session</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href='<%= request.getContextPath() %>/facilites'>Facilities</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href='<%= request.getContextPath() %>/contact'>Contact</a>
+                </li>
+                <% if(session.getAttribute("customer")==null){%>
+                 <li class="nav-item">
+                  <a class="nav-link"  href='<%= request.getContextPath() %>/viewLogin' id="login">Login</a>
+                </li>
+                <%}
+                else{ %>
+                <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                            </svg>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="userMenu">
+                        
+                            <li><a class="dropdown-item ms-0" href="<%= request.getContextPath() %>/PaymentServlet">My Bookings</a></li>
+                             <li><a class="dropdown-item ms-0" href="<%= request.getContextPath() %>/RequestHall">Booking Request</a></li>
+                              <li><a class="dropdown-item ms-0" href="#" id="logout">Logout</a></li>
+                      	</ul>
+                </li>
+                <%} %>
+              </ul>
+            </div>
+          </nav>
+    </header>
+<!--Logout modal-->
+		 <div class="modal" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+ <form action="logout" method="get">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      	</div>
+     	 <div class="modal-body">
+        	<p>Are you sure you want to logout?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-outline-danger">Logout</button>
+      </div>
+    </div>
+  </div> 
+  </form>
+</div> 
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-6 d-flex flex-column align-items-center">
+                <span class="mb-3">Payment Method</span>
+                <div class="card w-100">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header p-0" id="headingPaypal">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-light btn-block text-left collapsed p-3 rounded-0 border-bottom-custom d-flex" type="button" data-toggle="collapse" data-target="#collapsePaypal" aria-expanded="false" aria-controls="collapsePaypal" style="width:100%">
+                                        <div class="d-flex align-items-center justify-content-center">Paypal <img class="ms-3" src="https://i.imgur.com/7kQEsHU.png" width="30"></div>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapsePaypal" class="collapse" aria-labelledby="headingPaypal" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <input type="text" id ="paypal-mail" name="paypalMail" class="form-control" placeholder="Paypal email">
+                                    <div class="invalid-class" id="errorupiIdpaypal" style="display:none;color:red">Invalid Account number</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header p-0" id="headingGPay">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-light btn-block text-left collapsed p-3 rounded-0 border-bottom-custom d-flex" type="button" data-toggle="collapse" data-target="#collapseGPay" aria-expanded="false" aria-controls="collapseGPay" style="width:100%">
+                                        <div class="d-flex align-items-center justify-content-center">GPay <img class="ms-3" src="${pageContext.request.contextPath}/assert/image/google-pay-icon.png" width="30"></div>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseGPay" class="collapse" aria-labelledby="headingGPay" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <input type="text" id="upiIdG" name="upiIdG" class="form-control" placeholder="number">
+                                    <div class="invalid-class" id="errorupiIdG" style="display:none;color:red">Invalid Account number</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header p-0" id="headingPhonepe">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-light btn-block text-left collapsed p-3 rounded-0 border-bottom-custom d-flex" type="button" data-toggle="collapse" data-target="#collapsePhonepe" aria-expanded="false" aria-controls="collapsePhonepe" style="width:100%">
+                                        <div class="d-flex align-items-center justify-content-center">Phonepe <img class="ms-3" src="${pageContext.request.contextPath}/assert/image/phonepe-icon.png" width="30"></div>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapsePhonepe" class="collapse" aria-labelledby="headingPhonepe" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <input type="text" id="upiIdP" name="upiIdP" class="form-control" placeholder="number">
+                                    <div class="invalid-class" id="errorupiIdP" style="display:none;color:red">Invalid Upi Id</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header p-0" id="headingCreditCard">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-light btn-block text-left p-3 rounded-0" data-toggle="collapse" data-target="#collapseCreditCard" aria-expanded="true" aria-controls="collapseCreditCard" style="width:100%">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span>Credit card</span>
+                                            <div class="icons">
+                                                <img src="https://i.imgur.com/2ISgYja.png" width="30">
+                                                <img src="https://i.imgur.com/W1vtnOV.png" width="30">
+                                                <img src="https://i.imgur.com/35tC99g.png" width="30">
+                                                <img src="https://i.imgur.com/2ISgYja.png" width="30">
+                                            </div>
+                                        </div>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseCreditCard" class="collapse show" aria-labelledby="headingCreditCard" data-parent="#accordionExample">
+                                <div class="card-body payment-card-body">
+                                    <span class="font-weight-normal card-text">Card Number</span>
+                                    <div class="input">
+                                        <i class="fa fa-credit-card"></i>
+                                        <input type="text" class="form-control" id="accountnumber" name="accountnumber" placeholder="0000 0000 0000 0000">
+                                        <div class="invalid-class" id="errorAccountNumber" style="display:none;color:red">Invalid Account number</div>
+                                    </div>
+                                    <div class="row mt-3 mb-3">
+                                        <div class="col-6">
+                                            <span class="font-weight-normal card-text">Expiry Date</span>
+                                            <div class="input">
+                                                <i class="fa fa-calendar"></i>
+                                                <input type="text" id="expdate" name="expdate" class="form-control" placeholder="MM/YY">
+                                                <div class="invalid-class" id="errorExpDate" style="display:none;color:red">Enter the valid Exp-date and year should be year</div>
+                                            </div>
+                                        </div>
+                                       <div class="col-6">
+										    <span class="font-weight-normal card-text">CVC/CVV</span>
+										    <div class="input">
+										        <i class="fa fa-lock"></i>
+										        <input type="text" id="cvc" name="cvc" class="form-control" placeholder="000">
+										        <div class="invalid-class" id="errorCvc" style="display:none;color:red">
+										            Please enter a valid 3-digit CVC/CVV number.
+										        </div>
+										    </div>
+										</div>
+                                    </div>
+                                    <span class="text-muted certificate-text"><i class="fa fa-lock"></i> Your transaction is secured with SSL certificate</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="p-3">
+            <button class="btn btn-success btn-block free-button ps-5 pe-5" data-toggle="modal" data-target="#enterPinModal" id="pay-btn" disabled><strong>Pay</strong></button>
+        </div>
+</div>
+</div>
+            
+<p style="display:none" id="bookingId">${booking.bookingId}</p>
+	<div class="col-md-6 d-flex flex-column align-items-center">
+    <span class="mb-3">Summary</span>
+    <div class="card w-100">
+        <div class="d-flex justify-content-between p-3">
+            <div class="d-flex flex-column">
+                <span>HallName</span>
+            </div>
+            <div class="mt-1">
+                <span class="price">&#8377;<strong>${booking.hall.price}</strong></span>
+                <span class="month">/Day</span>
+            </div>
+        </div>
+        <hr class="mt-0 line">
+        <div class="d-flex justify-content-between mb-2">
+            <span class="ms-3">Payment Method</span>
+            <span>
+                <select class="form-select" id="paymentMethod" name="paymentMethod" aria-label="Default select example">
+                    <option value="2">Full</option>
+                </select>
+            </span>
+        </div>
+        <div class="p-3">
+            <div class="d-flex justify-content-between mb-2">
+                <span>Start Date</span>
+                <span>${booking.startDate}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span>End Date<i class="fa fa-clock-o"></i></span>
+                <span>${booking.endDate}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span>No of Days<i class="fa fa-clock-o"></i></span>
+                <span>${numberOfDays}</span>
+            </div>
+        </div>
+        <hr class="mt-0 line">
+        <div class="p-3 d-flex justify-content-between">
+            <div class="d-flex flex-column">
+                <span>Total Payment</span>
+            </div>
+            <span id="totalPayment" data-original-total="${totalPayment}">&#8377;${totalPayment}</span>
+        </div>
+    </div>
+</div>
+<!-- Enter PIN Modal -->
+<div class="modal fade" id="enterPinModal" tabindex="-1" role="dialog" aria-labelledby="enterPinModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form action="payBooking" method="get">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="enterPinModalLabel">Enter Your PIN</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- Hidden inputs for passing data -->
+                <input name="paytype" id="paytype" type="hidden">
+                <input type="hidden" name="paybookId" id="paybookId" autocomplete="off">
+                <input type="hidden" name="totpay" id="totpay" autocomplete="off">
+                <div class="modal-body">
+                    <input type="password" id="userPin" name="userPin" class="form-control" placeholder="0000" autocomplete="off">
+                     <div class="invalid-class" id="errorPin" style="display:none;color:red">Enter the valid Pin</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" disabled id="pin-sub" onclick="submitPin()">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+
+<footer class="text-center pt-4 pb-4">
+    © 2021 Copyright:
+    <a class="text-reset fw-bold" href="https://RoyalHalls.com/">RoyalHalls.com</a>
+</footer>
+
+<script>
+
+    document.getElementById('paymentMethod').addEventListener('change', function() {
+        let paymentMethod = this.value;
+        let totalPaymentElement = document.getElementById('totalPayment');
+        let originalTotal = parseFloat(totalPaymentElement.getAttribute('data-original-total'));
+
+        if (paymentMethod === '1') { // Advanced payment
+            totalPaymentElement.textContent = '₹' + (originalTotal / 2).toFixed(2);
+        } else { // Full payment
+            totalPaymentElement.textContent = '₹' + originalTotal.toFixed(2);
+        }
+    });
+	document.getElementById('confirmLogoutButton').addEventListener('click', function() {
+        // Add your logout logic here
+        window.location.href = '<%= request.getContextPath() %>/LogoutServlet'; // Replace 'logoutURL' with the actual URL to log out
+      });
+
+      // Show the modal when the logout dropdown item is clicked
+      document.getElementById('logout').addEventListener('click', function(event) {
+        event.preventDefault();
+        var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+        logoutModal.show();
+      });
+
+    function submitPin() {
+        var pin = document.getElementById("userPin").value;
+        if (pin) {
+            var totalPaymentElement = document.querySelector("#totalPayment");
+            var total = totalPaymentElement.textContent.trim().replace('₹', ''); // Extracting the total payment amount
+            var paymentMethod = document.querySelector("#paymentMethod").value; // Corrected to get value
+            var bookingId = document.querySelector("#bookingId").textContent.trim(); // Extracting the booking ID
+
+            // Setting values to hidden inputs in the modal form
+            document.getElementById("paytype").value = paymentMethod;
+            document.getElementById("paybookId").value = bookingId;
+            document.getElementById("totpay").value = total;
+
+            $('#enterPinModal').modal('hide'); // Hiding the PIN modal
+            $('#paymentModal').modal('show'); // Showing the payment confirmation modal (if exists)
+        } else {
+            alert("Please enter your PIN.");
+        }
+    }
+    
+    
+    var creaditCardBoolean = false;
+    
+    var isaccountEntered = false;
+    var isDateEntered = false;
+    var isCvcEntered = false;
+    var isGpayUpi = false;
+    var isPhonepeeUpi = false;
+    var isPaypal =false;
+    
+    var isAccountEntered = false;
+    var isDateEntered = false;
+    var isCvcEntered = false;
+
+    document.getElementById("accountnumber").addEventListener("input", function() {
+        var cardNumber = document.getElementById("accountnumber").value;
+        var regexPattern = /^[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{4}$/;
+
+        if (!regexPattern.test(cardNumber)) {
+            document.getElementById("errorAccountNumber").style.display = "block";
+            isAccountEntered = false;
+        } else {
+            document.getElementById("errorAccountNumber").style.display = "none";
+            isAccountEntered = true;
+            console.log("errorAccountNumber");
+        }
+        checkFormValidity();
+    });
+
+    document.getElementById('expdate').addEventListener('input', function() {
+        const input = this.value;
+        const regex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+        const errorDiv = document.getElementById('errorExpDate');
+
+        if (regex.test(input)) {
+            const [month, year] = input.split('/').map(Number);
+            const currentYear = new Date().getFullYear() % 100; // Get last two digits of current year
+
+            if (year >= currentYear) {
+                errorDiv.style.display = 'none';
+                isDateEntered = true;
+                console.log("errorExpDate");
+            } else {
+                errorDiv.style.display = 'block';
+                isDateEntered = false;
+            }
+        } else {
+            errorDiv.style.display = 'block';
+            isDateEntered = false;
+        }
+        checkFormValidity();
+    });
+
+    document.getElementById("cvc").addEventListener("input", function() {
+        var cardNumber = document.getElementById("cvc").value;
+        var regexPattern = /^[0-9]{3}$/;
+
+        if (!regexPattern.test(cardNumber)) {
+            document.getElementById("errorCvc").style.display = "block";
+            isCvcEntered = false;
+        } else {
+            document.getElementById("errorCvc").style.display = "none";
+            isCvcEntered = true;
+            console.log("errorCvc");
+        }
+        checkFormValidity();
+    });
+
+    function checkFormValidity() {
+        if (isAccountEntered && isDateEntered && isCvcEntered) {
+            console.log("All fields are valid");
+            document.getElementById("pay-btn").disabled = false;
+        } else {
+            document.getElementById("pay-btn").disabled = true;
+        }
+    }
+
+    
+    
+    document.getElementById("upiIdP").addEventListener("input", function() {
+        var cardNumber = document.getElementById("upiIdP").value;
+        var regexPattern = /^[6789]{1}[0-9]{9}$/;
+
+        if (!regexPattern.test(cardNumber)) {
+            document.getElementById("errorupiIdP").style.display = "block";
+			var isPhonepeeUpi = false;
+			document.getElementById("pay-btn").disabled = true;
+        } else {
+            document.getElementById("errorupiIdP").style.display = "none";
+            var isPhonepeeUpi = true;
+            document.getElementById("pay-btn").disabled = false;
+
+        }
+    });
+    
+    
+    document.getElementById("upiIdG").addEventListener("input", function() {
+        var cardNumber = document.getElementById("upiIdG").value;
+        var regexPattern = /^[6789]{1}[0-9]{9}$/;
+
+        if (!regexPattern.test(cardNumber)) {
+            document.getElementById("errorupiIdG").style.display = "block";
+            var isGpayUpi = false;
+            document.getElementById("pay-btn").disabled = true;
+
+        } else {
+            document.getElementById("errorupiIdG").style.display = "none";
+            var isGpayUpi = true;
+            document.getElementById("pay-btn").disabled = false;
+        }
+    });
+    
+    
+    
+    document.getElementById("paypal-mail").addEventListener("input", function() {
+        var cardNumber = document.getElementById("paypal-mail").value;
+        var regexPattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+
+        if (!regexPattern.test(cardNumber)) {
+            document.getElementById("errorupiIdpaypal").style.display = "block";
+            var isPaypal =false;
+            document.getElementById("pay-btn").disabled = true;
+        } else {
+            document.getElementById("errorupiIdpaypal").style.display = "none";
+            var isPaypal =true;
+            document.getElementById("pay-btn").disabled = false;
+        }
+    });
+    
+	document.getElementById("userPin").addEventListener("input",function(){
+		var pinNumber = document.getElementById("userPin").value;
+		var regexPattern = /^[0-9]{4}$/
+		if(!regexPattern.test(pinNumber)){
+			document.getElementById("errorPin").style.display = "block";
+			document.getElementById("pin-sub").disabled  = true;
+		}
+		else{
+			document.getElementById("pin-sub").disabled = false;
+			document.getElementById("errorPin").style.display = "none";
+		}
+	} )
+    
+    </script>
+</body>
+</html>

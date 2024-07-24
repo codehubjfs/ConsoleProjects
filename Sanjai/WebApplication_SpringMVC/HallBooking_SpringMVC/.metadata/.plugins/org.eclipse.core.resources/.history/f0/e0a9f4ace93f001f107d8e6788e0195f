@@ -1,0 +1,39 @@
+package com.hallbookingmanagement.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.hallbookingmanagement.beans.Booking;
+import com.hallbookingmanagement.service.AdminServices;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+
+@Controller
+public class BookingStatusController {
+	
+	@Autowired
+	AdminServices adminServices;
+	
+	
+	@GetMapping("/edit-status")
+	public String editStatus(@RequestParam("status") String status,@RequestParam("bookId") int bookId, HttpServletRequest request) {
+		System.out.println("I'm in controller");
+		if(status.equals("CONFIRMED")) {
+			Booking conflictBook = adminServices.checkConflict(bookId);
+			if(conflictBook==null) {
+				adminServices.changeBookingStatus(status,bookId);
+			}
+			else {
+				request.getSession().setAttribute("conflictBooking", conflictBook);
+			}
+		}
+		else {
+			adminServices.changeBookingStatus(status,bookId);
+		}
+		return "forward:showManagebooking";
+	}
+
+}

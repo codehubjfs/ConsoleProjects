@@ -1,0 +1,45 @@
+
+.editable-field {
+    border: none;
+    background-color: transparent;
+}
+.innerContainer {
+    display: inline-flex;
+    
+}
+.bookingTable {
+     margin-left: 130px !important;
+}
+.bookingTable td {
+    justify-content: center;
+    margin-left: 10px;
+    paddind-left:20px !important; 
+    padding-right:20px !important;
+    text-align: center;
+}
+.bookingTable thead.thead-dark tr th {
+    text-align: center;
+}
+.status-head {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.profile a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+}
+.status-active {
+    color: green;
+}
+.status-inactive {
+    color: orange;
+}
+.status-blocked {
+    color: red;
+}
+
+ .table th, .table td {
+            white-space: nowrap;
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+        }

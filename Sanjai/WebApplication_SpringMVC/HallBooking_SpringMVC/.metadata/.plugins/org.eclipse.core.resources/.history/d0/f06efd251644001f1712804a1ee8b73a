@@ -1,0 +1,582 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page isELIgnored = "false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hall List</title>
+    <link rel="icon" type="image/x-icon" href="../assert/image/LogoFavIcon.jpg">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/assert/css/CustomerHeaderFooter.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css"
+    rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .tooltip {
+            position: absolute;
+            background-color: #333;
+            color: #fff;
+            border-radius: 5px;
+            padding: 5px;
+            z-index: 1000;
+        }
+    </style>
+    <style>
+        .card-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            width: 300px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .namestar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+        }
+
+        .rating img {
+            width: 20px;
+            margin-right: 5px;
+        }
+
+        .location {
+            display: flex;
+            align-items: center;
+        }
+        .location p{
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .location img {
+            width: 20px;
+            margin-right: 10px;
+            align-items: center;
+        }
+
+        .price, .capacity {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .amenties {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .amenties p {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            font-size: 14px;
+            margin: 0;
+        }
+      .filter-bar {
+        position: fixed;
+          margin-top: 20px;
+          top: 56px;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          max-width: 270px;
+          height: calc(100vh - 100px);
+          background-color: #ffeed3;
+          padding: 15px;
+          overflow-y: auto;
+      }
+      #customNavbar h3 {
+          margin-left: 7px;
+      }
+
+      .filter-by-events, .filter-by-amenities, .filter-by-events, .filter-by-location, .filter-by-Price {
+          border: #2b15359a solid 1px;
+          padding: 10px;
+          margin-bottom: 15px;
+      }
+
+      .clear-button {
+          margin-top: 10px;
+      }
+
+      @media (max-width: 767px) {
+          .filter-bar {
+              position: relative;
+              top: auto;
+              width: 100%;
+              height: auto;
+              margin-bottom: 15px;
+          }
+
+          #main-container {
+              flex-direction: column;
+              margin-left: 0;
+          }
+
+          .dropdown {
+              margin-top: 15px;
+          }
+      }
+  </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="customNavbar">
+            <a class="navbar-brand" href="<%= request.getContextPath() %>/index.jsp"><img src="${pageContext.request.contextPath}/assert/image/Logo.1.1.png" id="company-logo" alt="Company Logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left:40% ">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href= '<%= request.getContextPath() %>/index.jsp'>Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href='<%= request.getContextPath() %>/blogs'>Blogs</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Hall Events
+                  </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" id="Events-DropDown">
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Wedding</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Corporate Party</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Conference</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Concert</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Exhibition</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Product Launch</a>
+                    <a class="dropdown-item" href='<%= request.getContextPath() %>/viewHalls'>Training Session</a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href='<%= request.getContextPath() %>/facilites'>Facilities</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href='<%= request.getContextPath() %>/contact'>Contact</a>
+                </li>
+                <% if(session.getAttribute("customer")==null){%>
+                <li class="nav-item">
+                  <a class="nav-link"  id="login"    href="<%= request.getContextPath() %>/viewLogin" >Login</a>
+                </li>
+                <%}
+                else{ %>
+                <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                            </svg>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="userMenu">
+                            <li><a class="dropdown-item ms-0" href="<%= request.getContextPath() %>/viewBooking" style ="color: #4e4332 !important;">My Bookings</a></li>
+                             <li><a class="dropdown-item ms-0" href="<%= request.getContextPath() %>/RequestHall" style ="color: #4e4332 !important;">Booking Request</a></li>
+                               <li><a class="dropdown-item ms-0" href="<%= request.getContextPath() %>/logout" style ="color: #4e4332 !important;" id="logout">Logout</a></li>
+                      	</ul>
+                </li>
+                <%} %>
+              </ul>
+            </div>
+          </nav>
+    </header>
+    <!--Logout modal-->
+		<div class="modal" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <p>Are you sure you want to logout?</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+		        <button type="button" class="btn btn-outline-danger" id="confirmLogoutButton">Logout</button>
+		      </div>
+		    </div>
+		  </div>
+		</div> 
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 col-sm-12 filter-bar">
+            <div class="filter-by"><h3>Filter By</h3></div>
+            <ul class="nav flex-column">
+                <li class="nav-item filter-by-events">
+                    <div class="filter-by"><h4>Events</h4></div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkboxWedding">
+                        <label class="form-check-label" for="checkboxWedding">Wedding</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkboxCorporateParty">
+                        <label class="form-check-label" for="checkboxCorporateParty">Corporate Party</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkboxConference">
+                        <label class="form-check-label" for="checkboxConference">Conference</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkboxConcert1">
+                        <label class="form-check-label" for="checkboxConcert1">Concert</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkboxExhibition">
+                        <label class="form-check-label" for="checkboxExhibition">Exhibition</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkboxProductLaunch">
+                        <label class="form-check-label" for="checkboxProductLaunch">Product Launch</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkboxTrainingSession">
+                        <label class="form-check-label" for="checkboxTrainingSession">Training Session</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkboxConcert2">
+                        <label class="form-check-label" for="checkboxConcert2">Concert</label>
+                    </div>
+                    <button class="btn btn-secondary btn-sm clear-button" onclick="clearCheckboxesByEvents()">Clear</button>
+                </li>
+                
+                <script>
+                    function clearCheckboxesByEvents() {
+                        const checkboxes = document.querySelectorAll('.filter-by-events .form-check-input');
+                        checkboxes.forEach(checkbox => {
+                            checkbox.checked = false;
+                        });
+                    }
+                </script>
+                
+                <li class="nav-item filter-by-amenities">
+                    <div class="filter-by"><h4>Amenities</h4></div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="amenityParking">
+                        <label class="form-check-label" for="amenityParking">Parking</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="amenityWifi">
+                        <label class="form-check-label" for="amenityWifi">Wi-Fi</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="amenityCatering">
+                        <label class="form-check-label" for="amenityCatering">Catering</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="amenityAudioVisual">
+                        <label class="form-check-label" for="amenityAudioVisual">Audio Visual Equipment</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="amenityBar">
+                        <label class="form-check-label" for="amenityAudioVisual">Bar</label>
+                    </div>
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="amenityIceScreamBar">
+                        <label class="form-check-label" for="amenityAudioVisual">Ice Scream Bar</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="amenityAdditionalSecurity">
+                        <label class="form-check-label" for="amenityAudioVisual">Additional Security</label>
+                    </div>
+                    <button class="btn btn-secondary btn-sm clear-button" onclick="clearCheckboxesByAmenities()">Clear</button>
+                </li>
+                <script>
+                    function clearCheckboxesByAmenities() {
+                        const checkboxes = document.querySelectorAll('.filter-by-amenities .form-check-input');
+                        checkboxes.forEach(checkbox => {
+                            checkbox.checked = false;
+                        });
+                    }
+                </script>
+                
+                <li class="nav-item filter-by-Price mb-6">
+                    <h4>Price</h4>
+                    <div class="form-group">
+                        <label for="minPrice">Minimum Price:</label>
+                        <input type="number" class="form-control" id="minPrice" placeholder="Enter minimum price">
+                    </div>
+                    <div class="form-group pb-2">
+                        <label for="maxPrice">Maximum Price:</label>
+                        <input type="number" class="form-control" id="maxPrice" placeholder="Enter maximum price">
+                    </div>
+                </li>
+                <li style="justify-content: center; align-items: center;" ><button type="button" class="btn btn-light"> Apply </button></li>
+              </ul>
+        </div>
+        <div class="col-md-9 col-sm-12 " id ="main-container" style="margin-left: 350px; margin-top: 7%; " >
+            <div class="row">
+                <div class="col-12 d-flex justify-content-between align-items-center">
+                    <div class="halls-cards">
+                        <h4>Best Wedding Venues</h4>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Sort by
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">Popularity</a></li>
+                        <li><a class="dropdown-item" href="#">Price: Low to High</a></li>
+                        <li><a class="dropdown-item" href="#">Price: High to Low</a></li>
+                        </ul>
+                    </div>
+            </div>
+            <div style="margin-top:40px"></div> 
+            <c:forEach items="${hallList}" var="hall" varStatus="status"> 
+		          
+                <div class="col-sm"> 
+                    <div class="card-container">
+                        <div class="card">
+	                          <a class="hall_link" data-hall-id="${hall.hallId}" data-index="${status.index}">
+                    					<img src="<%= request.getContextPath() %>/assert/image/hallcard-5.jpg" style="border-radius:20px;">
+                				</a>
+	                            <div class="card-content">
+	                                <div class="namestar d-flex mt-2">
+	                                    <h4 style="text-decoration:none;">${hall.hallName}</h4>
+	                                        <div class="rating d-inline">
+	                                            <img src="<%= request.getContextPath() %>/assert/image/star_148841.png" style="width:20px;">
+	                                            <p class="d-inline" style="margin-right: 20px;">4.5</p>
+	                                        </div>
+	                                </div>
+	                                <div class="location d-flex d-block">
+	                                    <img src="<%= request.getContextPath() %>/assert/image/placeholder_186250.png">
+	                                    <p>${hall.location}</p>
+	                                </div>
+	                                        <div class="price ms-2">
+	                                            <p><strong>&#8377;${hall.price}</strong>Per Day</p>
+	                                        </div>
+	                                        <div class="capacity ms-2">
+	                                            <p><strong>${hall.capacity} </strong> Aprox</p>
+	                                        </div >
+	                                        <div class="amenties d-flex ms-2">
+	                                            <c:forEach items="${hall.amenities}" var="amenity" varStatus="amenityStatus">
+	                                    			<c:if test="${amenityStatus.index < 3}">
+	                                        			<p>${amenity.amenityType}</p>
+	                                    			</c:if>
+	                                			</c:forEach>
+	                                    </div>
+	                            </div>
+	                        </div >
+                        	 <form id="form-${status.index}" style="display:none" class="submission" action="showHallDetail" method="post">
+				                <input name="hallId" id="hall-Id-${status.index}" value="${hall.hallId}">
+				                <button type="submit" class="form-btn"></button>
+				            </form>
+                    </div>
+                </div>
+                </c:forEach>
+            </div>
+            <div class="row ">
+              <div class="col mt-4 mb-4">
+                  <ul class="pagination" style="justify-content: center;">
+                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+          </div>
+            <div class="row">
+                <div class="col d-flex flex-column justify-content-center align-items-center">
+                    <h2 class="text-center mt-3">Best Wedding Venues in Coimbatore</h2>
+                    <p class="text-center mt-2" style="line-height: 25px; letter-spacing: 2px;">
+                        Known for its beauty over the globe, offers a great variety of wedding venues.
+                        The best wedding venues are mentioned below along with their pictures and reviews.
+                        The available venues are of all types including banquet halls to farmhouses. Both pocket-friendly & 
+                        grand wedding venues are available for booking, contact your favourite wedding venue vendor or request a
+                        call back from us. We will take care of the rest
+                    </p>
+                </div>
+            </div>  
+            </div>
+            
+            </div>
+        </div>
+      </div>
+  
+  <footer class="text-center text-lg-start bg-body-tertiary text-muted">
+
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+
+      <div class="me-5 d-none d-lg-block">
+        <span>Get connected with us on social networks:</span>
+      </div>
+      <div>
+        <a href="" class="me-4 text-reset social-media">
+          <img src="assert/image/social_12942327.png">
+        </a>
+        <a href="" class="me-4 text-reset social-media">
+          <img src="assert/image/twitter-alt_12107622.png">
+        </a>
+        <a href="" class="me-4 text-reset social-media">
+          <img src="assert/image/instagram_2111463.png" alt="">
+        </a>
+        <a href="" class="me-4 text-reset social-media">
+          <img src="assert/image/youtube_1384060.png" alt="">
+        </a>
+      </div>
+    </section>
+    <section class="">
+      <div class="container text-center text-md-start mt-5">
+
+        <div class="row mt-3">
+
+          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">
+              <i class="fas fa-gem me-3"></i>Royal Halls
+            </h6>
+            <p>
+              Manage all your event details,
+              sales and billings and enhance the
+              client experience with 20+ online
+              booking, event planning.
+            </p>
+          </div>
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">Search Planning</h6>
+            <p>
+              <a href="Hall.html" class="text-reset">Search by Events</a>
+            </p>
+            <p>
+              <a href="Hall.html" class="text-reset">Search by Seating Arrangements</a>
+            </p>
+            <p>
+              <a href="Hall.html" class="text-reset">Search by Price</a>
+            </p>
+            <p>
+              <a href="Hall.html" class="text-reset">Search by Hall</a>
+            </p>
+          </div>
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">Useful links :</h6>
+            <p>
+              <a href="Home1.0.html" class="text-reset">Home</a>
+            </p>
+            <p>
+              <a href="Hall.html" class="text-reset">Venues</a>
+            </p>
+            <p>
+              <a href="facilities.html" class="text-reset">Facilities</a>
+            </p>
+            <p>
+              <a href="contact.html" class="text-reset">Contact</a>
+            </p>
+          </div>
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+            <p><i class="fas fa-home me-3"></i> Singa, Coimbatore</p>
+            <p>
+              <i class="fas fa-envelope me-3"></i>
+              info@example.com
+            </p>
+            <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+            <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+5hb7ie1LQQa9U52EXv7aQZL2RHB5SEc5HB5nh9" crossorigin="anonymous">
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+7HAuoD6z7VVvNK15MWEhPJwW/7mo" crossorigin="anonymous">
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"></script>
+    <div class="text-center p-4 copyright">
+      © 2021 Copyright:
+      <a class="text-reset fw-bold" href="https://RoyalHalls.com/">RoyalHalls.com</a>
+    </div>
+  </footer>
+  <script>
+  
+  document.addEventListener('DOMContentLoaded', function() {
+      var links = document.querySelectorAll('.hall_link');
+
+      links.forEach(function(link) {
+          link.addEventListener('click', function(event) {
+              event.preventDefault();
+              var index = link.getAttribute('data-index');
+              var form = document.getElementById('form-' + index);
+              form.submit();
+          });
+      });
+  });
+  
+  
+  document.getElementById('confirmLogoutButton').addEventListener('click', function() {
+	    // Add your logout logic here
+	    window.location.href = '<%= request.getContextPath() %>/LogoutServlet'; // Replace 'logoutURL' with the actual URL to log out
+	  });
+
+	  // Show the modal when the logout dropdown item is clicked
+	  document.getElementById('logout').addEventListener('click', function(event) {
+	    event.preventDefault();
+	    var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+	    logoutModal.show();
+	  });
+	  
+
+	  
+
+    window.onscroll = function() {checkPosition()};
+        function checkPosition() {
+            var fixedDiv = document.getElementById("filter-bar");
+            var containerEnter = document.getElementById("foot");
+            var containerEnterRect = containerEnter.getBoundingClientRect();
+            var fixedDivRect = fixedDiv.getBoundingClientRect();
+
+            if (containerEnterRect.top <= fixedDivRect.bottom) {
+                fixedDiv.style.position = "absolute";
+                fixedDiv.style.top = (window.pageYOffset + containerEnterRect.top - fixedDivRect.height) + "px";
+            } else {
+                fixedDiv.style.position = "fixed";
+                fixedDiv.style.top = "20px";
+            }
+        }
+
+        document.querySelector('.dropdown-toggle').addEventListener('click', function() {
+        document.querySelector('.dropdown-menu').classList.toggle('show');
+        });
+        
+        
+       
+  </script>
+  </body>
+</html>

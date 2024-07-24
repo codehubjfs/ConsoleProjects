@@ -1,0 +1,30 @@
+package com.hallbookingmanagement.controller;
+
+import java.time.temporal.ChronoUnit;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.hallbookingmanagement.beans.Booking;
+import com.hallbookingmanagement.service.CustomerServices;
+
+@Controller
+public class ViewPaymentGateway {
+	@Autowired 
+	CustomerServices customerServices;
+	
+	@GetMapping("/Payment")
+	public ModelAndView viewGateWay(@RequestParam("bookingID") int bookId, ModelAndView model) {
+		Booking booking = customerServices.showBookingDetails(bookId);
+		model.addObject("booking", booking);
+		long numberOfDays = ChronoUnit.DAYS.between(booking.getStartDate(), booking.getEndDate());
+		long totalDays = numberOfDays * (long) booking.getHall().getPrice();
+		model.addObject("totalPayment",totalDays);
+		model.addObject("numberOfDays",numberOfDays);
+		model.setViewName("PaymentPage");
+		return model;
+	}
+}

@@ -1,0 +1,17 @@
+package com.hallbookingmanagement.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class ChangePasswordController {
+	
+	@PostMapping("changePassword")
+	public ModelAndView changePassword(@RequestParam("password") String password, @RequestParam("mail") String mail, ModelAndView model) {
+		
+		return model;
+	}
+
+}

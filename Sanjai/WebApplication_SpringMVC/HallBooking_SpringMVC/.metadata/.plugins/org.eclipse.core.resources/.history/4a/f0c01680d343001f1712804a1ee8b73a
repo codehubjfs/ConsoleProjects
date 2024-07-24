@@ -1,0 +1,10 @@
+package com.hallbookingmanagement.mapper;
+
+import java.util.List;
+
+import com.hallbookingmanagement.beans.WebContactDetails;
+
+public interface WebContactDetailMapper {
+	int updateWebContactDetails(WebContactDetails webContactDetails);
+	List<WebContactDetails> getAllDetail();
+}

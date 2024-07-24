@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hallbookingmanagement.mapper.BookingMapper">
+    
+     <resultMap id="BookingResultMap" type="com.hallbookingmanagement.beans.Booking">
+     	  	<id property="bookingId" column="book_id"/>
+     	  	<result property="requestedTime" column="requested_time"/>
+	        <result property="startDate" column="start_date"/>
+	        <result property="endDate" column="end_date"/>
+	        <result property="bookStatus" column="book_status"/>
+     	    <association property="customer" javaType="com.hallbookingmanagement.beans.Customer">
+            	<id property="userId" column="user_id"/>
+        	</association>
+        	<association property="hall" javaType="com.hallbookingmanagement.beans.Hall">
+            <id property="hallId" column="hall_id"/>
+            <!-- Assuming events and seat are collections (lists) -->
+            <collection property="events" ofType="com.hallbookingmanagement.beans.Event">
+                <id property="eventId" column="EVENT_ID"/>
+            </collection>
+            <collection property="seat" ofType="com.hallbookingmanagement.beans.Seats">
+                <id property="seatId" column="ARRANGEMENT_ID"/>
+            </collection>
+        </association>
+     </resultMap>
+    
+    <select id="selectBookingById" parameterType="int" resultMap="BookingResultMap">
+        SELECT book_id, user_id, hall_id, requested_time, start_date, end_date, book_status
+        FROM booking 
+        WHERE book_id = #{bookingId}
+    </select>
+    
+    <select id="getAllBookings" resultMap="BookingResultMap">
+        SELECT book_id, user_id, hall_id, requested_time, start_date, end_date, book_status
+        FROM booking
+    </select>
+    
+    <insert id="addBooking" parameterType="com.hallbookingmanagement.beans.Booking">
+    INSERT INTO booking (book_id, user_id, hall_id, event_id, arrangement_id, requested_time, start_date, end_date, book_status)
+    VALUES (
+        #{bookingId}, 
+        #{customer.userId}, 
+        #{hall.hallId}, 
+        #{hall.events[0].eventId},  <!-- Assuming only one event is being booked -->
+        #{hall.seat[0].seatId},  <!-- Assuming only one arrangement is being booked -->
+        #{requestedTime}, 
+        #{startDate}, 
+        #{endDate}, 
+        #{bookStatus}
+    )
+</insert>
+    <update id="updateBooking" parameterType="com.hallbookingmanagement.beans.Booking">
+        UPDATE booking SET book_status = #{bookStatus} WHERE book_id = #{bookingId}
+    </update>
+</mapper>

@@ -1,0 +1,33 @@
+package com.hallbookingmanagement.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.hallbookingmanagement.beans.Customer;
+import com.hallbookingmanagement.service.AdminServices;
+
+@Controller
+public class BlockCustomer {
+
+	@Autowired
+	AdminServices adminServices;
+	
+	@GetMapping("/changeCustomerStatus")
+	public ModelAndView changeCustomerStatus(@RequestParam("userId") int userId,@RequestParam("status") String status,ModelAndView model) {
+		
+		Customer customerExisted = adminServices.changeCustomerStatus(userId, status);
+		if(customerExisted!=null) {
+			model.addObject("customerStatusChanged", customerExisted.getName()+" status is change to "+ status);
+		}
+		else {
+			System.out.print("Not Updated");
+		}
+		 model.setViewName("redirect:customerManagement");
+		 return model;
+	}
+	
+}

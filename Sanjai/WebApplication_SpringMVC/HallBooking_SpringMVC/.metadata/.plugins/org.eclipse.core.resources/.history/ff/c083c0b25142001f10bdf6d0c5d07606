@@ -1,0 +1,27 @@
+package com.hallbookingmanagement.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.hallbookingmanagement.beans.Payment;
+import com.hallbookingmanagement.service.CustomerServices;
+
+@Controller
+public class FullPaymentController {
+	
+	@Autowired
+	CustomerServices customerServices;
+	
+	@GetMapping("/fullPayment")
+	public ModelAndView fullPayment(@RequestParam("paymentId") int paymentId, ModelAndView model) {
+		System.out.println("Payment Controller");
+		Payment payment = customerServices.getPayment(paymentId);
+		model.addObject("payment",payment);
+		model.setViewName("fullPayment");
+		return model;
+	}
+
+}

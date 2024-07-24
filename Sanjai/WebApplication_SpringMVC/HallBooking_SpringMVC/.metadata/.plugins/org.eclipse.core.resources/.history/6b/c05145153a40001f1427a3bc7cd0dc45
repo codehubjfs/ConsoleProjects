@@ -1,0 +1,410 @@
+package com.hallbookingmanagement.service;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Properties;
+import java.util.Random;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import jakarta.mail.Authenticator;
+import jakarta.mail.Message;
+import jakarta.mail.PasswordAuthentication;
+import jakarta.mail.Transport;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.mail.Session;
+
+import com.hallbookingmanagement.beans.Booking;
+import com.hallbookingmanagement.beans.Customer;
+import com.hallbookingmanagement.beans.Event;
+import com.hallbookingmanagement.beans.Hall;
+import com.hallbookingmanagement.beans.Payment;
+import com.hallbookingmanagement.beans.Seats;
+import com.hallbookingmanagement.mapper.CustomerMapper;
+import com.hallbookingmanagement.util.DAOFactory;
+
+@Service
+public class CustomerServicesImp implements CustomerServices {
+	
+	@Autowired
+	Customer customer;
+
+	public boolean validateUsers(String name, String password, HttpServletRequest request) {
+	    try {
+	     
+	        CustomerMapper mapper = DAOFactory.getCustomerDao();
+	        List<Customer> customerList = mapper.getAllCustomer();
+	        
+	        boolean isUser = customerList.stream()
+	            .anyMatch(x -> x.getUserName().equals(name) && x.getPassword().equals(password));
+	        
+	        if (isUser) {
+	            Customer customer = customerList.stream()
+	                .filter(x -> x.getUserName().equals(name) && x.getPassword().equals(password))
+	                .findFirst()
+	                .orElse(null);
+	            
+	            if (customer != null && request != null) {
+	                request.getSession().setAttribute("customer", customer);
+	            }
+	        }
+
+	        return isUser;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+
+	@Override
+	public HashMap<String,String> registerUser(String name, String gender, String emailId, String phone,
+			String Address, String userName, String Password) {
+		try {
+			HashMap<String,String> errorMessages = new HashMap<String, String>();
+			List<Customer> customerList =  DAOFactory.getCustomerDao().getAllCustomer();
+			boolean userNameExisted = customerList.stream().anyMatch(x->x.getUserName().equals(userName));
+			boolean userPhoneExisted = customerList.stream().anyMatch(x->x.getNumber().equals(phone));
+			boolean userEmailExisted = customerList.stream().anyMatch(x->x.getEmailId().equals(emailId));
+			if(userPhoneExisted) {
+				errorMessages.put("phoneError", "Mobile number is already Existed");
+				
+			}
+			if(userNameExisted) {
+				errorMessages.put("username", "Username is already existed please give another username");
+				
+			}
+			if(userEmailExisted) {
+				errorMessages.put("emailError", "Email-Id is already existed");
+			}
+			
+			return errorMessages;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+			
+	}	
+
+	
+	
+	@Override
+	public int addCustomer(String name, String gender, String email, String phone, String address, String username,
+			String password) {
+		int numberOfRowsAffected = 0 ;
+		try {
+			int primaryKey = DAOFactory.getCustomerDao().getAllCustomer().stream()
+			    .mapToInt(Customer::getUserId)
+			    .max()
+			    .orElseThrow(() -> new RuntimeException("No customers found"));
+			System.out.println("PrimaryKey :"+primaryKey);
+			customer.setUserId(primaryKey+1);
+			customer.setName(name);
+			customer.setGender(gender);
+			customer.setAccountStatus("Active");
+			customer.setNumber(phone);
+			customer.setAddress(address);
+			customer.setUserName(username);
+			customer.setPassword(password);
+			customer.setEmailId(email);
+			customer.setAccountType("Customer");
+			numberOfRowsAffected = DAOFactory.getCustomerDao().addCustomer(customer);
+			if(numberOfRowsAffected>0) {
+				System.out.println("Added Success fully");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return numberOfRowsAffected;
+	}
+
+	
+	@Autowired
+	Hall hall;
+	
+	@Override
+	public List<Hall> showHall() {
+		try {
+			List<Hall> listHall = DAOFactory.getHallDao().getAllHalls();
+			return listHall;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	
+	@Override
+	public Hall getHallDetails(int hallId) {
+		try {
+			hall = DAOFactory.getHallDao().getAllHalls().stream().filter(x->x.getHallId()==hallId).findFirst().orElse(null);
+			return hall;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Booking> getMyRequest(int userId, HttpServletRequest request) {
+		List<Booking> myRequest = listAllBooking().stream().filter(x->x.getCustomer().getUserId()==userId).collect(Collectors.toList());
+		return myRequest;
+	}
+
+	@Override
+	public List<Booking> listAllBooking() {
+		try {
+			List<Booking> booking = new ArrayList<Booking>();
+			List<Customer> customerList = DAOFactory.getCustomerDao().getAllCustomer();
+			List<Hall> hallList = DAOFactory.getHallDao().getAllHalls();
+			List<Booking> allbooking = DAOFactory.getBookingDao().getAllBookings();
+			for(Booking book: allbooking) {
+				int userId = book.getCustomer().getUserId();
+				int hallId = book.getHall().getHallId();
+				Hall hall = hallList.stream().filter(x->x.getHallId()==hallId).findFirst().orElse(null);
+				Customer customer = customerList.stream().filter(x->x.getUserId()==userId).findFirst().orElse(null);
+				book.setHall(hall);
+				book.setCustomer(customer);
+				booking.add(book);
+			}
+			return booking;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	@Autowired
+	Event eventObj;
+	
+	@Autowired
+	Hall hallObj;
+	
+	@Autowired
+	Booking booking;
+
+	@Override
+	public boolean requestHall(HttpServletRequest request, String event, String seat, LocalDate bookedDate,
+	        int numberOfDays) {
+	    try {
+	        Hall hall = (Hall) request.getSession().getAttribute("hallDetail");
+	        int hallid = hall.getHallId();
+	        Customer customer = (Customer) request.getSession().getAttribute("customer");
+	        int userId = customer.getUserId();
+	        int bookedEvent = hall.getEvents().stream()
+	            .filter(x -> x.getEventName().equals(event))
+	            .findFirst()
+	            .orElseThrow(() -> new NoSuchElementException("Event not found"))
+	            .getEventId();
+	        int bookedSeat = hall.getSeat().stream()
+	            .filter(x -> x.getArrangementType().equals(seat))
+	            .findFirst()
+	            .orElseThrow(() -> new NoSuchElementException("Seat not found"))
+	            .getSeatId();
+
+	        Seats seatObj = new Seats();
+	        seatObj.setSeatId(bookedSeat);
+	        Event eventObj = new Event();
+	        eventObj.setEventId(bookedEvent);
+
+	        int maxId = DAOFactory.getBookingDao().getAllBookings().stream()
+	            .max(Comparator.comparingInt(Booking::getBookingId))
+	            .map(Booking::getBookingId)
+	            .orElse(0);
+
+	        Booking booking = new Booking();
+	        booking.setBookingId(maxId + 1);
+	        booking.setCustomer(customer);
+	        booking.setHall(hall);
+	        booking.setRequestedTime(LocalDateTime.now());
+	        booking.setStartDate(bookedDate);
+	        booking.setEndDate(bookedDate.plusDays(numberOfDays));
+	        booking.setBookStatus("PENDING");
+
+	        int added = DAOFactory.getBookingDao().addBooking(booking);
+	        if (added > 0) {
+	            System.out.println("Booking added successfully");
+	            return true;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return false;
+	}
+	
+	@Autowired
+	Booking cancelBook;
+
+	@Override
+	public boolean cancelBooking(int bookId) {
+		cancelBook.setBookingId(bookId);
+		cancelBook.setBookStatus("CANCELED");
+		  try {
+			  int cancelRows = DAOFactory.getBookingDao().updateBooking(cancelBook);
+			  return cancelRows>0?true:false;
+		  	} 
+		  catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public Map<String, String> forgetPassword(HttpServletRequest request, HttpServletResponse response, String mail) {
+		Map<String, String> error = new HashMap<String, String>();
+		try {
+			boolean mailNotExisted = DAOFactory.getCustomerDao().getAllCustomer().stream().anyMatch(customer -> customer.getEmailId().equals(mail));
+			if(!mailNotExisted) {		
+			}
+			String host = "smtp.gmail.com";
+		    String username = "2k20it30@kiot.ac.in";
+		    String password = "sanjai@4321";
+		    String port = "587";
+
+		    Properties props = new Properties();
+		    props.put("mail.smtp.auth", "true");
+		    props.put("mail.smtp.starttls.enable", "true");
+		    props.put("mail.smtp.host", host);
+		    props.put("mail.smtp.port", port);
+
+		    // create a mail session with the given properties
+		    Session session = Session.getInstance(props, new Authenticator() {
+		        protected PasswordAuthentication getPasswordAuthentication() {
+		            return new PasswordAuthentication(username, password);
+		        }
+		    });
+		    
+		    Random random = new Random();
+	        int otp  = 100000 + random.nextInt(900000);
+	        
+	        HttpSession otpSession = request.getSession();
+	        otpSession.setAttribute("otp", otp);
+
+		    String from = "2k20it30@kiot.ac.in";
+		    String to = "sanjaisanjai5611@gmail.com";
+		    String subject = "OTP for Password Reset Request";
+		    String body = "<div style=\"font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2\">\r\n"
+		    		+ "  <div style=\"margin:50px auto;width:70%;padding:20px 0\">\r\n"
+		    		+ "    <div style=\"border-bottom:1px solid #eee\">\r\n"
+		    		+ "      <a href=\"\" style=\"font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600\">Your Brand</a>\r\n"
+		    		+ "    </div>\r\n"
+		    		+ "    <p style=\"font-size:1.1em\">Hi,</p>\r\n"
+		    		+ "    <p>Thank you for choosing Your Brand. Use the following OTP to complete your Sign Up procedures. OTP is valid for 5 minutes</p>\r\n"
+		    		+ "    <h2 style=\"background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;\">"+otp+"</h2>\r\n"
+		    		+ "    <p style=\"font-size:0.9em;\">Regards,<br />Your Brand</p>\r\n"
+		    		+ "    <hr style=\"border:none;border-top:1px solid #eee\" />\r\n"
+		    		+ "    <div style=\"float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300\">\r\n"
+		    		+ "      <p>Royal Halls lt</p>\r\n"
+		    		+ "      <p>Singanalur Covai</p>\r\n"
+		    		+ "      <p>Tamil nadu</p>\r\n"
+		    		+ "    </div>\r\n"
+		    		+ "  </div>\r\n"
+		    		+ "</div>";
+
+		   
+		        MimeMessage message = new MimeMessage(session);
+		        message.setFrom(new InternetAddress(from));
+		        message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+		        message.setSubject(subject);
+		        message.setContent(body,"text/html" );
+		        // send the message
+		        Transport.send(message);
+		        boolean isExisted = DAOFactory.getCustomerDao().getAllCustomer().stream()
+			    .anyMatch(customer -> customer.getEmailId().equals(mail));
+		        DAOFactory.getCustomerDao().getAllCustomer().forEach(System.out::println);
+		        if(!isExisted) {
+		        		error.put("emailNotExisted", "Incorrect user name password");
+		        	}
+		    } catch(Exception e) {
+		        System.out.print(e.getMessage());
+		    }
+		return error;
+	}
+	
+	@Override
+	public Booking showBookingDetails(int bookId) {
+		Booking book = listAllBooking().stream().filter(x->x.getBookingId()==bookId).findFirst().orElse(null);
+		return book;
+	}
+
+	@Override
+	public List<Payment> paymentList() {
+		try {
+			List<Payment> paymentList = new ArrayList<Payment>();
+			for(Payment payment: DAOFactory.getPaymentDao().getAllPayments()) {
+				int bookId = payment.getBook().getBookingId();
+				Booking book =  listAllBooking().stream().filter(x->x.getBookingId()==bookId).findFirst().orElse(null);
+				payment.setBook(book);
+				paymentList.add(payment);
+			}
+			return paymentList;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
+
+	@Override
+	public boolean paymentbooking(int bookId,String paymentType, double paymentPrice) {
+		try {
+			
+			Payment payment =  paymentList().stream().filter(x->x.getBook().getBookingId()==bookId).findFirst().orElse(null);
+			if(payment==null) {
+				payment = new Payment();
+	            Booking book = listAllBooking().stream().filter(x->x.getBookingId()==bookId).findFirst().orElse(null);
+	            int paymentId = paymentList().stream().mapToInt(Payment::getPaymentId).max().orElse(0)+1;
+	            payment.setPaymentId(paymentId);
+	            payment.setBook(book);
+	            payment.setPaidStatus(paymentType);
+	            payment.setPrice(paymentPrice);
+	            payment.setPaymentTime(LocalDateTime.now());
+	            DAOFactory.getPaymentDao().insertPayment(payment);
+	            book.setBookStatus("CONFIRMED");
+	            DAOFactory.getBookingDao().updateBooking(book);
+	            return true;
+			}
+		else {
+			Booking book = listAllBooking().stream().filter(x->x.getBookingId()==bookId).findFirst().orElse(null);
+			payment.setBook(book);
+			payment.setPaidStatus(paymentType);
+			payment.setPaymentTime(LocalDateTime.now());
+			DAOFactory.getPaymentDao().insertPayment(payment);
+			return true;
+		}
+		
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public List<Payment> showPaymentDetails(HttpServletRequest request) {
+		Customer customer = (Customer)request.getSession().getAttribute("customer");
+		List<Payment> paymentList =  paymentList().stream().filter(x->x.getBook().getCustomer().getUserId()==customer.getUserId()).toList();
+		return paymentList;
+	}
+}

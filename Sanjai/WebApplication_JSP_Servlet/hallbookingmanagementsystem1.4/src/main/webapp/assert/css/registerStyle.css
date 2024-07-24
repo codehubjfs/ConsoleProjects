@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+  body {
+      background-repeat: no-repeat;
+      background-size: cover;
+  }
+  .container {
+      margin-top: 50px;
+      max-width: 50%;
+  }
+  .card {
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      padding: 20px;
+      margin-bottom: 10%;
+  }
+  .hr-with-text {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 20px 0;
+  }
+  .hr-with-text::before,
+  .hr-with-text::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #4c4444;
+  }
+  .hr-with-text::before {
+      margin-right: 10px;
+  }
+  .hr-with-text::after {
+      margin-left: 10px;
+  }
+  .form-label {
+      color: #2B1535;
+      font-family: sans-serif;
+      font-weight: 400;
+  }
+  .text-center {
+      text-align: center;
+      margin-bottom: 20px;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+  .context {
+      margin-bottom: 20%;
+      margin-left: 10%;
+      font-size: 70px;
+      color: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 600;
+  }
+  .already-account {
+      text-align: center;
+      margin-top: 20px;
+  }
+  sup {
+      color: red;
+  }
